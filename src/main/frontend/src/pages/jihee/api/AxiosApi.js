@@ -69,9 +69,10 @@ const AxiosApi = {
     return await axios.post(`/review/edit`, data);
   },
   // 리뷰 삭제
-  deleteReview: async(id) => {
+  deleteReview: async(id, cafeNum) => {
     const data = {
-      reviewId: id
+      reviewId: id,
+      cafeNum: cafeNum
     }
     return await axios.post(`/review/delete`, data);
   },

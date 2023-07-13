@@ -39,13 +39,15 @@ const CafeReviewEdit = ({id, reviewInfo, cafeNum}) => {
   
   const editReview = async() => {
     navigate("/cafe/review/edit", {state: {cafeNum, selectInfo}});
-    // const response = await AxiosApi.editReview(id);
-    // console.log(response.data);
   }
 
   const deleteReview = async() => {
-    const response = await AxiosApi.deleteReview(id);
+    const response = await AxiosApi.deleteReview(id, cafeNum);
     console.log(response.data);
+    if(response.data === true) {
+      alert("리뷰가 삭제되었습니다.");
+      navigate(-1);
+    }
   }
 
   return(
