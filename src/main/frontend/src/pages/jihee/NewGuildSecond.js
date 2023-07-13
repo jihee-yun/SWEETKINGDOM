@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "./images/logo.png";
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import img from "./images/upload.png";
 import { storage } from "../../context/Firebase";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import AxiosApi from "./api/AxiosApi";
 
 const Container = styled.div`
@@ -134,56 +134,27 @@ const NewGuildSecond = () => {
 
   // 이미지 미리보기
   const [imageSrc, setImageSrc] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(null);
 
   const onUpload = async(e) => {
     const file = e.target.files[0];
+    const reader = new FileReader();
 
-    const storageRef = ref(storage,`images/${file.name}`);
+    reader.onloadend = () => {
+      const imageURL = reader.result;
+      setImageSrc(imageURL);
+      setUploadedImage(file);
+    };
 
-    try {
-      // if (imageSrc) {
-      //   const previousImageRef = ref(storage, imageSrc);
-      //   await deleteObject(previousImageRef);
-      // }
-
-      await uploadBytes(storageRef, file);
-      const imageUrl = await getDownloadURL(storageRef);
-      setImageSrc(imageUrl);
-      console.log("Url 경로 : " + imageSrc);
-    } catch(error) {
-      console.log(error);
+    if(file) {
+      reader.readAsDataURL(file);
     }
+
   }
-
-  const updatePreview = async () => {
-    if (imageSrc) {
-      const image = new Image();
-      image.src = imageSrc;
-      await image.decode();
-      // 이미지가 로드된 후에 배경 이미지를 업데이트하기 위해 이미지를 먼저 로드
-      setImageSrc(imageSrc);
-      // 이미지 경로 확인
-      console.log("Url 경로 : " + imageSrc);
-    }
-  };
-
-  useEffect(() => {
-    updatePreview();
-  }, [imageSrc]);
-
-
 
   const clearImg = async() => {
-    try {
-      if (imageSrc) {
-        const previousImageRef = ref(storage, imageSrc);
-        await deleteObject(previousImageRef);
-      }
-      setImageSrc(null);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    setImageSrc("");
+  };
 
   const onChangeDay = (e) => {
    setMeetDay(e.target.value);
@@ -193,14 +164,29 @@ const NewGuildSecond = () => {
     setMember(e.target.value);
   };
 
-  console.log(region, guildName, guildIntro, guildDetailIntro, meetDay, member);
-
   const createGuild = async() => {
+    const file = uploadedImage;
+    const storageRef = ref(storage,`images/${file.name}`);
+
+    try {
+     
+      await uploadBytes(storageRef, file);
+      const imageUrl = await getDownloadURL(storageRef);
+      setImageSrc(imageUrl);
+      console.log("Url 경로 : " + imageSrc);
+    } catch(error) {
+      console.log(error);
+    }
+
     const response = await AxiosApi.createNewGuild(
       1, guildName, guildIntro, guildDetailIntro, meetDay, 
       member, region, imageSrc
     );
     console.log(response.data);
+    if(response.data === true) {
+      alert("새로운 길드가 생성되었습니다")
+      navigate("/guild");
+    }
   };
 
   const prevPage = () => {

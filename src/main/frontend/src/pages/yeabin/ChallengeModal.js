@@ -119,8 +119,8 @@ const ChallnegeModal = (props) => {
             <hr />
             <main>{children}</main>
             <footer>
-              {/* {type && <button onClick={confirm}>확인</button>}
-              {type && <button onClick={close}>취소</button>} */}
+              {type && <button onClick={confirm}>확인</button>}
+              {type && <button onClick={close}>취소</button>}
               {type && <button onClick={confirm}>확인</button>}
              <button onClick={close}>취소</button>
             </footer>

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router-dom";
 import AxiosApi from "../api/AxiosApi";
+import { UserContext } from "../../../context/UserStore";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../../now/component/Header";
+import Footer from "../../now/component/Footer";
 import SideMenu from "./SideMenu";
 import ChatBot from "./ChatBot";
 
@@ -22,7 +23,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   transition: opacity 1.8s ease-in-out;
-  opacity: ${({ loaded }) => (loaded ? 1 : 0)};
 `;
 const Detail = styled.div`
   width: 100%;
@@ -220,7 +220,9 @@ const SuperRightButton = styled.button`
 `;
 
 const MyReview = () => {
-  const [loaded, setLoaded] = useState(false);
+  // useContext 저장값 불러오기
+  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority} = useContext(UserContext);
+
   // 날짜 선택 state
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showDate, setShowDate] = useState(true);
@@ -255,39 +257,11 @@ const MyReview = () => {
   // 리뷰 데이터 받기
   useEffect(() => {
     const getReviewInfo = async () => {
-      const rsp = await AxiosApi.reviewGetByDate(10000001, startDate, endDate);
+      const rsp = await AxiosApi.reviewGetByDate(10000001, startDate, endDate, grantType, accessToken);
       if (rsp.status === 200) setReviewInfo(rsp.data);
     };
     getReviewInfo();
-  }, [startDate]);
-
-  // 화면 전환 효과
-  useEffect(() => {
-    const styleTags = Array.from(
-      document.querySelectorAll('style[data-styled="true"]')
-    );
-
-    const showStyleTags = () => {
-      let currentIndex = 0;
-      const interval = setInterval(() => {
-        const currentTag = styleTags[currentIndex];
-
-        if (currentTag) {
-          currentTag.setAttribute("data-loaded", "true");
-          currentIndex++;
-
-          if (currentIndex >= styleTags.length) {
-            clearInterval(interval);
-            setLoaded(true);
-          }
-        } else {
-          clearInterval(interval);
-          setLoaded(true);
-        }
-      }, 200); // 각 스타일 태그가 표시되는 시간 간격 (200ms)
-    };
-    showStyleTags();
-  }, []);
+  }, [endDate]);
 
   // 최초 날짜 한 달로 설정
   useEffect(() => {
@@ -376,7 +350,7 @@ const MyReview = () => {
   return (
     <OutBox>
       <Header />
-      <Container loaded={loaded}>
+      <Container>
         <SideMenu />
         <Detail>
           <SelectBox>

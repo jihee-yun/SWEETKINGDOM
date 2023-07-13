@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AxiosApi from "./Api/AxiosApi";
 import logo from "../../images/logo.png";
-import Modal from "../jihee/Modal";
+import Modal from "./Modal";
 
 const SignUpBlock = styled.div`
   position: relative;
@@ -38,64 +38,65 @@ const SignUpBlock = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 12px;
-    color: #999;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   .name {
-    margin-bottom: 20px;
+    margin-bottom :30px;
   }
 
-  .enable-button {
-    margin-top: 50px;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 50px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 26px;
-    font-weight: bold;
-    width: 400px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #395144;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: #395144;
-    font-weight: 700;
-    cursor: pointer;
+  .email {
+    margin-top: 10px;
   }
-  .enable-button:active {
-    margin-top: 50px;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 50px;
-    font-size: 26px;
-    font-weight: bold;
-    width: 400px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #999;
-    font-size: 15px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: #999;
-    font-weight: 700;
+
+  .message {
+    font-size: 14px;
+    margin-left: 5px;
   }
-  .disable-button {
-    margin-top: 50px;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 50px;
-    font-size: 26px;
-    font-weight: bold;
-    width: 400px; /* 원하는 너비 설정 */
-    height: 50px;
-    color: white;
-    background-color: #999;
-    font-size: 13px;
-    font-weight: 400;
-    border-radius: 18px;
-    border: #999;
+
+  .message.success {
+    color: green;
+  }
+
+  .message.error {
+    color: red;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 40px;
+  }
+
+  .label {
+    margin-right: 10px;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .radio-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .radio-group label {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  input[type="radio"] {
+    margin-left: 60px;
   }
 
   
@@ -143,12 +144,44 @@ const SignUpBlock = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: auto;
-    padding: 5px;
+    margin-left: 0;
 
     .agreeContents {
       width: 100%;
-      margin-bottom: 20px;
+      max-width: 450px;
+    }
+
+    .container {
+      align-items: center;
+    }
+
+    .row {
+      flex-direction: row;
+      margin-left: 0;
+      margin-right: 90px;
+    }
+
+    .label {
+      font-size: 20px;
+      margin-right: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="radio"] {
+      margin-left: 10px;
+    }
+
+    .item1 {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 0;
+    }
+
+    .item1 button {
+      width: 20%;
+      margin-left: 30px;
+      margin-top: 10px;
     }
 
     .signBtn {
@@ -156,22 +189,8 @@ const SignUpBlock = styled.div`
       margin-right: 0;
     }
 
-    .item1 {
-      margin-top: -40px;
-    }
-
-    .item1 button {
-      margin-top: 20px;
-      margin-left: 30px;
-    }
-
-    .hint {
-      margin-top: -50px;
-    }
-
-    .signBtn {
-      margin-bottom: 20px;
-      margin-top: 60px;
+    .signBtn button {
+      width: 50%;
     }
   }
 `;
@@ -192,6 +211,10 @@ const SignTitle = styled.div`
     margin-left: -60px;
     color: #FFCFDA;
     font-weight: bolder;
+
+    @media (max-width:768px) {
+        margin-left: 15px;
+    }
 `;
 
 const SignAgree = styled.div`
@@ -211,29 +234,41 @@ const Input = styled.input`
   outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */
 
   @media (max-width:768px) {
-    margin-top: 60px;
+    margin-top: 30px;
+    width: 350px;
   }
 `;
 
 const SignUp = () => {
   const navigate = useNavigate();
 
-  // 아이디/비밀번호
+  // 아이디, 비밀번호, 전화번호, 이메일, 생일, 성별, 사업자+회원
   const [userID, setUserID] = useState("");
   const [passWord, setPassWord] = useState("");
   const [conPw, setConPw] = useState("");
   const [name, setName] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthDay] = useState("");
+  const [gender, setGender] = useState("");
+  const [authority, setAuthority] = useState("");
   
 
   // 오류 메세지
   const [idMsg, setIdMsg] = useState("");
   const [pwMsg, setPwMsg] = useState("");
   const [conPwMsg, setConPwMsg] = useState("");
+  const [emailMsg, setEmailMsg] = useState("");
+  const [birthMsg, setBirthMsg] = useState("");
+  const [phoneMsg, setPhoneMsg] = useState("");
 
   // 유효성 검사
   const [isID, setIsID] = useState(false);
   const [isPw, setIsPw] = useState(false);
   const [isConPw, setIsConPw] = useState(false);
+  const [isEmail, setIsEmail] = useState(false);
+  const [isBirth, setIsBirth] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
 
   // 팝업
   const [modalOpen, setModalOpen] = useState(false);
@@ -244,7 +279,7 @@ const SignUp = () => {
 
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
-    // console.log(isChecked);
+    console.log(isChecked);
   };
 
   // 이름
@@ -252,24 +287,32 @@ const SignUp = () => {
     setName(e.target.value);
   }
 
+  // 성별
+  const handleGender = (e) => {
+    setGender(e.target.value);
+  }
+
+  // 사업자 or 회원
+  const handleAuthority = (e) => {
+    setAuthority(e.target.value);
+  }
+
   const closeModal = () => {
     setModalOpen(false);
     navigate('/');
   }
 
-  // 아이디(이메일) 정규식 확인
+  // 아이디 정규식
   const onChangeId = (e) => {
-    const validateEmail = (email) => {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return regex.test(email);
-    };
-    setUserID(e.target.value);
-    if (!validateEmail(e.target.value)) {
-      setIdMsg("이메일 형식으로 입력해주세요");
+    setUserID(e.target.value)
+    if (e.target.value.length < 5 || e.target.value.length > 12) {
+        setIdMsg("5자리 이상 12자리 미만으로 입력해 주세요.");
+        setIsID(false);    
     } else {
-      setIdMsg("올바른 형식입니다.");
+        setIdMsg("올바른 형식 입니다.");
+        setIsID(true);
     }
-  };
+}
 
   // 비밀번호 정규식 확인
   const onChangePw = (e) => {
@@ -285,7 +328,7 @@ const SignUp = () => {
     }
   };
 
-  // 비밀번화 확인 일치 여부
+  // 비밀번호 확인 일치 여부
   const onChangeConPw = (e) => {
     const passwordCurrent = e.target.value;
     setConPw(passwordCurrent);
@@ -298,7 +341,23 @@ const SignUp = () => {
     }
   };
 
-  // 이메일(아이디) 중복확인
+  // 이메일 정규식
+  const onChangeEmail = (e) => {
+    const validateEmail = (email) => {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    };
+    setEmail(e.target.value);
+    if (!validateEmail(e.target.value)) {
+      setEmailMsg("이메일 형식으로 입력해주세요");
+      setIsEmail(false);
+    } else {
+      setEmailMsg("올바른 형식입니다.");
+      setIsEmail(true);
+    }
+  }
+
+  // 아이디 중복확인
   const onClickIdCheck = async() => {
         console.log(userID);
         const mailCheck = await AxiosApi.checkId(userID);
@@ -312,13 +371,48 @@ const SignUp = () => {
         }
   }
 
+  // 생일 정규식
+  const onChangeBirth = (e) => {
+    const validBirthDay = (birthday) => {
+      const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      return birthdateRegex.test(birthday);
+    };
+    setBirthDay(e.target.value);
+    if(!validBirthDay(e.target.value)) {
+      setBirthMsg("올바른 형식의 생년월일을 입력하세요 (yyyy-mm-dd).");
+      setIsBirth(false);
+    }else{
+      setBirthMsg("유효한 생년월일입니다.");
+      setIsBirth(true);
+    }
+  }
+
+  // 전화번호 정규식
+  const onChnagePhoneNum = (e) => {
+    const validPhoneNum = (phoneNum) => {
+      const phoneRegex = /^\d{2,3}-\d{3,4}-\d{4}$/;
+      return phoneRegex.test(phoneNum);
+    };
+    setPhoneNum(e.target.value);
+    if(!validPhoneNum(e.target.value)) {
+      setPhoneMsg("올바른 형식의 전화번호를 입력하세요.");
+      setIsPhone(false);
+    }else{
+      setPhoneMsg("유효한 전화번호입니다.");
+      setIsPhone(true);
+    }
+  }
+  
+    
+    
+
   const LogoClick = () => {
         navigate('/');
   }
   
 
   const handleSubmit = async() => {
-      const signUp = await AxiosApi.userReg(userID, passWord, name);
+      const signUp = await AxiosApi.userReg(userID, passWord, name, phoneNum, email, birthday, gender, authority);
       console.log(signUp);
       setModalText("회원가입이 완료되었습니다.");
       setModalOpen(true);
@@ -465,52 +559,6 @@ const SignUp = () => {
                             ① 아이디(ID)와 비밀번호에 대한 모든 관리는 회원에게 책임이 있습니다. 회원에게 부여된 아이디(ID)와 비밀번호의 관리소홀, 부정사용에 의하여 발생하는 모든 결과에 대한 전적인 책임은 회원에게 있습니다.<br />
                             ② 자신의 아이디(ID)가 부정하게 사용된 경우 또는 기타 보안 위반에 대하여, 회원은 반드시 사이트에 그 사실을 통보해야 합니다.
                             <br /><br />
-                            
-
-                            제 11 조 (서비스 제한 및 정지)<br />
-                            ① 사이트는 전시, 사변, 천재지변 또는 이에 준하는 국가비상사태가 발생하거나 발생할 우려가 있는 경우와 전기통신사업법에 의한 기간통신 사업자가 전기통신서비스를 중지하는 등 기타 불가항력적 사유가 있는 경우에는 서비스의 전부 또는 일부를 제한하거나 정지할 수 있습니다.<br />
-                            ② 사이트는 제1항의 규정에 의하여 서비스의 이용을 제한하거나 정지할 때에는 그 사유 및 제한기간 등을 지체없이 회원에게 알려야 합니다.<br />
-
-                            
-                            <br />
-                            제5장 계약사항의 변경, 해지<br />
-
-                            
-
-                            제 12 조 (정보의 변경)<br />
-                            회원이 주소, 비밀번호 등 고객정보를 변경하고자 하는 경우에는 홈페이지의 회원정보 변경 서비스를 이용하여 변경할 수 있습니다.<br />
-
-                            <br />
-
-                            제 13 조 (계약사항의 해지)<br />
-                            회원은 서비스 이용계약을 해지할 수 있으며, 해지할 경우에는 본인이 직접 서비스를 통하거나 전화 또는 온라인 등으로 사이트에 해지신청을 하여야 합니다. 사이트는 해지신청이 접수된 당일부터 해당 회원의 서비스 이용을 제한합니다. 사이트는 회원이 다음 각 항의 1에 해당하여 이용계약을 해지하고자 할 경우에는 해지조치 7일전까지 그 뜻을 이용고객에게 통지하여 소명할 기회를 주어야 합니다.<br />
-                            ① 이용고객이 이용제한 규정을 위반하거나 그 이용제한 기간 내에 제한 사유를 해소하지 않는 경우<br />
-                            ② 정보통신윤리위원회가 이용해지를 요구한 경우<br />
-                            ③ 이용고객이 정당한 사유 없이 의견진술에 응하지 아니한 경우<br />
-                            ④ 타인 명의로 신청을 하였거나 신청서 내용의 허위 기재 또는 허위서류를 첨부하여 이용계약을 체결한 경우<br />
-                            사이트는 상기 규정에 의하여 해지된 이용고객에 대해서는 별도로 정한 기간동안 가입을 제한할 수 있습니다.<br />
-                            <br />
-                            
-
-                            제6장 손해배상<br />
-
-                            
-
-                            제 14 조 (면책조항)<br />
-                            ① 사이트는 회원이 서비스 제공으로부터 기대되는 이익을 얻지 못하였거나 서비스 자료에 대한 취사선택 또는 이용으로 발생하는 손해 등에 대해서는 책임이 면제됩니다.<br />
-                            ② 사이트는 회원의 귀책사유나 제3자의 고의로 인하여 서비스에 장애가 발생하거나 회원의 데이터가 훼손된 경우에 책임이 면제됩니다.<br />
-                            ③ 사이트는 회원이 게시 또는 전송한 자료의 내용에 대해서는 책임이 면제됩니다.<br />
-                            ④ 상표권이 있는 도메인의 경우, 이로 인해 발생할 수도 있는 손해나 배상에 대한 책임은 구매한 회원 당사자에게 있으며, 사이트는 이에 대한 일체의 책임을 지지 않습니다.<br />
-                            <br />
-                            
-
-                            제 15 조 (관할법원)<br />
-
-                            
-
-                            서비스와 관련하여 사이트와 회원간에 분쟁이 발생할 경우 사이트의 본사 소재지를 관할하는 법원을 관할법원으로 합니다.<br />
-
-                            
 
                             [부칙]
                             <br />
@@ -533,13 +581,8 @@ const SignUp = () => {
                     <h3>회원정보 입력</h3>
                 </div>
 
-                <div className="name">
-                  <Input type="name" placeholder="이름" value={name} onChange={onChangeName}/>
-                </div>
-
-
                 <div className="item1">
-                    <Input type="email" placeholder="아이디(이메일)" value={userID} onChange={onChangeId}/>
+                    <Input type="email" placeholder="아이디" value={userID} onChange={onChangeId}/>
                         <button classname="checkID" onClick={onClickIdCheck}>중복확인</button>
                 </div>
 
@@ -563,13 +606,106 @@ const SignUp = () => {
                     <Input type="password" placeholder="비밀번호 확인" value ={conPw} onChange={onChangeConPw}/>
                 </div>
 
+
                 <div className="hint">
                     {passWord.length > 0 && (<span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMsg}</span>)}
                 </div>
 
+                <br/>
+
+                <div className="name">
+                  <Input type="name" placeholder="이름" value={name} onChange={onChangeName}/>
+                </div>
+
+                <div classname="phone">
+                  <Input type="phone" placeholder="전화번호" value={phoneNum} onChange={onChnagePhoneNum}/>
+                </div>
+
+
+                <div className="hint">
+                    {phoneNum.length > 0 && (<span className={`message ${isPhone ? 'success' : 'error'}`}>{phoneMsg}</span>)}
+                </div>
+
+                <br/>
+
+
+                <div className="email">
+                  <Input type="email" placeholder="이메일" value={email} onChange={onChangeEmail}/>
+                </div>
+
+
+                <div className="hint">
+                    {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMsg}</span>)}
+                </div>
+                
+                <br/>
+
+                <div className="birthday">
+                    <Input type="text" placeholder="생년월일(YYYY-MM-DD)" value={birthday} onChange={onChangeBirth}/>
+                </div>
+
+                <div className="hint">
+                    {birthday.length > 0 && (<span className={`message ${isBirth ? 'success' : 'error'}`}>{birthMsg}</span>)}
+                </div>
+
+                <br/>
+
+                <div className="container">
+                  <div className="row">
+                    <span className="label">성별 </span>
+                    <div className="radio-group">
+                      <label>
+                        <input
+                          type="radio"
+                          value="MALE"
+                          checked={gender === 'MALE'}
+                          onChange={handleGender}
+                        />
+                        남성
+                      </label>
+
+                      <label>
+                        <input
+                          type="radio"
+                          value="FEMALE"
+                          checked={gender === 'FEMALE'}
+                          onChange={handleGender}
+                        />
+                        여성
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <span className="label">권한 </span>
+                    <div className="radio-group">
+                      <label>
+                        <input
+                          type="radio"
+                          value="ROLE_USER"
+                          checked={authority === 'ROLE_USER'}
+                          onChange={handleAuthority}
+                        />
+                        일반
+                      </label>
+
+                      <label>
+                        <input
+                          type="radio"
+                          value="ROLE_MEMBER"
+                          checked={authority === 'ROLE_MEMBER'}
+                          onChange={handleAuthority}
+                        />
+                        사업자
+                      </label>
+                    </div>
+                  </div>
+                </div>
+    
+
                 
                 <div className="signBtn">
-                  {(isChecked && isID && isPw && isConPw) ?
+                  {(isChecked && isID && isPw && isConPw && isEmail && isBirth && isPhone) ?
                     <button className="enable-button" onClick={handleSubmit}>회원가입</button> :
                     <button className="disable-button">회원가입</button>}
                     <Modal open={modalOpen} close={closeModal} header="Sweet Kingdom">{modalText}</Modal>

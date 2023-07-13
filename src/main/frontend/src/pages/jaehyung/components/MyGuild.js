@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router-dom";
-import AxiosApi from ".././api/AxiosApi";
+import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../../../context/UserStore";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../../now/component/Header";
+import Footer from "../../now/component/Footer";
 import SideMenu from "./SideMenu";
 import ChatBot from "./ChatBot";
 
@@ -47,7 +47,7 @@ const ContentBox = styled.div`
 
 `;
 
-const MySomoim = () => {
+const MyGuild = () => {
 
   return (
     <OutBox>
@@ -70,4 +70,4 @@ const MySomoim = () => {
     </OutBox>
   );
 };
-export default MySomoim;
+export default MyGuild;

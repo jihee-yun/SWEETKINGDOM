@@ -19,8 +19,8 @@ const FloatingButton = styled.div`
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  box-shadow: ${({ isHovered }) => 
-    (isHovered ? "3px 3px 10px rgba(0, 0, 0, 0.5)" : "2px 2px 5px rgba(0, 0, 0, 0.7)")};
+  box-shadow: ${({ isHovered }) =>
+    isHovered ? "3px 3px 10px rgba(0, 0, 0, 0.5)" : "2px 2px 5px rgba(0, 0, 0, 0.7)"};
 `;
 
 const NewDiv = styled.div`

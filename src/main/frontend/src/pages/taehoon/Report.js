@@ -61,6 +61,17 @@ const AdminDeclarationBlock = styled.div`
         background-color: #f7f7f7;
     }
 
+    .writer input[type="id"] {
+        width: 150px;
+        height: 30px;
+        margin-top :20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 14px;
+        color: #333;
+        margin-right: 330px;
+    }
+
     legend {
         font-size: 20px;
         font-weight: bold;
@@ -191,6 +202,11 @@ const Report = () => {
 
     const [reportText, setReportText] = useState("");
     const [reportTypes, setReportTypes] = useState([]);
+    const [userId, setUserId] = useState("");
+
+    const onChangeId = (e) => {
+        setUserId(e.target.value);
+    }
 
     const handleSubmit = () => {
         setReportText('');
@@ -275,6 +291,10 @@ const Report = () => {
                         />
                         <span>리뷰 테러</span>
                     </label>
+                </div>
+
+                <div className="writer">
+                    <input type="id" placeholder="작성자" value={userId} onChange={onChangeId}/>
                 </div>
 
                 <textarea

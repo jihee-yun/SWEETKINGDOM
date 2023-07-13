@@ -40,9 +40,9 @@ const StarRating = styled.div`
 }
 `;
 
-const Star = () => {
+const Star = ({star}) => {
 
-  const star = 4.5; // 백에서 리뷰 평균 점수 계산하는 로직 구현해서 값 받아오기
+  // const star = 4.5; // 백에서 리뷰 평균 점수 계산하는 로직 구현해서 값 받아오기
 
   const ratingToPercent = {
     width: `${(star / 5) * 100}%`

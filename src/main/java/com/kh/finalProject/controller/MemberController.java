@@ -1,13 +1,17 @@
 package com.kh.finalProject.controller;
 
+import com.kh.finalProject.dto.MemberDto;
 import com.kh.finalProject.dto.MemberRequestDto;
 import com.kh.finalProject.dto.MemberResponseDto;
 import com.kh.finalProject.dto.TokenDto;
 import com.kh.finalProject.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -26,4 +30,13 @@ public class MemberController {
     public ResponseEntity<TokenDto> login(@RequestBody MemberRequestDto requestDto) {
         return ResponseEntity.ok(memberService.login(requestDto));
     }
+
+    // 회원 아이디로 회원 번호 조회
+//    @PostMapping("/numget")
+//    public ResponseEntity<List<MemberDto>> memberNum(@RequestBody MemberDto memberIdData) {
+//        String memberId = memberIdData.getMemberId();
+//        List<MemberDto> list = memberService.getMemberNumById(memberId);
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
+
 }

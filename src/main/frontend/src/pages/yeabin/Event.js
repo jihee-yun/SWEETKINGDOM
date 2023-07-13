@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Roulette from "./Roulette";
 import quiz from "./images/quiz.png";
 import shopping from "./images/shopping.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AxiosApi from "./Api/AxiosApi";
 
 const ContainerBox = styled.div`
@@ -20,12 +20,20 @@ const Box = styled.div`
   }
 `;
 
-const ChallengeBox = styled.div`
+const ChallengeContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+`;
+
+const ChallengeBox = styled.div`
+  /* display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; */
 `;
 
 const EventFooter = styled.div` 
@@ -186,8 +194,11 @@ const Event = () => {
     challengeInfo();
   }, []);
 
-  const navigateCh = () => {
-    navigate('/challengeMain');
+  // console.log(challengeInfo);
+
+  const navigateCh = (id) => {
+    const editedInfo = challengeInfo.filter(item => item.id === id);
+    navigate('/challengeMain', {state: {editedInfo}});
   };
 
   const navigatePoint = () => {
@@ -209,15 +220,17 @@ const Event = () => {
       <ContainerBox>
         <Box>
           <h3>이 달의 퀘스트</h3>
-          <ChallengeBox onClick={navigateCh}>
-            {challengeInfo && challengeInfo.map(item => (
-              <ChallengeTitle key={item.challengeName}>
-                <Thumb className="img" imageurl={item.thumbnail}></Thumb>
+          <ChallengeContainer>
+          {challengeInfo && challengeInfo.map(item => (
+          <ChallengeBox key={item.id} onClick={() => navigateCh(item.id)}>
+              <ChallengeTitle >
+                <Thumb  className="img" imageurl={item.thumbnail}></Thumb>
                 <div className="shadow"></div>
                 <Title>{item.challengeName}</Title>
               </ChallengeTitle>
-            ))}
           </ChallengeBox>
+          ))}
+          </ChallengeContainer>
           <div className="r-title">
             <h3>룰렛 돌리고 포인트 받아가기</h3>
           </div>

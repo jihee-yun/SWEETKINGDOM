@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosApi from "./Api/AxiosApi";
+// import { UserContext } from "../../context/UserStore";
 
 // 포인트로 카페 쿠폰 결제하는 상점
 
@@ -103,9 +104,20 @@ const Notice = styled.div`
   margin-top: 100px;
 `;
 
+const InfoBox = styled.div`
+`;
+
+const InfoList = styled.div`
+`;
+
 const CouponStore = () => {
   const [couponInfo, setCouponInfo] = useState("");
+  const [myinfo, setMyInfo] = useState("");
   const navigate = useNavigate();
+  // const context = useContext(UserContext);
+  // const {setCouponNum} = context;
+
+  console.log(couponInfo);
 
   useEffect(() => {
     const couponInfo = async() => {
@@ -115,11 +127,18 @@ const CouponStore = () => {
     couponInfo();
   }, []);
 
-  // console.log(couponInfo);
+  useEffect(() => {
+    const myinfo = async() => {
+      const response = await AxiosApi.myInfoGet("ALL");
+      if(response.status === 200) setMyInfo(response.data);
+    };
+    myinfo();
+  }, []);
 
-  const navigatePay = () => {
-    navigate('/couponPayment');
-  }
+  const navigatePay = (id) => {
+    const filterCoupon = couponInfo.filter(coupon => coupon.id === id);
+    navigate('/couponPayment', {state : {filterCoupon}});
+  };
 
 
   return(
@@ -127,9 +146,15 @@ const CouponStore = () => {
     <Container>
       <Box>
         <MyPoint>
-          <div>
-            <h3>(회원)님 현재 보유 포인트 : </h3>
-          </div>
+          <InfoBox>
+            {myinfo && myinfo.map(item => (
+              <InfoList key={item.userNum}>
+                <Name>{item.name}님 현재 보유 포인트 : </Name> 
+                {/* 로그인 한 회원만 보이게 수정 */}
+                {/* 포인트 불러오기 */}
+              </InfoList>
+            ))}
+          </InfoBox>
           <div className="goEvent">
             <Link to='/event' className="link_style">받을 수 있는 포인트 확인하기</Link>
           </div>
@@ -137,9 +162,9 @@ const CouponStore = () => {
         <h3>포인트로 카페 할인 받기</h3>
         <CouponBox>
             {couponInfo && couponInfo.map(item => (
-              <CouponList key={item.couponName} onClick={() => console.log('결제로 이동 예정')}>
+              <CouponList key={item.couponNum} onClick={() => console.log('결제로 이동')}>
                 <Name>{item.couponName}</Name>
-                <Price onClick={navigatePay}>{item.price} 포인트</Price>
+                <Price onClick={() => navigatePay(item.id)}>{item.price} 포인트</Price>
               </CouponList>
             ))}
         </CouponBox>

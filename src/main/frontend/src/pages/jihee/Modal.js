@@ -36,20 +36,29 @@ const ModalStyle = styled.div`
     }
     section > header {
         display: flex;
-        width: 85%;
-        margin: 0 auto;
-        padding-left: 10px;
-        position: relative;
+        justify-content: space-around;
+        width: 100%;
+        /* margin: 0 auto; */
+        /* padding-left: 10px; */
+        /* position: relative; */
         /* padding: 16px 64px 16px 35px; */
         /* background-color: #FFCFDA; */
         font-size: 1rem;
         font-weight: bold;
+
+        .box{
+            width: 35%;
+        }
+
+        p {
+            padding-left: 5px;
+        }
     }
 
     section > header button {
-        position: absolute;
+        /* position: absolute;
         top: 15px;
-        right: 3px;
+        right: 3px; */
         width: 30px;
         font-size: 21px;
         font-weight: 700;
@@ -111,6 +120,7 @@ const Modal = (props) => {
                     <section>
                         <header>
                             <p>{header}</p>
+                            <div className="box"></div>
                             <button onClick={close}>
                                 &times;  
                             </button>

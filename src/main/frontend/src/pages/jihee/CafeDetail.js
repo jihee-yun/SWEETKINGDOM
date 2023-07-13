@@ -10,7 +10,6 @@ import menu from "./images/restaurant-menu.png";
 import Slider from "./Slider";
 import AxiosApi from "./api/AxiosApi";
 import KaKaoMap from "./KaKaoMap";
-import Star from "./Star";
 import AvgStar from "./AvgStar";
 
 
@@ -162,7 +161,7 @@ const CafeDetail = () => {
     <div className="top">
     <h1>{cafe.cafeName}</h1>
     <div className="star">
-      <AvgStar />
+      <AvgStar avgStar={cafe.avgScore}/>
        <p onClick={sendDetailInfo}>전체 후기</p>
     </div>
     <h3>{cafe.addr}</h3>

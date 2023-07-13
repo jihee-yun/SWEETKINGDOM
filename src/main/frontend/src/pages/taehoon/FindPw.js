@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../images/logo.png";
+import AxiosApi from "./Api/AxiosApi";
+import Modal from "./Modal";
+
 
 const FindPwBlock = styled.div`
     justify-content: center;
@@ -21,7 +24,7 @@ const FindPwBlock = styled.div`
         margin-top: 10px;
     }
 
-    .inputId {
+    .inputEmail {
         margin-left: -540px;
     }
 
@@ -30,6 +33,14 @@ const FindPwBlock = styled.div`
         margin-right: 240px;
         margin-top: 10px;
         color: #999;
+    }
+
+    .message.success {
+        color: green;
+    }
+
+    .message.error {
+        color: red;
     }
 
     .pwBtn button {
@@ -60,31 +71,60 @@ const Input = styled.input`
 const FindPw = () => {
     const navigate = useNavigate();
 
-    // 아이디/비밀번호
-    const [userID, setUserID] = useState("");
+    // 이메일
+    const [email, setEmail] = useState("");
 
-      // 유효성 검사
-    const [idMsg, setIdMsg] = useState("");
+    // 오류 메세지
+    const [emailMsg, setEmailMsg] = useState("");
 
-    const [isID, setIsID] = useState("");
+    // 유효성 검사
+    const [isEmail, setIsEmail] = useState("");
+
+    // 팝업
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalText, setModalText] = useState(false);
 
 
     const onClickLogo = () => {
         navigate('/');
     }
 
-    const onChangeId = (e) => {
+    // 이메일 정규식
+    const onChangeEmail = (e) => {
         const validateEmail = (email) => {
-          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return regex.test(email);
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
         };
-        setUserID(e.target.value);
+        setEmail(e.target.value);
         if (!validateEmail(e.target.value)) {
-          setIdMsg("이메일 형식으로 입력해주세요");
+            setEmailMsg("이메일 형식으로 입력해주세요");
+            setIsEmail(false);
         } else {
-          setIdMsg("올바른 형식입니다.");
+            setEmailMsg("올바른 형식입니다.");
+            setIsEmail(true);
+        }
+    }
+
+    const handleSendEmail = async () => {
+        try {
+          // 이메일 전송 요청
+          const response = await AxiosApi.findPw(email);
+      
+          // 이메일 전송 성공
+          setModalText('이메일로 전송되었습니다.');
+          setModalOpen(true);
+        } catch (error) {
+          // 이메일 전송 실패
+          setModalText('이메일 전송에 실패했습니다.');
+          setModalOpen(true);
         }
       };
+
+
+      const closeModal = () => {
+        setModalOpen(false);
+        navigate("/login");
+    }
 
     return(
         <FindPwBlock>
@@ -99,17 +139,18 @@ const FindPw = () => {
                 <p>비밀번호 찾기를 위해 ID를 입력해 주세요.</p>
             </div>
 
-            <div className="inputId">
-                <Input type="email" placeholder="아이디(이메일)" value={userID} onChange={onChangeId}/>
+            <div className="inputEmail">
+                <Input type="email" placeholder="이메일" value={email} onChange={onChangeEmail}/>
             </div>
 
             <div className="hint">
-                    {userID.length > 0 && (<span className={`message ${isID ? 'success' : 'error'}`}>{idMsg}</span>)}
+                    {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMsg}</span>)}
             </div>
 
 
             <div className="pwBtn">
-                <button>임시 비밀번호 발급</button>
+                <button onClick={handleSendEmail}>임시 비밀번호 발급</button>
+                <Modal open={modalOpen} close={closeModal} header="Sweet Kingdom">이메일로 전송되었습니다.</Modal>
             </div>
             
 

@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserStore";
 import filterimg from "./images/filter.png";
 import AxiosApi from "./api/AxiosApi";
 import Header from "../now/component/Header";
-import Modal from "./Modal";
+import Modal from "./Modal2";
 import CafeFilterModal from "./CafeFilterModal";
 
 const Container = styled.div`

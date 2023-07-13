@@ -1,106 +1,82 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import { styled } from 'styled-components';
 import profile from '../images/leeknow.jpg';
-import { UserContext } from '../../../context/UserStore';
-import CloseIcon from '@mui/icons-material/CloseOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const Container = styled.div`
-  box-sizing: border-box;
-  width: 300px;
+
+
+
+const SidebarContainer = styled.div`
+  background-color: #202020;
+  transition: 0.4s ease;
   height: 100%;
-  display: none;
-  position: fixed;
-  right: -300px;
-  transition: right 0.3s ease-in-out;
-  flex-direction: column;
-  padding: 25px;
-  border-radius: 10px;
-  background: rgb(223, 214, 210, 0.9);
-  z-index: 11;
-  &.active {
-    right: 0px;
-  }
 `
-const SideBarTop = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  .xButton {
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 3px;
-    display: flex;
-    color: black;
-    justify-content: center;
-    align-items: center;
-    &:active {
-      background: rgb(193, 159, 138);
-      color: white;
-    }
-  }
+
+const SidebarTop = styled.div`
+display: flex;
+flex-direction: column;
 `;
 
 const Profile = styled.img`
-width: 200px;
+ width: 200px;
   height: 200px;
   margin: 16px 16px 16px 16px;
   background: white;
   border-radius: 10px;
   cursor: pointer;
   align-self: center;
+  @media screen and (max-width: 1024px) {
+    margin-right: 16px;
+  }
+
 `
 
-const Menu = styled.div`
-width: 100%;
+const Menu = styled.ul`
+  width: 90%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
 `  
 
-const Side = styled.ul`
-  .show-menu{
-width: 376px;
-height: 500px;
-position: absolute;
-left: 0px;
-transition: 1s;
-}
-
-.hide-menu{
-width: 376px;
-height: 500px;
-position: absolute;
-left: -376px;
-transition: 1s;
-}
-`;
 
 
-
-
-const Sidebar = () => {
-  const [showSidebar, setShowSidebar] = useState(false);
-
+const Sidebar = ({ width, children }) => {
+  const [isOpen, setOpen] = useState(false);
+  const [xPosition, setX] = useState(-width);
+  
+// button 클릭 시 토글
+  const toggleMenu = () => {
+    if (xPosition < 0) {
+      setX(0);
+      setOpen(true);
+    } else {
+      setX(-width);
+      setOpen(false);
+    }
+  };
 
 
   return (
-    <Container> 
-      <SideBarTop>
-        <button className="xButton" onClick={() => setShowSidebar(false)}>
-          <CloseIcon />
-        </button>
-      </SideBarTop>
-      <Profile src={profile}></Profile>
+      <SidebarContainer  style={{ transform: `translatex(${-xPosition}px)`}}>
+      <button onClick={() => toggleMenu()}>
+          {isOpen ? <span>X</span> : <MenuIcon /> }
+      </button>
+      <SidebarTop>
+      <Profile src={profile}/>
+      </SidebarTop>
       <Menu>
         <Link to="/cafe">카페 찾기</Link>
         <Link to="/guild">길드</Link>
         <Link to="/event">퀘스트</Link>
         <Link to="/couponStore">상점</Link>
       </Menu>
-    </Container>
+      </SidebarContainer>
+
   )
 }
 
 export default Sidebar;
+

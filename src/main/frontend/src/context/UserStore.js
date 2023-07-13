@@ -5,6 +5,8 @@ import { Navigate } from "react-router-dom";
 export const UserContext = createContext(null);
 
 const UserStore = ({children}) => {
+  // 인증 방식
+  const [grantType, setGrantType] = useState("");
   // 엑세스 토큰, 리프레시 토큰
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
@@ -16,6 +18,10 @@ const UserStore = ({children}) => {
   const [isLogin, setIsLogin] = useState(false);
   // 로그인시 쿼리문에 쓰일 회원번호
   const [userNum, setUserNum] = useState(0);
+  // 로그인시 토큰에 받아올 회원 이름
+  const [userName, setUserName] = useState("");
+  // 로그인시 토큰에 받아올 회원 종류(권한)
+  const [userAuthority, setUserAuthoruty] = useState("");
   // 지역별 카페메인으로 이동
   const [region, setRegion] = useState("");
   // 카페번호
@@ -23,7 +29,11 @@ const UserStore = ({children}) => {
   // 길드번호
   const [guildNum, setGuildNum] = useState("");
   // 사이드바
-  const [isSidebar, setIsSidebar] = useState(true);
+  const [isSidebar, setIsSidebar] = useState(false);
+  // 쿠폰번호
+  const [couponNum, setCouponNum] = useState("");
+  // 챌린지번호
+  const [challengeNum, setChallengeNum] = useState("");
 
   const restoreSession = async() => {
     const token =  localStorage.getItem('token');
@@ -61,10 +71,11 @@ const UserStore = ({children}) => {
 
 
   const contextValue = {
-    accessToken, setAccessToken, refreshToken, setRefreshToken,
+    grantType, setGrantType, accessToken, setAccessToken, refreshToken, setRefreshToken,
     userID, setUserID, passWord, setPassWord, isLogin, setIsLogin, userNum, setUserNum, 
+    userName, setUserName, userAuthority, setUserAuthoruty, 
     region, setRegion, cafeNum, setCafeNum, guildNum, setGuildNum,
-    handleLogin, handleLogOut, setIsSidebar
+    handleLogin, handleLogOut, isSidebar, setIsSidebar, couponNum, setCouponNum, challengeNum, setChallengeNum
   };
 
 

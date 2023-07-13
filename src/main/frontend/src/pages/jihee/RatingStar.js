@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import StarIcon from '@mui/icons-material/Star';
 
@@ -23,7 +23,7 @@ const RatingBox = styled.div`
   }
 `;
 
-const Star = ({setScore}) => {
+const Star = ({getScore, setScore}) => {
 
   // 별 선택 상태값 관리
   const [clicked, setClicked] = useState([false, false, false, false, false]);
@@ -32,13 +32,26 @@ const Star = ({setScore}) => {
   const starArray = [0, 1, 2, 3, 4];
 
   const starClick = (index) => {
-    let clickStates = [...clicked];
+    const clickStates = [...clicked];
     for(let i = 0; i < 5; i++) {
       clickStates[i] = i <= index ? true : false;
     }
     setClicked(clickStates);
     setScore(clickStates.filter(Boolean).length);
   }
+
+  // 기존 스코어 값 가져오기
+  useEffect(() => {
+    if (getScore) {
+      const defaultScore = getScore;
+      const clickStates = [...clicked];
+      for (let i = 0; i < defaultScore; i++) {
+        clickStates[i] = true;
+      }
+      setClicked(clickStates);
+    }
+  }, [getScore]);
+
 
   // 별점에 따라 문구 출력
   let scoreText = "";
@@ -57,7 +70,7 @@ const Star = ({setScore}) => {
     {starArray.map(el => (
       <StarIcon key={el} 
       onClick={() => starClick(el)}
-      className={clicked[el] && 'yellow'}
+      className={clicked[el] ? 'yellow' : ''}
       size="10"/>
     ))}
     <div className="score">{scoreText}</div>

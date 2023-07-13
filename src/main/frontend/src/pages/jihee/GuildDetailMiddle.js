@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import cafeimg1 from "./images/카페임시이미지.jpeg";
 import location from "./images/location.png";
 import member from "./images/member.png";
-import Modal from "./Modal";
+import Modal from "./Modal2";
+import GuildMemberModal from "./GuildMemberModal";
 
 const Middle = styled.div`
   position: absolute;
@@ -70,10 +70,16 @@ const Middle = styled.div`
       width: 50px;
       height: 50px;
       border-radius: 50px;
-      margin: 0 auto;
+      /* margin: 0 auto; */
       object-fit: cover;
       background-size: cover;
       background-position: center;
+    }
+
+    .profile-box {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
     }
 
     button{
@@ -142,6 +148,7 @@ const Middle = styled.div`
 const GuildDetailMiddle = ({guildNum, guildInfo}) => {
   const [modalOpen, setModalOpen] = useState(false);
 
+  console.log(guildInfo);
 
   const memberModal = () => {
     setModalOpen(true);
@@ -175,7 +182,11 @@ const GuildDetailMiddle = ({guildNum, guildInfo}) => {
           </div>
           </div>
           <div className="members">
-            <div style={{ backgroundImage: `url(${cafeimg1})`}} className="member-profile"></div>
+            <div className="profile-box">
+              {guild.memberProfileList.slice(0, 3).map(index => (
+              <div key={index} style={{ backgroundImage: `url(${index})`}} className="member-profile"></div>
+            ))}
+            </div>
             <br />
             <h4>함께 할 멤버들을 확인하고 길드에 가입해 보세요!</h4>
             <button onClick={memberModal}>전체 멤버 확인하기</button>
@@ -190,7 +201,7 @@ const GuildDetailMiddle = ({guildNum, guildInfo}) => {
         </div>
         <button className="join">가입하기</button>
         <Modal open={modalOpen} type={false} close={closeModal} header="전체 멤버">
-
+          <GuildMemberModal members={guild.memberProfileList}></GuildMemberModal>
         </Modal>
       </Middle>
       ))}

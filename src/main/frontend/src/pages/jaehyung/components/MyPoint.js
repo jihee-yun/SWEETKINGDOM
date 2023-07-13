@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router-dom";
 import AxiosApi from ".././api/AxiosApi";
 import { UserContext } from "../../../context/UserStore";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../../now/component/Header";
+import Footer from "../../now/component/Footer";
 import SideMenu from "./SideMenu";
 import ChatBot from "./ChatBot";
 
@@ -37,6 +37,9 @@ const SelectBox = styled.div`
   margin-top: 3%;
   border: 1px solid #F3E1E1;
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const ContentBox = styled.div`
   width: 90%;
@@ -44,7 +47,8 @@ const ContentBox = styled.div`
   margin-top: 3%;
   border: 1px solid #F3E1E1;
   border-radius: 15px;
-
+  display: flex;
+  flex-direction: column;
 `;
 
 const MyPoint = () => {
@@ -56,10 +60,10 @@ const MyPoint = () => {
         <SideMenu />
         <Detail>
           <SelectBox>
-
+            결제 / 포인트
           </SelectBox>
           <ContentBox>
-
+            
           </ContentBox>
 
 

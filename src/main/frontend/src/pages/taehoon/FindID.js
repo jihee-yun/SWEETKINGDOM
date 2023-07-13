@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../images/logo.png";
+import Modal from "./Modal";
+import AxiosApi from "./Api/AxiosApi";
 
 const FindIdBlock = styled.div`
     justify-content: center;
@@ -22,7 +24,7 @@ const FindIdBlock = styled.div`
         font-weight: bold;
     }
 
-    .inputId {
+    .inputEmail {
         margin-bottom: 20px;
     }
 
@@ -31,6 +33,14 @@ const FindIdBlock = styled.div`
         font-size: 15px;
         margin-right: 220px;
         color: #999;
+    }
+
+    .message.success {
+        color: green;
+    }
+
+    .message.error {
+        color: red;
     }
 
     .check button {
@@ -61,28 +71,56 @@ const Input = styled.input`
 const FindID = () => {
     const navigate = useNavigate("");
 
-    // 아이디 입력
-    const [userID, setUserID] = useState("");
+    // 이메일
+    const [email, setEmail] = useState("");
 
     // 유효성 검사
-    const [idMsg, setIdMsg] = useState("");
-    const [isID, setIsID] = useState("");
+    const [emailMsg, setEmailMsg] = useState("");
+    const [isEmail, setIsEmail] = useState("");
 
-    const onChangeId = (e) => {
-        const validateEmail = (email) => {
-          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return regex.test(email);
-        };
-        setUserID(e.target.value);
-        if (!validateEmail(e.target.value)) {
-          setIdMsg("이메일 형식으로 입력해주세요");
-        } else {
-          setIdMsg("올바른 형식입니다.");
+    // 팝업
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalText, setModalText] = useState(false);
+
+
+        // 이메일 정규식
+        const onChangeEmail = (e) => {
+            const validateEmail = (email) => {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+            setEmail(e.target.value);
+                if (!validateEmail(e.target.value)) {
+                setEmailMsg("이메일 형식으로 입력해주세요");
+                setIsEmail(false);
+            } else {
+                setEmailMsg("올바른 형식입니다.");
+                setIsEmail(true);
+        }
+    }
+
+    const handleSendEmail = async () => {
+        try {
+          // 이메일 전송 요청
+          const response = await AxiosApi.findId(email);
+      
+          // 이메일 전송 성공
+          setModalText('이메일로 전송되었습니다.');
+          setModalOpen(true);
+        } catch (error) {
+          // 이메일 전송 실패
+          setModalText('이메일 전송에 실패했습니다.');
+          setModalOpen(true);
         }
       };
 
     const LogoClick = () => {
         navigate('/');
+    }
+
+    const closeModal = () => {
+        setModalOpen(false);
+        navigate("/login");
     }
 
     return(
@@ -97,17 +135,20 @@ const FindID = () => {
                 <p>아이디를 찾기 위해 이메일을 입력해 주세요.</p>
             </div>
 
-            <div className="inputId">
-               <Input type="email" placeholder="이메일" value={userID} onChange={onChangeId}/>
+            <div className="inputEmail">
+               <Input type="email" placeholder="이메일" value={email} onChange={onChangeEmail}/>
             </div>
 
             <div className="check">
-                <button>확인</button>
+                <button onClick={handleSendEmail}>확인</button>
+                <Modal open={modalOpen} close={closeModal} header="Sweet Kingdom">이메일로 전송되었습니다.</Modal>
             </div>
 
             <div className="hint">
-                {userID.length > 0 && (<span className={`message ${isID ? 'success' : 'error'}`}>{idMsg}</span>)}
+                {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMsg}</span>)}
             </div>
+
+            
 
         </FindIdBlock>
     );

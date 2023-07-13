@@ -33,7 +33,7 @@ const QuizBox = styled.div`
     font-weight: bolder;
     border: none;
     background-color: #FFCFDA;
-    border-radius: 20px;
+    /* border-radius: 20px; */
   }
 
   p{

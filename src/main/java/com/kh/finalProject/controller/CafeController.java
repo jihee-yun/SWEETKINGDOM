@@ -19,6 +19,7 @@ import java.util.List;
 public class CafeController {
     private final CafeService cafeService;
 
+    // 지역 및 필터링 값으로 카페 조회
     @GetMapping("/region")
     public ResponseEntity<List<CafeDto>> selectCafeList(@RequestParam String region, @RequestParam(required = false) String sortingOption) {
         System.out.println("지역 : " + region);
@@ -38,6 +39,7 @@ public class CafeController {
 //        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 특정 카페 디테일 조회
     @GetMapping("/detail")
     public ResponseEntity<List<CafeDetailDto>> detailCafe(@RequestParam Long cafeNum) {
         System.out.println("카페번호 : " + cafeNum);
@@ -45,6 +47,7 @@ public class CafeController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // 특정 카페 이미지 리스트 반환
     @GetMapping("/img")
     public ResponseEntity<List<ImgDto>> imgList(@RequestParam Long cafeNum) {
         System.out.println("카페번호 : " + cafeNum);

@@ -6,9 +6,9 @@ import com.kh.finalProject.constant.Gender;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,13 +19,13 @@ public class User { // 일반 회원
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userNum;
-    @Column(unique = true)
+    @Column(name = "user_id", unique = true)
     private String userId;
     private String name;
     private String password;
     private String phone;
     private String email;
-    private Date birthday; // 생년월일
+    private LocalDate birthday; // 생년월일
     @Enumerated(EnumType.STRING)
     private Gender gender; // 성별
 
@@ -40,12 +40,16 @@ public class User { // 일반 회원
     private Authority authority; // 회원 종류
 
     @Builder
-    public User(String userId, String email, String password, String name, Existence existence) {
+    public User(String userId, String password, String name, String email, String phone, LocalDate birthday, Gender gender, Existence existence, Authority authority) {
         this.userId = userId;
-        this.email = email;
         this.password = password;
         this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.birthday = birthday;
         this.existence = existence;
+        this.gender = gender;
+        this.authority = authority;
     }
 
 
@@ -57,5 +61,10 @@ public class User { // 일반 회원
 
     @OneToOne(mappedBy = "user")
     private Point point;
+
+    @OneToMany(mappedBy = "user")
+    private List<MyChallenge> myChallenges = new ArrayList<>();
+
+
 
 }

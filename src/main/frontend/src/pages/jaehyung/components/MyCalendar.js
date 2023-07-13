@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router-dom";
 import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../../../context/UserStore";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../../now/component/Header";
+import Footer from "../../now/component/Footer";
 import SideMenu from "./SideMenu";
 import ChatBot from "./ChatBot";
 

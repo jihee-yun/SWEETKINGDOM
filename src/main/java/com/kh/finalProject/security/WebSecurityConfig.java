@@ -4,6 +4,7 @@ import com.kh.finalProject.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -49,7 +50,8 @@ public class WebSecurityConfig {
                     .and()
                     .authorizeRequests()
                     // 경로에 대해 인증 없이 접근을 허용
-                    .antMatchers("/**", "/static/**", "/auth/**", "/mypage/**", "/cafe/**", "/event/**", "/koauth/**", "/couponstore/**", "/guild/**", "/user/**", "/roulette/**", "/quizmain/**", "/member/**", "/token/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
+                    .antMatchers("/auth/**", "/mypage/**", "/cafe/**", "/event/**", "/koauth/**", "/couponstore/**", "/guild/**", "/user/**", "/roulette/**", "/quizmain/**", "/member/**", "/token/**", "/review/**", "/couponpayment/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
+                    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
 
                     .and()

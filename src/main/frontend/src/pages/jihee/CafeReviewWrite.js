@@ -7,11 +7,11 @@ import upload from "./images/upload.png";
 import upload2 from "./images/upload.png";
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import AxiosApi from "./api/AxiosApi";
-import { async } from "@firebase/util";
-
+import { storage } from "../../context/Firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Container = styled.div`
-  @media (max-width: 768px) {
+  @media (max-width: 768px) { 
     width: 70%;
     margin: 0 auto;
   }
@@ -159,10 +159,7 @@ const Detail = styled.textarea`
 const CafeReviewWrite = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const cafeNum = location?.state?.cafeNum;
-
-
-  console.log("CafeReviewWrite - cafeNum:", cafeNum);
+  const cafeNum = location.state && location.state.cafeNum;
 
   // 이미지 미리보기
   const [imageSrc, setImageSrc] = useState(null);
@@ -170,7 +167,12 @@ const CafeReviewWrite = () => {
   const [score, setScore] = useState("");
   const [content, setContent] = useState("");
 
+  // 이미지 업로드 경로
+  const [uploadedImage1, setUploadedImage1] = useState(null);
+  const [uploadedImage2, setUploadedImage2] = useState(null);
+
   console.log("넘어온 값 : " + score);
+  console.log("CafeReviewWrite - cafeNum:", cafeNum);
 
   const onUpload = async(e, imageIndex) => {
     const file = e.target.files[0];
@@ -180,8 +182,10 @@ const CafeReviewWrite = () => {
       const imageURL = reader.result;
       if (imageIndex === 1) {
         setImageSrc(imageURL);
+        setUploadedImage1(file);
       } else if (imageIndex === 2) {
         setImageSrc2(imageURL);
+        setUploadedImage2(file);
       }
     };
 
@@ -209,11 +213,39 @@ const CafeReviewWrite = () => {
   };
 
   // 후기 작성
-  const writeReview = async() => {
-    const response = await AxiosApi.createNewReview(
-      1, cafeNum, content, score, imageSrc, imageSrc2
-    );
-    console.log(response.data);
+  const writeReview = async() => {  
+    try{
+      let imageUrl1 = null;
+      let imageUrl2 = null;
+
+      if (uploadedImage1) {
+        const storageRef1 = ref(storage, `reviewImg/${uploadedImage1.name}`);
+        const uploadTask1 = uploadBytes(storageRef1, uploadedImage1);
+        const snapshot1 = await uploadTask1;
+        imageUrl1 = await getDownloadURL(snapshot1.ref);
+      }
+
+      if (uploadedImage2) {
+        const storageRef2 = ref(storage, `reviewImg/${uploadedImage2.name}`);
+        const uploadTask2 = uploadBytes(storageRef2, uploadedImage2);
+        const snapshot2 = await uploadTask2;
+        imageUrl2 = await getDownloadURL(snapshot2.ref);
+      }
+
+      console.log("url 경로 1: " + imageUrl1);
+      console.log("url 경로 2: " + imageUrl2);
+  
+      const response = await AxiosApi.createNewReview(
+        3, cafeNum, content, score, imageUrl1, imageUrl2
+      );
+      console.log(response.data);
+      if(response.data === true) {
+        alert("리뷰가 작성되었습니다.");
+        navigate(-1);
+      }
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   return(

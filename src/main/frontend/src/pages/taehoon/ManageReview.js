@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import logo from "../../images/logo.png";
+import { useNavigate } from "react-router-dom";
+import AxiosApi from "./Api/AxiosApi";
 
 const ManageReviewBlock = styled.div`
     position: relative;
@@ -63,13 +65,18 @@ const ManageReviewBlock = styled.div`
         height: 30px;
     }
 
+    .writer {
+        width: 70px;
+        height: 30px;
+    }
+
     .title {
-        width: 100px;
+        width: 150px;
         height: 30px;
     }
 
     .date {
-        width: 80px;
+        width: 120px;
         height: 30px;
     }
 
@@ -91,11 +98,22 @@ const ManageReviewBlock = styled.div`
     }
 `;
 
-const ManageReview = () => {
+    const ManageReview = () => {
+        const navigate = useNavigate("");
+
+        const onClickLogo = () => {
+            navigate('/admininfo');
+
+        // const reportList = async() => {
+        //     const response = await AxiosApi.reportGet()
+        // }
+    }   
+    
     return(
+        
         <ManageReviewBlock>
             <div className="logo">
-                <img src={logo} alt="logo" className="logo"/>
+                <img src={logo} alt="logo" className="logo" onClick={onClickLogo}/>
             </div>
 
             <div className="review">
@@ -106,6 +124,7 @@ const ManageReview = () => {
                 <thead>
                     <tr>
                         <th class="number">번호</th>
+                        <th class="writer">작성자</th>
                         <th class="title">제목</th>
                         <th class="date">날짜</th>
                     </tr>

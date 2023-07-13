@@ -1,5 +1,4 @@
 import axios from "axios";
-//const KH_DOMAIN = "http://localhost:8111";
 
 const AxiosApi = {
   // 지역별 카페 정보 조회
@@ -39,12 +38,47 @@ const AxiosApi = {
       thumbnail : url
     };
     return await axios.post("/guild/newGuild", guildData);
-  }
+  },
+  //길드 가입하기
   // 새로운 리뷰 작성
-  // 리뷰 조회
+  createNewReview: async(memNum, cafeNum, content, score, url1, url2) => {
+    const reviewData = {
+      memNum: memNum,
+      cafeNum: cafeNum,
+      content: content,
+      score: score,
+      url1: url1,
+      url2: url2
+    }
+    return await axios.post(`/review/newReview`, reviewData);
+  },
+  // 특정 카페 리뷰 조회
+  cafeReviewGet: async(cafeNum) => {
+    return await axios.get(`/review/cafeReview?cafeNum=${cafeNum}`);
+  },
+  // 리뷰 수정
+  editReview: async(cafeNum, reviewNum, content, editScore, url1, url2) => {
+    const data = {
+      cafeNum: cafeNum,
+      reviewNum: reviewNum,
+      content: content,
+      editScore: editScore,
+      url1: url1,
+      url2: url2 
+    }
+    return await axios.post(`/review/edit`, data);
+  },
+  // 리뷰 삭제
+  deleteReview: async(id) => {
+    const data = {
+      reviewId: id
+    }
+    return await axios.post(`/review/delete`, data);
+  },
+  // 리뷰 좋아요 누르기
+  // 리뷰 좋아요 취소
   // 카페 좋아요 누르기
-
-
+  // 카페 좋아요 취소
 };
 
 export default AxiosApi;
