@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const SelectBox = styled.div`
-   @media (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 90%;
     margin: 0 auto;
   }
@@ -28,7 +28,7 @@ const SelectBox = styled.div`
 `;
 
 const SelectAuth = styled.div`
- @media (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 150px;
     height: 200px;
     font-size: 1.2rem;
