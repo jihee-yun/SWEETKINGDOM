@@ -6,7 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,22 +27,23 @@ public class Challenge {
     private String thumbnail;
 
     @Column(nullable = false, length = 1000)
-    private String detail; // 챌린지 내용
+    private String detail;
 
     @Column (nullable = false)
-    private int count; // 챌린지 몇개 성공했는지
+    private int count;
+
+//    @Column (nullable = false)
+//    private LocalDateTime startTime;
 
     @Column (nullable = false)
-    private LocalDateTime startTime;
+    private LocalDate endTime;
 
-    @Column (nullable = false)
-    private LocalDateTime endTime;
+    // 상품
+//    @ManyToOne
+//    @JoinColumn(name = "my_challenge_id")
+//    private MyChallenge myChallenge;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "t_my_challenge",
-//            joinColumns = @JoinColumn(name = "challenge_id"),
-//            inverseJoinColumns = @JoinColumn(name = "my_challenge_id")
-//    )
-//    private List<MyChallenge> myChallenges;
+    @OneToMany(mappedBy = "challenge")
+    private List<MyChallenge> myChallenges = new ArrayList<>();
+
 }

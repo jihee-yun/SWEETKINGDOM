@@ -21,23 +21,27 @@ public class Guild {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "T_User_userNum")
-    private User user;
+    @JoinColumn(name = "T_userNum")
+    private Member member;
+
+    @Column(nullable = false)
+    private int category;
 
     @Column(nullable = false)
     private String guildName;
+
     @Column(nullable = false)
     private int limitMember;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String detailIntro;
 
     @Lob
     @Column(nullable = false)
     private String intro;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String thumbnail;
 
     @Column(nullable = false)

@@ -2,12 +2,8 @@ package com.kh.finalProject.service;
 
 import com.kh.finalProject.dto.CafeReviewDto;
 import com.kh.finalProject.dto.ReviewDto;
-import com.kh.finalProject.entity.Cafe;
-import com.kh.finalProject.entity.Review;
-import com.kh.finalProject.entity.User;
-import com.kh.finalProject.repository.CafeRepository;
-import com.kh.finalProject.repository.ReviewRepository;
-import com.kh.finalProject.repository.UserRepository;
+import com.kh.finalProject.entity.*;
+import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +22,9 @@ import java.util.Optional;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final CafeRepository cafeRepository;
+    private final ReviewLikeRepository reviewLikeRepository;
 
     public List<ReviewDto> getReviewList() {
         List<Review> reviewList = reviewRepository.findAll();
@@ -47,6 +45,46 @@ public class ReviewService {
         return reviewDtoList;
     }
 
+    // 관리자 리뷰관리
+    public List<ReviewDto> getAdminReview() {
+        List<Review> adminReview = reviewRepository.findAll();
+        List<ReviewDto> adminReviewList = new ArrayList<>();
+        for(Review review : adminReview) {
+            ReviewDto reviewDto = new ReviewDto();
+            reviewDto.setReviewNum(review.getReviewNum());
+            reviewDto.setUserNum(review.getUserNum());
+            reviewDto.setCafeNum(review.getCafeNum());
+            reviewDto.setReviewContent(review.getReviewContent());
+            reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
+            reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
+            reviewDto.setWrittenTime(review.getWrittenTime());
+            reviewDto.setLikeCount(review.getLikeCount());
+            reviewDto.setScore(review.getScore());
+            adminReviewList.add(reviewDto);
+        }
+        return adminReviewList;
+    }
+
+    // 관리자 리뷰번호
+    public List<ReviewDto> getAdminReviewNum(Long reviewNum) {
+        List<Review> adminReviewNum = reviewRepository.findByReviewNum(reviewNum);
+        List<ReviewDto> adminReviewNumList = new ArrayList<>();
+        for(Review review : adminReviewNum) {
+            ReviewDto reviewDto = new ReviewDto();
+            reviewDto.setReviewNum(review.getReviewNum());
+            reviewDto.setUserNum(review.getUserNum());
+            reviewDto.setCafeNum(review.getCafeNum());
+            reviewDto.setReviewContent(review.getReviewContent());
+            reviewDto.setReviewImgUrl1(review.getReviewImgUrl1());
+            reviewDto.setReviewImgUrl2(review.getReviewImgUrl2());
+            reviewDto.setWrittenTime(review.getWrittenTime());
+            reviewDto.setLikeCount(review.getLikeCount());
+            reviewDto.setScore(review.getScore());
+            adminReviewNumList.add(reviewDto);
+        }
+            return adminReviewNumList;
+    }
+
     public List<ReviewDto> getReviewListByNum(Long userNum) {
         List<Review> reviewList = reviewRepository.findByUserNum(userNum);
         List<ReviewDto> reviewDtoList = new ArrayList<>();
@@ -65,7 +103,7 @@ public class ReviewService {
         }
         return reviewDtoList;
     }
-
+    // 시작 날짜와 종료 날짜로 리뷰 검색
     public List<ReviewDto> getReviewListByNumAndDate(Long userNum, LocalDate startDate, LocalDate endDate) {
         List<Review> reviewList = reviewRepository.findByUserNumAndWrittenTimeBetween(userNum, startDate, endDate);
         List<ReviewDto> reviewDtoList = new ArrayList<>();
@@ -87,11 +125,11 @@ public class ReviewService {
 
     // 새로운 리뷰 작성
     public boolean createNewReview(Long memNum, Long cafeNum, String content, double score, String url1, String url2) {
-        Optional<User> user = userRepository.findByUserNum(memNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
         Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
-        if (user.isPresent() && cafe.isPresent()) {
+        if (member.isPresent() && cafe.isPresent()) {
             Review review = new Review();
-            review.setUserNum(user.get().getUserNum());
+            review.setUserNum(member.get().getMemberNum());
             review.setCafeNum(cafe.get().getId());
             review.setReviewContent(content);
             review.setReviewImgUrl1(url1);
@@ -166,21 +204,30 @@ public class ReviewService {
     }
 
     // 특정 카페 리뷰 조회
-    public List<CafeReviewDto> cafeReview(Long cafeNum) {
-        List<Review> reviews = reviewRepository.findByCafeNum(cafeNum);
+    public List<CafeReviewDto> cafeReview(Long cafeNum, String category) {
+        List<Review> reviews;
+
+        if(category.equals("최신순")) {
+            reviews = reviewRepository.findByCafeNumOrderByReviewNumDesc(cafeNum);
+        } else if(category.equals("좋아요순")) {
+            reviews = reviewRepository.findByCafeNumOrderByLikeCountDesc(cafeNum);
+        } else {
+            throw new IllegalArgumentException("잘못된 카테고리입니다.");
+        }
+
         List<CafeReviewDto> cafeReviewDtos = new ArrayList<>();
         double totalScore = 0.0;
 
         for (Review review : reviews) {
             Long memNum = review.getUserNum();
-            Optional<User> user = userRepository.findByUserNum(memNum);
+            Optional<Member> member = memberRepository.findByMemberNum(memNum);
 
-            if (user.isPresent()) {
-                User userData = user.get();
+            if (member.isPresent()) {
+                Member userData = member.get();
                 CafeReviewDto cafeReviewDto = new CafeReviewDto();
                 cafeReviewDto.setId(review.getReviewNum());
-                cafeReviewDto.setUserNum(userData.getUserNum());
-                cafeReviewDto.setUserId(userData.getUserId());
+                cafeReviewDto.setUserNum(userData.getMemberNum());
+                cafeReviewDto.setUserId(userData.getMemberId());
                 cafeReviewDto.setProfile(userData.getProfileImgUrl());
                 cafeReviewDto.setContent(review.getReviewContent());
                 cafeReviewDto.setUrl1(review.getReviewImgUrl1());
@@ -200,5 +247,45 @@ public class ReviewService {
             cafeReviewDto.setAvgScore(roundedAvgScore);
         }
         return cafeReviewDtos;
+    }
+
+
+    // 리뷰 좋아요 기능
+    public boolean changeReviewLike(Long memNum, Long reviewNum) {
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
+        Optional<Review> review = reviewRepository.findById(reviewNum);
+
+        if(member.isPresent() && review.isPresent()) {
+            Optional<ReviewLike> reviewLike = reviewLikeRepository.findByMemberAndReview(member.get(), review.get());
+
+            if(reviewLike.isPresent()) {
+                reviewLikeRepository.delete(reviewLike.get());
+
+                reviewLikeCountUpdate(reviewNum, -1);
+                return false;
+            } else {
+                ReviewLike newLike = new ReviewLike();
+                newLike.setMember(member.get());
+                newLike.setReview(review.get());
+                reviewLikeRepository.save(newLike);
+
+                reviewLikeCountUpdate(reviewNum, 1);
+                return true;
+            }
+        } else {
+            throw new IllegalArgumentException("해당 유저 또는 리뷰를 찾을 수 없습니다.");
+        }
+    }
+
+    // 리뷰 좋아요 카운트 반영을 위한 메소드
+    public void reviewLikeCountUpdate(Long reviewNum, int count) {
+        Optional<Review> review = reviewRepository.findById(reviewNum);
+
+        if(review.isPresent()) {
+            Review review1 = review.get();
+            int likeCount = review1.getLikeCount();
+            review1.setLikeCount(likeCount + count);
+            reviewRepository.save(review1);
+        }
     }
 }

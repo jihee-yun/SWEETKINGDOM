@@ -47,10 +47,37 @@ public class GuildController {
         String meetDayStr = guildData.get("meetDay") + " 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime meetDay = LocalDateTime.parse(meetDayStr, formatter);
+        int category = Integer.parseInt(guildData.get("category"));
         int limitMem = Integer.parseInt(guildData.get("member"));
         String region = guildData.get("region");
         String thumbnail = guildData.get("thumbnail");
-        boolean result = guildService.createNewGuild(num, name, intro, detailIntro, meetDay, limitMem, region, thumbnail);
+        boolean result = guildService.createNewGuild(num, category, name, intro, detailIntro, meetDay, limitMem, region, thumbnail);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    // 길드 가입 회원 확인
+    @GetMapping("/isMember")
+    public ResponseEntity<Integer> isMember(@RequestParam Long guildNum, Long userNum) {
+        System.out.println("유저 번호 : " + userNum);
+        System.out.println("길드 번호 : " + guildNum);
+        int isMember = guildService.isMember(guildNum, userNum);
+        return new ResponseEntity<>(isMember, HttpStatus.OK);
+    }
+
+    // 길드 가입하기
+    @PostMapping("/join")
+    public ResponseEntity<Boolean> joinGuild(@RequestBody Map<String, Long> joinData) {
+        Long guildNum = joinData.get("guildNum");
+        Long userNum = joinData.get("userNum");
+        boolean result = guildService.joinGuild(guildNum, userNum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 회원 번호로 가입한 길드 정보 조회
+    @GetMapping("/guildinfo")
+    public ResponseEntity<List<GuildDto>> guildInfoByMemberNum(@RequestParam Long membernum) {
+        List<GuildDto> list = guildService.getGuildInfoByMemberNum(membernum);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
 }

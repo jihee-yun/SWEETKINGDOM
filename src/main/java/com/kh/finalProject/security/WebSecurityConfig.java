@@ -1,6 +1,7 @@
 package com.kh.finalProject.security;
 
 import com.kh.finalProject.jwt.TokenProvider;
+import com.kh.finalProject.jwt.UserTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 public class WebSecurityConfig {
         private final TokenProvider tokenProvider;
+        private final UserTokenProvider userTokenProvider;
         private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
         private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -50,12 +52,12 @@ public class WebSecurityConfig {
                     .and()
                     .authorizeRequests()
                     // 경로에 대해 인증 없이 접근을 허용
-                    .antMatchers("/", "/static/**", "/auth/**", "/mypage/**", "/cafe/**", "/event/**", "/koauth/**", "/couponstore/**", "/guild/**", "/user/**", "/roulette/**", "/quizmain/**", "/member/**", "/token/**", "/review/**", "/couponpayment/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
+                    .antMatchers("/auth/**", "/mypage/**", "/cafe/region", "/cafe/detail", "/cafe/img", "/event/**", "/koauth/**", "/couponstore/couponget", "/guild/all", "/guild/detail", "/guild/isMember", "/user/**", "/quizmain/**", "/member/**", "/token/**", "/review/**", "/admin/**", "/report/register", "/main/**", "/weather/**", "/challenge/chList", "/cafe/fourCafes", "/mail/**", "/cafe/searchList" , "/info/**", "/searchList/**").permitAll() // 어떤 패스로 들어올 때 접근을 허용해줄건지
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
 
                     .and()
-                    .apply(new JwtSecurityConfig(tokenProvider));
+                    .apply(new JwtSecurityConfig(tokenProvider, userTokenProvider ));
 
             return http.build();
         }

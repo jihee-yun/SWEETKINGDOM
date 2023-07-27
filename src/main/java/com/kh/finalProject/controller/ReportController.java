@@ -1,16 +1,19 @@
 package com.kh.finalProject.controller;
 
-import com.kh.finalProject.dto.ReportDateDto;
+
+import com.kh.finalProject.constant.QnaCategory;
+import com.kh.finalProject.constant.RequestCategory;
 import com.kh.finalProject.dto.ReportDto;
+import com.kh.finalProject.entity.Report;
 import com.kh.finalProject.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -19,24 +22,31 @@ import java.util.List;
 public class ReportController {
     private final ReportService reportService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ReportDto>> reportAll() {
-        List<ReportDto> list = reportService.getReportList();
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    @PostMapping("/register")
+    public String registerReport(@RequestParam("userId") String userId,
+                                 @RequestParam("title") String title,
+                                 @RequestParam("content") String content) {
+        ReportDto reportDto = new ReportDto();
+        reportDto.setUserId(userId);
+        reportDto.setTitle(title);
+        reportDto.setContent(content);
+
+        reportService.saveReport(reportDto);
+
+        // 등록 완료 후, 리다이렉트 등의 동작을 수행할 수 있습니다.
+        return "redirect:/report";
     }
 
-    @GetMapping("/getReportNum")
-    public ResponseEntity<List<ReportDto>> reportByNum(@RequestParam Long reportNum) {
-        List<ReportDto> list = reportService.getReportNum(reportNum);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    // 고객센터 문의사항 등록
+    @PostMapping("/newQuestion")
+    public ResponseEntity<Boolean> regQuestion(@RequestBody Map<String, String> requestData) {
+        Long userNum = Long.valueOf(requestData.get("userNum"));
+        String title = requestData.get("title");
+        String content = requestData.get("content");
+        QnaCategory qnaCategory = QnaCategory.valueOf(requestData.get("userType"));
+        RequestCategory requestCategory = RequestCategory.valueOf(requestData.get("category"));
+        boolean result = reportService.regQuestion(userNum, title, content, qnaCategory, requestCategory);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("getDate")
-    public ResponseEntity<List<ReportDto>> reportByNumAndDate(@RequestParam ReportDateDto reportDateDto) {
-        String userId = reportDateDto.getUserId();
-        LocalDate startDate = reportDateDto.getStartDate();
-        LocalDate endDate = reportDateDto.getEndDate();
-        List<ReportDto> list = reportService.getReportByNumAndDate(userId, startDate, endDate);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
 }

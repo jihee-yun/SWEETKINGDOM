@@ -24,6 +24,7 @@ public class UserRequestDto {
     private String phone;
     private String email;
     private LocalDate birthday;
+    private LocalDate signUpTime;
     private Gender gender;
     private Authority authority;
     private Existence existence;
@@ -32,11 +33,12 @@ public class UserRequestDto {
     public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .userId(userId)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .name(name)
                 .phone(phone)
                 .email(email)
                 .birthday(birthday)
+                .signUpTime(signUpTime)
                 .gender(gender)
                 .authority(Authority.ROLE_USER)
                 .existence(Existence.Yes)

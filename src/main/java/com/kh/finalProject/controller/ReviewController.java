@@ -28,8 +28,8 @@ public class ReviewController {
     }
 
     @GetMapping("/getbynum")
-    public ResponseEntity<List<ReviewDto>> reviewListByNum(@RequestParam Long usernum) {
-        List<ReviewDto> list = reviewService.getReviewListByNum(usernum);
+    public ResponseEntity<List<ReviewDto>> reviewListByNum(@RequestParam Long userNum) {
+        List<ReviewDto> list = reviewService.getReviewListByNum(userNum);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -57,9 +57,9 @@ public class ReviewController {
 
     // 특정 카페 리뷰 조회
     @GetMapping("/cafeReview")
-    public ResponseEntity<List<CafeReviewDto>> cafeReview(@RequestParam Long cafeNum) {
+    public ResponseEntity<List<CafeReviewDto>> cafeReview(@RequestParam Long cafeNum, String category) {
         System.out.println("넘어온 값 :" + cafeNum);
-        List<CafeReviewDto> list = reviewService.cafeReview(cafeNum);
+        List<CafeReviewDto> list = reviewService.cafeReview(cafeNum, category);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -82,6 +82,15 @@ public class ReviewController {
         Long reviewNum = Long.valueOf(reviewData.get("reviewId"));
         Long cafeNum = Long.valueOf(reviewData.get("cafeNum"));
         boolean result = reviewService.deleteReview(reviewNum, cafeNum);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    // 리뷰 좋아요 기능
+    @PostMapping("/like")
+    public ResponseEntity<Boolean> changeReviewLike(@RequestBody Map<String, Long> likeData) {
+        Long memNum = likeData.get("memNum");
+        Long reviewNum = likeData.get("reviewId");
+        boolean result = reviewService.changeReviewLike(memNum, reviewNum);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

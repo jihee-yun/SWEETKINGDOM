@@ -17,8 +17,8 @@ public class GuildMember {
     public Long id;
 
     @ManyToOne
-    @JoinColumn(name = "T_User_userNum")
-    public User user; // 참여자 번호
+    @JoinColumn(name = "T_userNum")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "guild_id")

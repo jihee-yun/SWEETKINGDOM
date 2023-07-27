@@ -7,7 +7,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +28,12 @@ public class User { // 일반 회원
     @Enumerated(EnumType.STRING)
     private Gender gender; // 성별
 
-    private LocalDateTime signUpTime; // 가입 시간
+    private LocalDate signUpTime; // 가입 날짜
     private Long followingId; // 내가 팔로우한 아이디
     private Long followedId; // 나를 팔로우한 아이디
+    @Column(length = 2000)
     private String profileImgUrl; // 프로필 이미지 url
+    @Column(length = 2000)
     private String intro; // 한 줄 소개
     @Enumerated(EnumType.STRING)
     private Existence existence; // 탈퇴 여부
@@ -40,31 +41,25 @@ public class User { // 일반 회원
     private Authority authority; // 회원 종류
 
     @Builder
-    public User(String userId, String password, String name, String email, String phone, LocalDate birthday, Gender gender, Existence existence, Authority authority) {
+    public User(String userId, String password, String name, String email, String phone, LocalDate birthday, LocalDate signUpTime, Gender gender, Existence existence, Authority authority) {
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.birthday = birthday;
+        this.signUpTime = signUpTime;
         this.existence = existence;
         this.gender = gender;
         this.authority = authority;
     }
 
 
-    @OneToMany(mappedBy = "user")
-    private List<Guild> guildList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<GuildMember> guildMemberList = new ArrayList<>();
-
     @OneToOne(mappedBy = "user")
     private Point point;
 
     @OneToMany(mappedBy = "user")
     private List<MyChallenge> myChallenges = new ArrayList<>();
-
 
 
 }

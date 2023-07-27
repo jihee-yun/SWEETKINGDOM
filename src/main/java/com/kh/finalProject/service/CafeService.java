@@ -3,13 +3,8 @@ package com.kh.finalProject.service;
 import com.kh.finalProject.dto.CafeDetailDto;
 import com.kh.finalProject.dto.CafeDto;
 import com.kh.finalProject.dto.ImgDto;
-import com.kh.finalProject.entity.Cafe;
-import com.kh.finalProject.entity.CafeImg;
-import com.kh.finalProject.entity.CafeMenu;
-import com.kh.finalProject.entity.Review;
-import com.kh.finalProject.repository.CafeImgRepository;
-import com.kh.finalProject.repository.CafeRepository;
-import com.kh.finalProject.repository.ReviewRepository;
+import com.kh.finalProject.entity.*;
+import com.kh.finalProject.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +23,10 @@ public class CafeService {
     private final CafeRepository cafeRepository;
     private final CafeImgRepository cafeImgRepository;
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+
+    private final MemberRepository memberRepository;
+    private final CafeLikeRepository cafeLikeRepository;
 
     // 지역별(카테고리 선택별) 카페 조회
     public List<CafeDto> selectCafeList(String region) {
@@ -142,5 +141,100 @@ public class CafeService {
             imgDtos.add(imgDto);
         }
         return imgDtos;
+    }
+
+    // 카페 좋아요 기능
+    public boolean changeCafeLike(Long cafeNum, Long memNum) {
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
+
+        if(cafe.isPresent() && member.isPresent()) {
+            Optional<CafeLike> cafeLike = cafeLikeRepository.findByMemberAndCafe(member.get(), cafe.get());
+
+            if(cafeLike.isPresent()) {
+                cafeLikeRepository.delete(cafeLike.get());
+
+                cafeLikeCountUpdate(cafeNum, -1);
+                return false;
+            } else {
+                CafeLike newLike = new CafeLike();
+                newLike.setMember(member.get());
+                newLike.setCafe(cafe.get());
+                cafeLikeRepository.save(newLike);
+
+                cafeLikeCountUpdate(cafeNum, 1);
+                return true;
+            }
+        } else {
+            throw new IllegalArgumentException("해당 유저 또는 리뷰를 찾을 수 없습니다.");
+        }
+    }
+
+    // 카페 좋아요 카운트 반영을 위한 메소드
+    public void cafeLikeCountUpdate(Long cafeNum, int count) {
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+
+        if(cafe.isPresent()) {
+            Cafe cafe1 = cafe.get();
+            Long likeCount = cafe1.getLikeCount();
+            cafe1.setLikeCount(likeCount + count);
+            cafeRepository.save(cafe1);
+        }
+    }
+
+    // 좋아요 상태값
+    public boolean isLike(Long cafeNum, Long memNum) {
+        Optional<Cafe> cafe = cafeRepository.findById(cafeNum);
+        Optional<Member> member = memberRepository.findByMemberNum(memNum);
+
+        if(cafe.isPresent() && member.isPresent()) {
+            Optional<CafeLike> cafeLike = cafeLikeRepository.findByMemberAndCafe(member.get(), cafe.get());
+
+            if(cafeLike.isPresent()) {
+                return true;
+            } else return false;
+        } else {
+            throw new IllegalArgumentException("해당 유저 또는 카페를 찾을 수 없습니다");
+        }
+    }
+
+    // 카페 인기순 4곳만 조회
+    public List<CafeDto> fourCafes() {
+        List<Cafe> cafes = cafeRepository.findAllByOrderByLikeCountDesc();
+        List<CafeDto> cafeDtos = new ArrayList<>();
+        int limit = 4;
+
+        for(int i = 0; i < Math.min(cafes.size(), limit); i++) {
+            Cafe cafe = cafes.get(i);
+            CafeDto cafeDto = new CafeDto();
+            cafeDto.setCafeName(cafe.getCafeName());
+            cafeDto.setId(cafe.getId());
+            cafeDto.setIntro(cafe.getIntro());
+            cafeDto.setRegion(cafe.getRegion());
+            cafeDto.setThumbnail(cafe.getThumbnail());
+            cafeDtos.add(cafeDto);
+        }
+        return cafeDtos;
+    }
+
+    // 카페 검색
+    public List<CafeDetailDto> searchDataLoad(String keyword) {
+        List<CafeDetailDto> cafeDetails = new ArrayList<>();
+        List<Cafe> cafeList = cafeRepository.findWithKeyword(keyword);
+        log.info("cafe = {}", cafeList);
+        for (Cafe c : cafeList) {
+            CafeDetailDto CafeDetailDtos = new CafeDetailDto();
+            CafeDetailDtos.setId(c.getId());
+            CafeDetailDtos.setCafeName(c.getCafeName());
+            CafeDetailDtos.setIntro(c.getIntro());
+            CafeDetailDtos.setMenuList(c.getCafeMenuList()
+                    .stream()
+                    .map(menu -> menu.getId() + " - " + menu.getName() + " - " + menu.getPrice()) // name과 price를 함께 매핑
+                    .collect(Collectors.toList()));
+
+            cafeDetails.add(CafeDetailDtos);
+        }
+
+        return cafeDetails;
     }
 }

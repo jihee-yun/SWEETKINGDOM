@@ -1,53 +1,70 @@
 import './App.css';
 import UserStore from './context/UserStore';
-import Main from './pages/now/Main';
-import SignUp from './pages/taehoon/SignUp';
-import Login from './pages/taehoon/Login';
-import Cafe from './pages/jihee/Cafe';
-import CafeReview from './pages/jihee/CafeReview';
-import CafeReviewWrite from './pages/jihee/CafeReviewWrite';
-import CafeReviewEdit from './pages/jihee/CafeReviewEdit';
-import CafeMain from './pages/jihee/CafeMain';
-import CafeDetail from './pages/jihee/CafeDetail';
-import Guild from './pages/jihee/Guild';
-import GuildDetail from './pages/jihee/GuildDetail';
-import NewGuild from './pages/jihee/NewGuild';
-import NewGuildSecond from './pages/jihee/NewGuildSecond';
-import Event from './pages/yeabin/Event';
-import Roulette from './pages/yeabin/Roulette';
-import FindPw from './pages/taehoon/FindPw';
-import Admin from './pages/taehoon/Admin';
-import AdminInfo from './pages/taehoon/AdminInfo';
-import CouponStore from './pages/yeabin/CouponStore';
-import PointStore from './pages/yeabin/PointStore';
-import FindID from './pages/taehoon/FindID';
-import AdminDelete from './pages/taehoon/AdminDelete';
-import AdminReport from './pages/taehoon/AdminReport';
-import UserManage from './pages/taehoon/UserManage';
-import MyPage from './pages/jaehyung/MyPages';
-import MyReview from './pages/jaehyung/components/MyReview';
-import MyChallenge from './pages/jaehyung/components/MyChallenge';
-import MyGuild from './pages/jaehyung/components/MyGuild';
-import MyEvent from './pages/jaehyung/components/MyEvent';
-import MyCalendar from './pages/jaehyung/components/MyCalendar';
-import MyPoint from './pages/jaehyung/components/MyPoint';
-import MyRanking from './pages/jaehyung/components/MyRanking';
-import MyInformation from './pages/jaehyung/components/MyInformation';
-import MyReport from './pages/jaehyung/components/MyReport';
-import MemberLoginPage from './pages/jaehyung/MemberLoginPage';
-import MemberSignUpPage from './pages/jaehyung/MemberSignUpPage';
-import Report from './pages/taehoon/Report';
-import ChallengeMain from './pages/yeabin/ChallengeMain';
-import ManageReview from './pages/taehoon/ManageReview';
-import QuizMain from './pages/yeabin/QuizMain';
-import PayComplete from './pages/yeabin/PayComplete';
-import CouponPayment from './pages/yeabin/CouponPayment';
+import Main from './pages/Main';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import Cafe from './pages/Cafe';
+import CafeReview from './pages/CafeReview';
+import CafeReviewWrite from './pages/CafeReviewWrite';
+import CafeReviewEdit from './pages/CafeReviewEdit';
+import CafeMain from './pages/CafeMain';
+import CafeDetail from './pages/CafeDetail';
+import Guild from './pages/Guild';
+import GuildDetail from './pages/GuildDetail';
+import NewGuild from './pages/NewGuild';
+import NewGuildSecond from './pages/NewGuildSecond';
+import Event from './pages/Event';
+import FindPw from './pages/FindPw';
+import Admin from './pages/Admin';
+import AdminInfo from './pages/AdminInfo';
+import CouponStore from './pages/CouponStore';
+import PointStore from './pages/PointStore';
+import FindID from './pages/FindID';
+import AdminReport from './pages/AdminReport';
+import UserManage from './pages/UserManage';
+import MyPage from './pages/MyPages';
+import MyReview from './pages/MyReview';
+import MyChallenge from './pages/MyChallenge';
+import MyGuild from './pages/MyGuild';
+import MyEvent from './pages/MyEvent';
+import MyCalendar from './pages/MyCalendar';
+import MyPoint from './pages/MyPoint';
+import MyRanking from './pages/MyRanking';
+import MyInformation from './pages/MyInformation';
+import MyReport from './pages/MyReport';
+import MyBlog from './pages/MyBlog';
+import MemberLoginPage from './pages/MemberLoginPage';
+import MemberSignUpPage from './pages/MemberSignUpPage';
+import SignUpForm from './pages/SignUpForm';
+import PaymentPage from './pages/PaymentPage';
+import BusinessPage from './pages/BusinessPage';
+import BusinessCafe from './pages/BusinessCafe';
+import BusinessChallenge from './pages/BusinessChallenge';
+import BusinessEvent from './pages/BusinessEvent';
+import BusinessPoint from './pages/BusinessPoint';
+import BusinessReport from './pages/BusinessReport';
+import BusinessReview from './pages/BusinessReview';
+import BusinessInformation from './pages/BusinessInformation';
+import Report from './pages/Report';
+import ChallengeMain from './pages/ChallengeMain';
+import ManageReview from './pages/ManageReview';
+import QuizMain from './pages/QuizMain';
+import PayComplete from './pages/PayComplete';
+import CouponPayment from './pages/CouponPayment';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import ServiceCenter from './pages/ServiceCenter';
+import ScrollToTop from './utils/ScrollToTop';
+import AdminReg from './pages/AdminReg';
+import PrivateRoute from './utils/PrivateRoute';
+import CafeSearch from './pages/CafeSearch';
+import ChangePw from './pages/ChangePw';
+import QnaSearchList from './component/QnaSearchList';
 
 function App() {
   return (
     <UserStore>
     <BrowserRouter>
+    <ScrollToTop />
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/signup" element={<SignUp/>}/>
@@ -56,41 +73,55 @@ function App() {
         <Route path="/cafe/main" element={<CafeMain/>}/>
         <Route path="/cafe/detail" element={<CafeDetail/>}/>
         <Route path="/cafe/review" element={<CafeReview/>}/>
-        <Route path="/cafe/review/write" element={<CafeReviewWrite/>}/>
-        <Route path="/cafe/review/edit" element={<CafeReviewEdit/>}/>
+        <Route path="/cafe/review/write" element={<PrivateRoute element={<CafeReviewWrite />}/>}/>
+        <Route path="/cafe/review/edit" element={<PrivateRoute element={<CafeReviewEdit />}/>}/>
         <Route path="/guild" element={<Guild/>}/>
         <Route path="/guild/detail" element={<GuildDetail/>}/>
-        <Route path="/createguild" element={<NewGuild/>}/>
-        <Route path="/createguild/second" element={<NewGuildSecond/>}/>
+        <Route path="/createguild" element={<PrivateRoute element={<NewGuild />}/>}/>
+        <Route path="/createguild/second" element={<PrivateRoute element={<NewGuildSecond />}/>}/>
         <Route path='/event' element={<Event/>} />
-        <Route path='/roulette' element={<Roulette/>} />
         <Route path='/findpw' element={<FindPw/>}/>
         <Route path='/admin' element={<Admin/>}/>
-        <Route path='/adminInfo' element={<AdminInfo/>}/>
-        <Route path='/couponStore' element={<CouponStore/>}/>
-        <Route path='/pointStore' element={<PointStore/>}/>
+        <Route path='/adminInfo' element={<PrivateRoute element={<AdminInfo />}/>}/>
+        <Route path='/couponStore' element={<PrivateRoute element={<CouponStore />}/>}/>
+        <Route path='/pointStore' element={<PrivateRoute element={<PointStore />}/>}/>
         <Route path='/findId' element={<FindID/>}/>
-        <Route path='/adminDelete' element={<AdminDelete/>}/>
-        <Route path='/adminReport' element={<AdminReport/>}/>
-        <Route path='/userManage' element={<UserManage/>}/>
-        <Route path='/mypage' element={<MyPage/>}/>
-        <Route path='/mypage/review' element={<MyReview/>}/>
-        <Route path='/mypage/challenge' element={<MyChallenge/>}/>
-        <Route path='/mypage/guild' element={<MyGuild/>}/>
-        <Route path='/mypage/event' element={<MyEvent/>}/>
-        <Route path='/mypage/calendar' element={<MyCalendar/>}/>
-        <Route path='/mypage/point' element={<MyPoint/>}/>
-        <Route path='/mypage/ranking' element={<MyRanking/>}/>
-        <Route path='/mypage/information' element={<MyInformation/>}/>
-        <Route path='/mypage/report' element={<MyReport/>}/>
+        <Route path='/admin/report' element={<PrivateRoute element={<AdminReport />}/>}/>
+        <Route path='/admin/userManage' element={<PrivateRoute element={<UserManage />}/>}/>
+        <Route path='/mypage' element={<PrivateRoute element={<MyPage />}/>}/>
+        <Route path='/mypage/review' element={<PrivateRoute element={<MyReview />}/>}/>
+        <Route path='/mypage/challenge' element={<PrivateRoute element={<MyChallenge />}/>}/>
+        <Route path='/mypage/guild' element={<PrivateRoute element={<MyGuild />}/>}/>
+        <Route path='/mypage/event' element={<PrivateRoute element={<MyEvent />}/>}/>
+        <Route path='/mypage/calendar' element={<PrivateRoute element={<MyCalendar />}/>}/>
+        <Route path='/mypage/point' element={<PrivateRoute element={<MyPoint />}/>}/>
+        <Route path='/mypage/ranking' element={<PrivateRoute element={<MyRanking />}/>}/>
+        <Route path='/mypage/information' element={<PrivateRoute element={<MyInformation />}/>}/>
+        <Route path='/mypage/report' element={<PrivateRoute element={<MyReport />}/>}/>
+        <Route path='/mypage/payment' element={<PrivateRoute element={<PaymentPage />}/>}/>
+        <Route path='/businesspage' element={<PrivateRoute element={<BusinessPage />}/>}/>
+        <Route path='/businesspage/cafe' element={<PrivateRoute element={<BusinessCafe />}/>}/>
+        <Route path='/businesspage/Challenge' element={<PrivateRoute element={<BusinessChallenge />}/>}/>
+        <Route path='/businesspage/event' element={<PrivateRoute element={<BusinessEvent />}/>}/>
+        <Route path='/businesspage/point' element={<PrivateRoute element={<BusinessPoint />}/>}/>
+        <Route path='/businesspage/report' element={<PrivateRoute element={<BusinessReport />}/>}/>
+        <Route path='/businesspage/review' element={<PrivateRoute element={<BusinessReview />}/>}/>
+        <Route path='/businesspage/information' element={<PrivateRoute element={<BusinessInformation />}/>}/>
+        <Route path='/blog' element={<PrivateRoute element={<MyBlog />}/>}/>
         <Route path='/memberlogin' element={<MemberLoginPage/>}/>
         <Route path='/membersignup' element={<MemberSignUpPage/>}/>
+        <Route path='/signupform' element={<SignUpForm/>}/>
         <Route path='/report' element={<Report/>}/>
         <Route path='/challengeMain' element={<ChallengeMain/>}/>
-        <Route path='/manageReview' element={<ManageReview/>}/>
+        <Route path='/admin/manageReview' element={<PrivateRoute element={<ManageReview />}/>}/>
         <Route path='/quizMain' element={<QuizMain/>}/>
-        <Route path='/payComplete' element={<PayComplete/>}/>
-        <Route path='/couponPayment' element={<CouponPayment/>}/>
+        <Route path='/payComplete' element={<PrivateRoute element={<PayComplete />}/>}/>
+        <Route path='/couponPayment' element={<PrivateRoute element={<CouponPayment />}/>}/>
+        <Route path='/servicecenter' element={<ServiceCenter/>}/>
+        <Route path='/admin/register' element={<PrivateRoute element={<AdminReg />}/>}/>
+        <Route path='/cafesearch/:keyword' element={<CafeSearch />}/>
+        <Route path='/changepw' element={<ChangePw/>}/>
+        <Route path='/qnasearch/:keyword' element={<QnaSearchList />}/>
       </Routes>
     </BrowserRouter>
     </UserStore>
