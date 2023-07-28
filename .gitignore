@@ -62,3 +62,6 @@ src/main/frontend/yarn-error.log*
 
 # Resources
 src/main/resources/static/static
+src/main/frontend/src/.DS_Store
+src/main/java/com/kh/finalProject/.DS_Store
+src/main/java/com/kh/finalProject/controller/.DS_Store
