@@ -8,6 +8,8 @@ import Footer from "../component/Footer";
 import Sidebar from "../component/Sidebar";
 
 const Box = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
   margin-top: 100px;
   width: 100%;
 

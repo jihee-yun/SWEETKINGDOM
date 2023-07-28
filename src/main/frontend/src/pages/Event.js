@@ -14,6 +14,9 @@ import Sidebar from "../component/Sidebar";
 import { UserContext } from "../context/UserStore";
 
 const Box = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -23,7 +26,6 @@ const Box = styled.div`
   }
 
   width: 80%;
-  margin: 0 auto;
   margin-top: 80px;
 
   h3 {

@@ -10,6 +10,7 @@ import Sidebar from "../component/Sidebar";
 // 포인트로 카페 쿠폰 결제하는 상점
 
 const Container = styled.div`
+  max-width: 1440px;
   width: 80%;
   margin: 0 auto;
 `;

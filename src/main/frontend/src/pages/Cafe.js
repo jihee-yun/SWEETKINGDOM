@@ -12,6 +12,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
+  max-width: 1440px;
   width: 80%;
   padding: 50px; // 헤더랑 푸터 여백주려고 넣어둠
   margin: 0 auto;

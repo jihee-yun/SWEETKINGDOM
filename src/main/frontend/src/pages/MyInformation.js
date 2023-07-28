@@ -153,9 +153,17 @@ const SmallInfo = styled.p`
 const MyInformation = () => {
   const navigate = useNavigate();
   // useContext 저장값 불러오기
-  const {grantType, isLogin, setIsLogin, userNum, accessToken, refreshToken, setUserNum, userName, setUserName, 
-    setGrantType, setAccessToken,setRefreshToken, userAuthority, setUserAuthoruty, isSidebar, setIsSidebar} = useContext(UserContext);
-
+  const {setIsLogin, setUserNum, setUserName, 
+    setGrantType, setAccessToken,setRefreshToken, setUserAuthoruty, isSidebar, setIsSidebar} = useContext(UserContext);
+  // 로컬 스토리지 저장값 불러오기
+  const userNum = localStorage.getItem("userNum");
+  const grantType = localStorage.getItem("grantType");
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const userName = localStorage.getItem("userName");
+  const userAuthority = localStorage.getItem("userAuthority");
+  const isLogin = localStorage.getItem("isLogin");
+  
   // 유저 정보 상태 관리
   const [memberInfo, setMemberInfo] = useState(null);
   // 기존 비밀번호 상태 추가

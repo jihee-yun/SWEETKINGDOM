@@ -10,6 +10,7 @@ import Footer from "../component/Footer";
 import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
+  max-width: 1440px;
   width: 80%;
   margin: 0 auto;
 

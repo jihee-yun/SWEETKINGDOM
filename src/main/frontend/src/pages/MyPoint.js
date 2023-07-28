@@ -251,7 +251,15 @@ const SuperRightButton = styled.button`
 
 const MyPoint = () => {
   // useContext 저장값 불러오기
-  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority, isSidebar, setIsSidebar} = useContext(UserContext);
+  const {isSidebar, setIsSidebar} = useContext(UserContext);
+  // 로컬 스토리지 저장값 불러오기
+  const userNum = localStorage.getItem("userNum");
+  const grantType = localStorage.getItem("grantType");
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const userName = localStorage.getItem("userName");
+  const userAuthority = localStorage.getItem("userAuthority");
+  const isLogin = localStorage.getItem("isLogin");
   
   // 포인트, 결제 선택 버튼
   // const [selectedButton, setSelectedButton] = useState("point");

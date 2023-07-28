@@ -8,6 +8,9 @@ import { UserContext } from '../context/UserStore';
 
 
 const Container = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+  
   display: flex;
   align-items: center;
   justify-content: center;

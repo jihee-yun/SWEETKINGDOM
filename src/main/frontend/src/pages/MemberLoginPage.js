@@ -181,7 +181,7 @@ const MemberLoginPage = () => {
         setUserAuthoruty(userAuthority);
         setIsLogin(true);
 
-        // 로컬 스토리지 저장...
+        // 로컬 스토리지 저장
         localStorage.setItem("grantType", grantType);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
