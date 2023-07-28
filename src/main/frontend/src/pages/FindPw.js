@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import AxiosApi from "../api/AxiosApi";
 import MessageModal from "../component/MessageModal";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
+import Sidebar from "../component/Sidebar";
 
 
 const FindPwBlock = styled.div`
@@ -102,6 +104,15 @@ const FindPw = () => {
   const [code, setCode] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState("");
+
+   const { isSidebar, setIsSidebar } = useContext(UserContext);
+
+      useEffect(() => {
+
+          return (
+              setIsSidebar("-300px")
+          )
+       }, []);
 
   const onClickClose = () => {
     setFindPwSuccess(false);
@@ -302,6 +313,7 @@ const FindPw = () => {
         )}
       </FindPwBlock>
         <Footer />
+        {isSidebar && <Sidebar/>}
       </>
     );
   };

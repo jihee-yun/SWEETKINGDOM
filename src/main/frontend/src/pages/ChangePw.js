@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import MessageModal from "../component/MessageModal";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import AxiosApi from "../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
+import Sidebar from "../component/Sidebar";
 
 const ChangePwBlock = styled.div`
     display: flex;
@@ -48,7 +50,7 @@ const ChangePwBlock = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: -5px;
     margin-bottom: 5px;
   }
 
@@ -85,8 +87,7 @@ const ChangePw = () => {
 
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [email, setEmail] = useState("");
-    //const [conPw, setConPw] = useState("");
+    const [memberId, setMemberId] = useState("");
 
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
@@ -97,11 +98,20 @@ const ChangePw = () => {
     const [isConPw, setIsConPw] = useState(false);
     const [isPw, setIsPw] = useState(false);
 
+    const { isSidebar, setIsSidebar } = useContext(UserContext);
+
+    useEffect(() => {
+
+        return (
+            setIsSidebar("-300px")
+        )
+    }, []);
+
     const onChangeNewPassword = (e) => {
         const passwordRex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,15}$/;
         const currentPw = e.target.value;
         setNewPassword(currentPw);
-        
+
         if (!passwordRex.test(currentPw)) {
           setPwMsg("숫자+영문자+특수문자 조합으로 7자리 이상 입력해주세요.");
           setIsPw(false);
@@ -111,11 +121,20 @@ const ChangePw = () => {
         }
       };
 
+      const onChangeMemberId = (e) => {
+        const memberIdNow = e.target.value;
+        setMemberId(memberIdNow);
+      }
+
+    // 아이디와 새 비밀번호가 모두 비어있지 않은지 확인하는 조건 추가
+    const isFormValid = memberId.trim() !== "" && newPassword.trim() !== "";
+
+
 
       const onChangeConfirmPassword = (e) => {
         const currentConPw = e.target.value;
         setConfirmPassword(currentConPw);
-    
+
         if (currentConPw === newPassword) {
           setConPwMsg("비밀번호가 일치합니다.");
           setIsConPw(true);
@@ -128,13 +147,14 @@ const ChangePw = () => {
 
    // 새 비밀번호 변경 요청 보내기
    const handleChangePw = async () => {
-    console.log("새 비밀번호:", newPassword);
-    const isSuccess = await AxiosApi.changePassword(email, newPassword);
-    if (isSuccess) {
+    const response = await AxiosApi.changePassword(memberId, newPassword);
+    console.log("응답 데이터:", response.data);
+    if (response) {
       setModalMessage("비밀번호가 성공적으로 변경되었습니다.");
       setShowModal(true);
       setNewPassword("");
       setConfirmPassword("");
+
     } else {
       setModalMessage("비밀번호 변경에 실패하였습니다. 다시 시도해주세요.");
       setShowModal(true);
@@ -154,6 +174,16 @@ const ChangePw = () => {
         <h2>비밀번호 변경</h2>
         <div className="loginWrapper">
           <div className="loginMain">
+          <div className="loginSmallBox">
+              {/* 아이디 입력란 */}
+              <input
+                type="text"
+                value={memberId}
+                className="loginInput"
+                placeholder="아이디"
+                onChange={onChangeMemberId}
+              />
+            </div>
             <div className="loginSmallBox">
               <input
                 type="password"
@@ -184,7 +214,7 @@ const ChangePw = () => {
 
 
             {/* 비밀번호 찾기 버튼 */}
-            <button className="loginButton" onClick={handleChangePw}>
+            <button className="loginButton" onClick={handleChangePw} disabled={!isFormValid}>
               비밀번호 변경
             </button>
 
@@ -202,6 +232,7 @@ const ChangePw = () => {
         </div>
       </ChangePwBlock>
       <Footer />
+      {isSidebar && <Sidebar/>}
     </>
   );
 };

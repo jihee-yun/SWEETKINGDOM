@@ -83,7 +83,7 @@ const AdminReportBlock = styled.div`
     }
 
     .date {
-        width: 150px;
+        width: 180px;
         height: 30px;
     }
 
@@ -289,7 +289,7 @@ const AdminReport = () => {
           // 신고정보가 성공적으로 삭제되었다면, 다시 신고 정보를 가져온다.
           getReportInfo();
           setShowModal(false);
-        } 
+        }
       }catch(error) {
         console.error('신고 삭제 오류 : ', error);
       }
@@ -326,10 +326,10 @@ const AdminReport = () => {
         const sortedReportInfo = reportInfo.sort(
           (a, b) => new Date(b.reportDate) - new Date(a.reportDate)
         );
-      
+
         const startIndex = (pageNumber - 1) * perPage;
         const endIndex = startIndex + perPage;
-      
+
         return sortedReportInfo.slice(startIndex, endIndex);
       };
 
@@ -383,6 +383,8 @@ const AdminReport = () => {
                     <p>글번호 : {selectedReport.reportNum}</p>
                     <p>작성자 : {selectedReport.userId}</p>
                     <p>날짜 : {selectedReport.reportDate}</p>
+                    <h4>신고유형 : {selectedReport.category}</h4>
+                    <h4>회원유형 : {selectedReport.memberType}</h4>
                     <br/>
                     <h3>내용</h3>
                 <ContentBox>
@@ -401,11 +403,11 @@ const AdminReport = () => {
             </div>
         );
       }
-    
-    
+
+
     return(
         <AdminReportBlock>
-            
+
             <div className="logo">
                 <img src={logo} alt="logo" className="logo" onClick={LogoClick}/>
             </div>
@@ -419,6 +421,8 @@ const AdminReport = () => {
                     <th className="user">작성자</th>
                     <th className="title">제목</th>
                     <th className="date">날짜</th>
+                    <th className="category">신고유형</th>
+                    <th className="memberType">회원유형</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -430,6 +434,8 @@ const AdminReport = () => {
                                 {report.title}
                             </td>
                             <td className="date">{report.reportDate}</td>
+                            <td className="category">{report.category}</td>
+                            <td className="memberTypte">{report.memberType}</td>
                         </tr>
                     ))}
                 </tbody>

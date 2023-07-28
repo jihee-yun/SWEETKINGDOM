@@ -23,7 +23,7 @@ const AdminBlock = styled.div`
         display: flex;
         width: 200px;
         height: 180px;
-        margin-left: 100px;
+        margin-left: 95px;
     }
 
     .item2{

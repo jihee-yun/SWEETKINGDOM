@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import AxiosApi from "../api/AxiosApi";
 import MessageModal from "../component/MessageModal";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import { UserContext } from "../context/UserStore";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -116,6 +118,15 @@ const FindID = () => {
     const [findIdSuccess, setFindIdSuccess] = useState(false);
     const [findIdFail, setFindIdFail] = useState(false);
 
+    const { isSidebar, setIsSidebar } = useContext(UserContext);
+
+    useEffect(() => {
+
+      return (
+             setIsSidebar("-300px")
+            )
+    }, []);
+
     // 모달창 닫기
     const onClickClose = () => {
       setFindIdSuccess(false);
@@ -182,6 +193,7 @@ const FindID = () => {
       </FindIdBlock>
       </Container>
       <Footer />
+      {isSidebar && <Sidebar/>}
       </>
     );
 }
