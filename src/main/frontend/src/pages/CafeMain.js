@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../context/UserStore";
 import filterimg from "../images/filter.png";
@@ -8,6 +8,7 @@ import Header from "../component/Header";
 import Modal from "../utils/Modal2";
 import CafeFilterModal from "../component/CafeFilterModal";
 import Footer from "../component/Footer";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   width: 80%;
@@ -44,8 +45,8 @@ const Box = styled.div`
   }
   position: relative;
   width: 100%;
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 25px;
   align-items: center;
   padding-top: 50px;
@@ -83,7 +84,7 @@ const CafeBox = styled.div`
     .intro{
       height: 45px;
     }
-    
+
     p {
       font-weight: bold;
       &:nth-child(1) {
@@ -114,7 +115,8 @@ const Thumb = styled.div`
 const CafeMain = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { setRegion, setCafeNum } = context; // cafeNum 유저스토어에 저장하기
+  const { isSidebar, setRegion, setCafeNum } = context; // cafeNum 유저스토어에 저장하기
+  const { category } = useParams();
 
   const getRegion = localStorage.getItem("region");
   const getOption = localStorage.getItem("option");
@@ -123,7 +125,7 @@ const CafeMain = () => {
   const [allCafeInfo, setAllCafeInfo] = useState([]);
   // 무한 스크롤을 위한 현재 페이지 번호
   const [currentPage, setCurrentPage] = useState(1);
-  // 무한 스크롤을 위한 
+  // 무한 스크롤을 위한
   const [cafeInfo, setCafeInfo] = useState([]);
   // 인기순, 별점순 정렬
   const [sortingOption, setSortingOption] = useState("");
@@ -134,15 +136,15 @@ const CafeMain = () => {
   useEffect(() => {
     const cafeInfo = async() => {
       let response;
-      if(getOption === "인기순") {
+      if(getRegion && (getOption === "인기순")) {
         response = await AxiosApi.cafeInfoGet(getRegion, "인기순");
-      } else if(getOption === "별점순") {
+      } else if(getRegion && (getOption === "별점순")) {
         response = await AxiosApi.cafeInfoGet(getRegion, "별점순");
-      } else response = await AxiosApi.cafeInfoGet(getRegion);
+      } else response = await AxiosApi.cafeInfoGet(category);
       if(response.status === 200) setAllCafeInfo(response.data);
     };
     cafeInfo();
-  }, [getRegion, getOption]);
+  }, [category, getRegion, getOption]);
 
   // 무한 스크롤 이벤트 처리
   const handleScroll = () => {
@@ -168,7 +170,7 @@ const CafeMain = () => {
 
   // 모달창
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   const filterModal = () => {
     setModalOpen(true);
   };
@@ -190,12 +192,13 @@ const CafeMain = () => {
   const selectCafe = (cafeNum) => {
     setCafeNum(cafeNum);
     localStorage.setItem("cafeNum", cafeNum);
-    navigate('/cafe/detail');
+    navigate(`/cafe/detail/${cafeNum}`);
   }
 
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
     <Container> 
     <Box>
     <button className="filter" onClick={filterModal}><img src={filterimg} alt="필터이미지" /><p>필터</p></button>

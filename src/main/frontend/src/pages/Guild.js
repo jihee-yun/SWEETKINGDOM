@@ -9,6 +9,7 @@ import GuildFilterCategory from "../component/GuildFilterCategory";
 import { UserContext } from "../context/UserStore";
 import Modal from "../utils/Modal2";
 import CompleteModal from "../utils/CompleteModal";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -45,7 +46,7 @@ const RegBox = styled.div`
       margin-top: 30px;
     }
   }
-  
+
   button{
     @media (max-width: 768px) {
       font-size: .9rem;
@@ -80,8 +81,8 @@ const GuildBox = styled.div`
 
 const Guild = () => {
   const navigate = useNavigate();
-  // const context = useContext(UserContext);
-  // const { userNum } = context;
+  const context = useContext(UserContext);
+  const { isSidebar } = context;
   const userNum = localStorage.getItem("userNum");
 
   const [allGuildInfo, setAllGuildInfo] = useState([]);
@@ -125,7 +126,7 @@ const Guild = () => {
   }, []);
 
   const moveToNewGuild = () => {
-    if(userNum === 0) {
+    if(!userNum) {
       setModalOpen(true);
     } else navigate('/createguild');
   }
@@ -146,6 +147,7 @@ const Guild = () => {
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
     <Container>
       <RegBox>
         <div className="context">

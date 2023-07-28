@@ -69,12 +69,12 @@ const Cafe = () => {
   const selectCategory = (category) => {
     setRegion(category);
     localStorage.setItem("region", category);
-    navigate('/cafe/main')
+    navigate(`/cafe/main/${category}`)
   }
 
-  useEffect(() => {
-    setIsSidebar('-380px');
-  }, [])
+  // useEffect(() => {
+  //   setIsSidebar('-380px');
+  // }, [])
 
 
   return(

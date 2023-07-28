@@ -5,6 +5,8 @@ import profile from '../images/leeknow.jpg';
 import { UserContext } from "../context/UserStore";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import AxiosApi from '../api/AxiosApi';
+import user from '../images/user2.png';
+
 
 const SidebarContainer = styled.div`
   box-sizing: border-box;
@@ -38,12 +40,14 @@ const SidebarTop = styled.div`
     display: flex;
     color: black;
     align-items: center;
+    background-color: #F8E0E6;
+    cursor: pointer;
+
     &:active {
-      background: #000000;
       color: white;
     }
   }
-  
+
 `;
 
 const ProfileBox = styled.div`
@@ -59,19 +63,33 @@ const ProfileBox = styled.div`
     font-weight: bold;
     font-size: 14px;
   }
+`
 
-  .member {
-    align-self: center;
-    padding-top: 30px;
+const LogoutBox = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+`
+
+const LoginBox = styled.div`
+    width: 180px;
+    height: 50px;
+    margin-top: 20px;
     margin-bottom: 10px;
     font-weight: bold;
-  
+    background-color: #e47e7e;
+    border-radius: 2.7rem;
     display: flex;
-    a {
-      text-decoration: none;
-      color: #6e6e6e;
+    justify-content: center;
+    align-items: center;
+
+    .login {
+    position: relative;
+    align-self: center;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
     }
-  }
 
 `
 
@@ -93,7 +111,7 @@ const Menu = styled.div`
   justify-content: center;
   align-items: center;
   list-style:none;
-`  
+`
 const NavLink = styled(Link) `
   text-decoration: none;
   margin-bottom: 30px;
@@ -108,7 +126,7 @@ const NavLink = styled(Link) `
 `
 
 const Sidebar = () => {
-  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName, 
+  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName,
     setGrantType, setAccessToken,setRefreshToken, userNum, setUserNum, userAuthority, setUserAuthoruty}  = useContext(UserContext);
     const [sideBarInfo, setSideBarInfo] = useState([]);
     const navigate = useNavigate();
@@ -131,7 +149,7 @@ const Sidebar = () => {
     localStorage.removeItem("userName");
     localStorage.removeItem("userAuthority");
     localStorage.removeItem("isLogin");
-    
+
     navigate("/");
   }
 
@@ -148,7 +166,7 @@ const Sidebar = () => {
     getSidebarInfo(userNum)
 
     console.log(sideBarInfo);
-    
+
   }, [isSidebar, isLogin]);
 
   const closeSideBar = () => {
@@ -182,17 +200,21 @@ const Sidebar = () => {
             <NavLink to="/guild" onClick={closeSideBar}>길드</NavLink>
             <NavLink to="/event" onClick={closeSideBar}>이벤트</NavLink>
             <NavLink to="/couponStore" onClick={closeSideBar}>상점</NavLink>
-          </Menu> 
-          <button className="mypage" onClick={handleLogout}>로그아웃</button>   
-          </> 
+          </Menu>
+          <LogoutBox>
+          <LoginBox>
+              <div onClick={handleLogout} className="login">로그아웃</div>
+          </LoginBox>
+          </LogoutBox>
+
+          </>
       ) : (
         <>
         <ProfileBox>
-        <Profile src={profile}/>
-        <div className="member">
-              <Link to="/memberlogin" style={{ marginRight: "10px" }}>로그인</Link>
-              <Link to="/membersignup">회원가입</Link>
-        </div>
+        <Profile src={user}/>
+        <LoginBox>
+              <Link to="/memberlogin" className="login">로그인</Link>
+          </LoginBox>
         </ProfileBox>
                     <Menu>
                     <NavLink to="/cafe" onClick={closeSideBar}>카페 찾기</NavLink>

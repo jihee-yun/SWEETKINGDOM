@@ -171,12 +171,14 @@ const GuildDetailMiddle = ({guildNum, guildInfo}) => {
   const isJoinable = memberNumList.length < limitMember - 1;
 
   useEffect(() => {
+    if(userNum) {
     const isMember = async() => {
       const response = await AxiosApi.isMemberGet(guildNum, userNum);
       if(response.status === 200) setIsTrue(response.data);
     }
     isMember();
-  },[]);
+    }
+  },[guildNum, userNum]);
 
   const joinGuild = async() => {
     const response = await AxiosApi.joinGuild(guildNum, userNum, grantType, accessToken);

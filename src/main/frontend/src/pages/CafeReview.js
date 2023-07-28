@@ -14,6 +14,7 @@ import CompleteModal from "../utils/CompleteModal";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   @media (max-width: 768px) {
@@ -114,7 +115,7 @@ const Content = styled.div`
   font-size: .9rem;
   padding-left: 10px;
  }
- 
+
 `;
 
 const Img = styled.div`
@@ -150,19 +151,18 @@ const Bar = styled.div`
 `;
 
 const CafeReview = () => {
-  // const context = useContext(UserContext);
-  // const { userNum } = context;
+  const context = useContext(UserContext);
+  const { isSidebar } = context;
   const navigate = useNavigate();
   const location = useLocation();
   const info = location.state;
   const cafeNum = info[0].id;
-
-  const userNumStr = localStorage.getItem("userNum");
-  const userNum = parseInt(userNumStr);
+  const userNum = localStorage.getItem("userNum");
+  // const userNum = parseInt(userNumStr);
 
   // 특정 카페 리뷰 조회
   const [cafeReviewInfo, setCafeReviewInfo] = useState("");
-  // 모달창 상태값 
+  // 모달창 상태값
   const [isModalVisible, setModalVisible] = useState(false);
   // 특정 리뷰 값만 모달창 오픈
   const [openReviewId, setOpenReviewId] = useState(null);
@@ -172,10 +172,7 @@ const CafeReview = () => {
   localStorage.setItem("reviewCategory", category);
   const selectCategory = localStorage.getItem("reviewCategory");
 
-
-  console.log(selectCategory);
-  console.log(cafeReviewInfo);
-  console.log(typeof userNum);
+  console.log(userNum);
 
   useEffect(() => {
     const cafeReview = async() => {
@@ -184,17 +181,17 @@ const CafeReview = () => {
     };
     cafeReview();
   }, [cafeNum, selectCategory]);
-  
+
   // 평균 별점 점수 전달
   const star = cafeReviewInfo.length > 0 ? cafeReviewInfo[0].avgScore : 0;
   const count = cafeReviewInfo.length > 0 ? cafeReviewInfo[0].countReview : 0;
-  
+
   const prevPage = () => {
     navigate(-1);
   };
 
   const sendCafeNum = () => {
-    if(userNum !== 0) {
+    if(userNum) {
       navigate('/cafe/review/write', {state : {cafeNum}});
     } else {
       completeModal(true);
@@ -210,7 +207,7 @@ const CafeReview = () => {
     setOpenReviewId(null);
     completeModal(false);
   };
-  
+
   const completeModal = (isOpen) => {
     setDeleteModalOpen(isOpen);
   };
@@ -229,6 +226,7 @@ const CafeReview = () => {
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
     <Container>
     <Box>
     <div className="back" onClick={prevPage}><ArrowBackIosIcon style={{width: "18px", height: "18px", marginLeft:"5px"}}/></div>
@@ -265,8 +263,8 @@ const CafeReview = () => {
     </ReviewBox>
      ))}
     </Box>
-    <Modal move={true} header="완료" open={isDeleteModalOpen} confirm={userNum !== 0 ? () => complete(1) : () => complete(2)} close={closeModal}>
-      <CompleteModal content={userNum !== 0 ? "리뷰가 삭제되었습니다" : "로그인이 필요합니다. 로그인 페이지로 이동할까요?"} maxCharacters={userNum !== 0 ? 0 : 11}/>
+    <Modal move={true} header="완료" open={isDeleteModalOpen} confirm={userNum ? () => complete(1) : () => complete(2)} close={closeModal}>
+      <CompleteModal content={userNum ? "리뷰가 삭제되었습니다" : "로그인이 필요합니다. 로그인 페이지로 이동할까요?"} maxCharacters={userNum ? 0 : 11}/>
     </Modal>
     </Container>
     <Footer />

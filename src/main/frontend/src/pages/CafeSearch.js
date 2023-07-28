@@ -112,13 +112,13 @@ const StatusBox = styled.div`
   display: flex;
   align-items: center;
   align-self: center;
-  padding-left: 32px;
-  margin: 16px 0 16px 0;
+  margin-top: 20px;
   width: 98%;
   height: 80px;
-  background: #FFD0E4;
-  color: white;
-  border-radius: 5px;
+  color: #6E6E6E;
+  font-weight: bold;
+  border-bottom: solid #FFCFDA;
+  border-bottom-width: thin;
 `;
 
 const FalseResult = styled.div`
@@ -127,6 +127,7 @@ const FalseResult = styled.div`
   align-items: center;
   width: 100%;
   height: 400px;
+  font-weight: bold;
 `;
 
 const CafeSearch = () => {
@@ -135,7 +136,7 @@ const CafeSearch = () => {
     const [searchResult, setSearchResult] = useState("");
     const [isSearchResult, setIsSearchResult] = useState(false);
     const context = useContext(UserContext);
-    const { setCafeNum } = context; 
+    const { setCafeNum } = context;
 
     useEffect(() => {
         const search = async () => {
@@ -158,7 +159,7 @@ const CafeSearch = () => {
     const cardClick = (cafeNum) => {
       setCafeNum(cafeNum);
     localStorage.setItem("cafeNum", cafeNum);
-    navigate('/cafe/detail');
+    navigate(`/cafe/detail/${cafeNum}`);
     };
 
 
