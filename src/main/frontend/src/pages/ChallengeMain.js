@@ -7,6 +7,7 @@ import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   width: 80%;
@@ -40,11 +41,20 @@ const ChHeader = styled.div`
   .ch-header{
     display: flex;
     flex-direction: row;
+
+    @media (max-width: 430px) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   img {
     width: 50px;
     height: 50px;
+
+    @media (max-width: 430px) {
+      display: none;
+    }
   }
 `;
 
@@ -112,7 +122,7 @@ const Btn = styled.div`
     cursor: pointer;
 
     @media (max-width: 430px) {
-      width: 300px;
+      width: 290px;
     }
   }
 `;
@@ -166,7 +176,7 @@ const CafeIntro = styled.div`
 
 const ChallengeMain = () => {
   const context = useContext(UserContext);
-  const {isLogin, userNum, grantType, accessToken} = context;
+  const {isLogin, userNum, grantType, accessToken, isSidebar} = context;
   const [modalOpen, setModalOpen] = useState(false);
   const location = useLocation();
   const info = location.state && location.state.editedInfo[0].id;
@@ -182,7 +192,7 @@ const ChallengeMain = () => {
     }
     const response = await AxiosApi.challengeApply(info, userNum, grantType, accessToken);
     if(response.status === 200 && response.data === true) {
-      setModalOpen(true); 
+      setModalOpen(true);
     }
   };
 
@@ -193,15 +203,16 @@ const ChallengeMain = () => {
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
     <Container>
       <Box>
         <div>
           <ChHeader>
             <div className="ch-header">
               <img src={challengePin} alt="핀" />
-              <h2>제휴 카페 "5곳" 방문하기 퀘스트</h2>
+              <h2>제휴 카페 방문하기 퀘스트</h2>
             </div>
-          </ChHeader>        
+          </ChHeader>
           <ChBox>
           <div className="ch-box1">
             <p className="title">참여 방법</p>

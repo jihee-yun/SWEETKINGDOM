@@ -18,7 +18,6 @@ import FindPw from './pages/FindPw';
 import Admin from './pages/Admin';
 import AdminInfo from './pages/AdminInfo';
 import CouponStore from './pages/CouponStore';
-import PointStore from './pages/PointStore';
 import FindID from './pages/FindID';
 import AdminReport from './pages/AdminReport';
 import UserManage from './pages/UserManage';
@@ -48,7 +47,6 @@ import BusinessInformation from './pages/BusinessInformation';
 import Report from './pages/Report';
 import ChallengeMain from './pages/ChallengeMain';
 import ManageReview from './pages/ManageReview';
-import QuizMain from './pages/QuizMain';
 import PayComplete from './pages/PayComplete';
 import CouponPayment from './pages/CouponPayment';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
@@ -84,7 +82,6 @@ function App() {
         <Route path='/admin' element={<Admin/>}/>
         <Route path='/adminInfo' element={<PrivateRoute element={<AdminInfo />}/>}/>
         <Route path='/couponStore' element={<PrivateRoute element={<CouponStore />}/>}/>
-        <Route path='/pointStore' element={<PrivateRoute element={<PointStore />}/>}/>
         <Route path='/findId' element={<FindID/>}/>
         <Route path='/admin/report' element={<PrivateRoute element={<AdminReport />}/>}/>
         <Route path='/admin/userManage' element={<PrivateRoute element={<UserManage />}/>}/>
@@ -114,7 +111,6 @@ function App() {
         <Route path='/report' element={<Report/>}/>
         <Route path='/challengeMain' element={<ChallengeMain/>}/>
         <Route path='/admin/manageReview' element={<PrivateRoute element={<ManageReview />}/>}/>
-        <Route path='/quizMain' element={<QuizMain/>}/>
         <Route path='/payComplete' element={<PrivateRoute element={<PayComplete />}/>}/>
         <Route path='/couponPayment' element={<PrivateRoute element={<CouponPayment />}/>}/>
         <Route path='/servicecenter' element={<ServiceCenter/>}/>

@@ -5,17 +5,15 @@ import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import Sidebar from "../component/Sidebar";
 
 const Box = styled.div`
   margin-top: 100px;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  width: 100%;
 
 `;
 
 const Container = styled.div`
-  /* border: 1px solid lightgray; */
   width: 40%;
   margin: 0 auto;
 
@@ -33,6 +31,10 @@ const Container = styled.div`
     font-weight: bolder;
     margin: 80px 0  80px 0;
     cursor: pointer;
+
+    @media (max-width: 430px) {
+      width: 290px;
+    }
   }
 `;
 
@@ -66,7 +68,7 @@ const CouponPayment = () => {
   const info = location.state && location.state.filterCoupon;
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { userNum, isLogin, grantType, accessToken } = context
+  const { userNum, isLogin, grantType, accessToken, isSidebar } = context
   const [pointInfo, setPointInfo] = useState([]);
 
   useEffect(() => {
@@ -106,6 +108,7 @@ const CouponPayment = () => {
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
     <Box>
     <Container>
       <h2>쿠폰 결제</h2>

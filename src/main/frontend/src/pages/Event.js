@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Roulette from "../component/Roulette";
 import menu from "../images/menu.png";
@@ -10,6 +10,8 @@ import ad2 from "../images/ad-media.png";
 import MenuBox from "../utils/MenuBox";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import Sidebar from "../component/Sidebar";
+import { UserContext } from "../context/UserStore";
 
 const Box = styled.div`
   @media (max-width: 768px) {
@@ -34,6 +36,10 @@ const Box = styled.div`
     @media (max-width: 768px) {
       margin-bottom: 80px;
     }
+
+    @media (max-width: 430px) {
+      width: 300px;
+    }
   }
 `;
 
@@ -49,7 +55,7 @@ const ChallengeContainer = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 `;
 
@@ -61,13 +67,13 @@ const ChallengeBox = styled.div`
   border-radius: 10px;
   box-shadow: 0 3px 3px #A4A4A4;
   cursor: pointer;
-`;  
+`;
 
 const ChallengeTitle = styled.div`
   width: 220px;
   height: 300px;
   border: none;
-  
+
   .shadow {
     width: 100%;
     height: 50%;
@@ -99,7 +105,7 @@ const Thumb = styled.div`
   border: none;
 `;
 
-const EventFooter = styled.div` 
+const EventFooter = styled.div`
  .event-box{
   display: flex;
   flex-direction: row;
@@ -141,7 +147,7 @@ const MediaBox = styled.div`
   }
   @media (max-width: 430px) {
     .ad {
-      height: 130px;
+      height: 110px;
     }
   }
 
@@ -150,6 +156,8 @@ const MediaBox = styled.div`
 const Event = () => {
   const navigate = useNavigate();
   const [challengeInfo, setChallengeInfo] = useState("");
+  const context = useContext(UserContext);
+  const { isSidebar } = context;
 
   const cafeOpen = () => {
     navigate('/cafe');
@@ -176,6 +184,7 @@ const Event = () => {
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
       <Box>
         <h3>이 달의 퀘스트</h3>
         <ChallengeContainer>

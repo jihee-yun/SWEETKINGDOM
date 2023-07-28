@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from "styled-components";
 import credit from "../images/credit.png";
 import Header from '../component/Header';
 import Footer from '../component/Footer';
+import Sidebar from '../component/Sidebar';
+import { UserContext } from '../context/UserStore';
 
 
 const Container = styled.div`
@@ -24,9 +26,13 @@ const Container = styled.div`
 `;
 
 const PayComplete = () => {
+  const context = useContext(UserContext);
+  const { isSidebar } = context;
+
   return(
     <>
     <Header />
+    {isSidebar && <Sidebar />}
     <Container>
       <div className='pay'>
         <img src={credit} alt="결제" />

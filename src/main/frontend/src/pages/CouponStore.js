@@ -5,6 +5,7 @@ import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import Sidebar from "../component/Sidebar";
 
 // 포인트로 카페 쿠폰 결제하는 상점
 
@@ -59,16 +60,16 @@ const CouponList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
 
   @media (max-width: 430px) {
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-    width: 100%;
-    height: 180px; 
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 180px;
   }
 `;
 
@@ -89,10 +90,9 @@ const Price = styled.div`
   cursor: pointer;
 
   @media (max-width: 430px) {
-    width: 200px;
+    width: 60%;
     margin: 20px 0 10px 0;
   }
-
 `;
 
 const CafeContainer = styled.div`
@@ -101,7 +101,7 @@ const CafeContainer = styled.div`
   }
   position: relative;
   width: 100%;
-  display: grid; 
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 25px;
   align-items: center;
@@ -139,7 +139,7 @@ const CafeBox = styled.div`
     .intro{
       height: 45px;
     }
-    
+
     p {
       font-weight: bold;
       &:nth-child(1) {
@@ -184,7 +184,7 @@ const CouponStore = () => {
   const [pointInfo, setPointInfo] = useState("");
   const [cafeInfo, setCafeInfo] = useState("");
   const context = useContext(UserContext);
-  const { userNum, isLogin, grantType, accessToken } = context
+  const { userNum, isLogin, grantType, accessToken, isSidebar } = context
   const navigate = useNavigate();
 
   console.log(couponInfo);
@@ -213,7 +213,7 @@ const CouponStore = () => {
       if(rsp.status === 200) setCafeInfo(rsp.data);
     };
     cafeInfo();
-  })
+  }, [])
 
   const navigatePay = (id) => {
     const filterCoupon = couponInfo.filter(coupon => coupon.id === id);
@@ -228,11 +228,12 @@ const CouponStore = () => {
   return(
     <>
     <Header/>
+    {isSidebar && <Sidebar />}
     <Container>
       <MyPoint>
           {pointInfo && pointInfo.map(item => (
             <InfoList key={item.memberNum}>
-              <Name>{item.name}님 현재 보유 포인트 : {item.totalPoint} 포인트</Name> 
+              <Name>{item.name}님 포인트 : {item.totalPoint} 포인트</Name>
             </InfoList>
           ))}
         <div className="goEvent">
@@ -257,7 +258,7 @@ const CouponStore = () => {
           <div className="content">
             <p>{cafe.region}</p>
             <p>{cafe.cafeName}</p>
-            <p className="intro">{cafe.intro}</p> 
+            <p className="intro">{cafe.intro}</p>
           </div>
         </CafeBox>
         ))}
@@ -265,7 +266,6 @@ const CouponStore = () => {
       <Notice>
         <div>
           <p><b>포인트 유의사항</b></p>
-          <p>SWEET KINGDOM 포인트는 100원 단위로 사용이 가능합니다.</p>
           <p>포인트는 타인에게 양도하거나 판매할 수 없습니다.</p>
         </div>
       </Notice>

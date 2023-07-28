@@ -70,6 +70,7 @@ const OuterBox = styled.div`
     bottom: 0;
 
     @media (max-width: 430px) {
+      width: 300px;
       top: -75px;
     }
   }
@@ -92,12 +93,12 @@ const Pin = styled.div`
     z-index: 1;
   }
 
-  /* @media (max-width: 430px) {
+  @media (max-width: 430px) {
     position: absolute;
     top: 0%;
-    left: 43%;
+    left: 37%;
     z-index: 1;
-  } */
+  }
 `;
 
 const Start = styled.div`
@@ -113,17 +114,28 @@ const Start = styled.div`
   cursor: pointer;
 
   @media (max-width: 430px) {
-  top: 54%;
-  left: 84%;
+  top: 52%;
+  left: 88%;
   .startImg {
+    img {
       width: 70px;
       height: 70px;
+    }
     }
   }
 `;
 
 const Pan = styled.div`
   position: absolute;
+
+  @media (max-width: 430px) {
+    .panImg {
+        img {
+        width: 300px;
+        height: 300px;
+      }
+    }
+  }
 `;
 
 const WinBox = styled.div`
@@ -170,7 +182,7 @@ const WinBox = styled.div`
       left: 20px;
     }
   }
-  
+
 `;
 
 
@@ -200,9 +212,9 @@ const Roulette = () => {
       console.log(rspSpin);
       setIsSpinning(true); // 회전 시작
       setCanSpin(false)
-    
+
       const stopTime = Math.floor(Math.random() * 4) + 3; // 3 ~ 6초 사이 정수값 랜덤으로 멈춤
-    
+
       setTimeout(async() => {
         setIsSpinning(false);
         showWinning(stopTime); // 당첨 금액 보여줌
@@ -223,7 +235,7 @@ const Roulette = () => {
     }
     setWinning(amount);
   };
-   
+
   return(
     <>
     <Container>
@@ -245,7 +257,7 @@ const Roulette = () => {
           {winning !== 0 && (
             <p className="win-p">
               <img className="celebrate1" src={celebration1} alt="왼쪽컨페티" />
-              당첨 금액 : {winning}원 
+              당첨 금액 : {winning}원
               <img className="celebrate2" src={celebration2} alt="오른쪽컨페티" />
             </p>
           )}
