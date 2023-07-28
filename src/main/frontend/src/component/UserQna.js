@@ -8,7 +8,8 @@ import { Padding } from "@mui/icons-material";
 const Box = styled.div`
 margin-top: 2rem;
 display: flex;
-justify-content: space-between;
+/* justify-content: space-between; */
+align-items: center;
 
 `;
 
@@ -23,7 +24,7 @@ background-color: #ffffff;
 border: none;
 align-items: center;
 align-self: center;
-
+cursor: pointer;
 `;
 
 const Box2 = styled.div`
@@ -87,10 +88,10 @@ const UserQna = () => {
     {qnaList.map((user, index) => (
     <div key={user.id}>
       <Box >
-        <Question > {user.question}
-          <Button className="icon" onClick={() => questionOpen(index)}>
-          {isOpen[index] ? <ExpandMoreIcon style={{fill: "gray" }}/> : <ExpandLessIcon style={{fill: "gray"}}/>}
-        </Button> </Question>
+        <Question > {user.question}</Question>
+        <Button className="icon" onClick={() => questionOpen(index)}>
+          {isOpen[index] ? <ExpandLessIcon style={{fill: "gray" }}/> : <ExpandMoreIcon style={{fill: "gray"}}/>}
+        </Button> 
       </Box>
       
       <Box2>

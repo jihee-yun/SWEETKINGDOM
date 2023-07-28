@@ -9,10 +9,13 @@ import NavBar from "./NavBar";
 import SearchIcon from '@mui/icons-material/Search';
 
 const OutBox = styled.div`
+max-width: 1440px;
+margin: 0 auto;
   width: 100%;
 `;
 
 const HeaderContainer = styled.header`
+
  @media (max-width: 768px) {
   padding: 0;
   align-items: center;

@@ -12,6 +12,8 @@ justify-content: space-between;
 
 const Question = styled.span`
 font-weight: bold;
+display: flex;
+align-items: center;
 `;
 
 const Button = styled.button`
@@ -19,6 +21,7 @@ background-color: #ffffff;
 border: none;
 align-items: center;
 align-self: center;
+cursor: pointer;
 `;
 
 const Box2 = styled.div`
@@ -80,9 +83,10 @@ const BusinessQna = () => {
     {qnaList.map((business, index) => (
     <div key={business.id}>
       <Box >
-        <Question > {business.question}
+        <Question > 
+          <div>{business.question}</div> 
           <Button onClick={() => questionOpen(index)}>
-          {isOpen[index] ? <ExpandMoreIcon style={{fill: "gray"}}/> : <ExpandLessIcon style={{fill: "gray"}}/>}
+          {isOpen[index] ? <ExpandLessIcon style={{fill: "gray"}}/> : <ExpandMoreIcon style={{fill: "gray"}}/>}
         </Button> </Question>
       </Box>
       
