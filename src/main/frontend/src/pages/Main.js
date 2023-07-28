@@ -9,6 +9,7 @@ import { styled } from "styled-components";
 import Sidebar from "../component/Sidebar";
 import { UserContext } from "../context/UserStore";
 import PopUp from "../utils/PopUp";
+import TestSwiper from "../component/TestSwiper";
 
 const Container = styled.div`
 width: 100%;
@@ -37,7 +38,8 @@ const Main = () => {
         <Weather />
         <Map/>
         <Ranking/>
-        <Recommend/>
+        {/* <Recommend/> */}
+        <TestSwiper/>
         <Footer/>
         {isSidebar && <Sidebar/>}
         </Container>

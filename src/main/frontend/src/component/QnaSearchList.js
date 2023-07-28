@@ -4,7 +4,8 @@ import AxiosApi from "../api/AxiosApi";
 import { styled } from "styled-components";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Header from "./Header"
+import Header from "./Header";
+import Footer from "./Footer";
 
 const Box = styled.div`
 margin-top: 2rem;
@@ -51,12 +52,34 @@ const Answer = styled.ul`
 
 `;
 
+const StatusBox = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  margin-top: 20px;
+  width: 98%;
+  height: 80px;
+  color: #6E6E6E;
+  font-weight: bold;
+  border-bottom: solid #FFCFDA;
+  border-bottom-width: thin;
+`;
+
+const FalseResult = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 400px;
+  font-weight: bold;
+`;
+
 const QnaSearchList = () => {
     const { keyword } = useParams();
     const [searchResult, setSearchResult] = useState("");
     const [isSearchResult, setIsSearchResult] = useState(false);
     const [isOpen, setIsOpen] = useState({});
-    const [qnaList, setQnaList] = useState([]);
 
     useEffect(() => {
         const search = async() => {
@@ -75,22 +98,6 @@ const QnaSearchList = () => {
         };
         search();
     }, [keyword]);
-
-
-    useEffect(() => {
-        const qna = async () => {
-            const rsp = await AxiosApi.QnaGet("USER")
-            .then((rsp) => {
-              setQnaList(rsp.data);
-              console.log("qna 정보 가져오기 성공: ", rsp.data)
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        };
-        qna();
-        console.log(qnaList);
-      }, []);
       
     const questionOpen = (index) => {
       setIsOpen((prev) => ({
@@ -104,23 +111,35 @@ const QnaSearchList = () => {
     return(
     <>
     <Header/>
-     {qnaList.map((user, index) => (
-    <div key={user.id}>
-      <Box >
-        <Question > {user.question}
+    {isSearchResult ? (
+      <>
+    {searchResult.map((keyword, index) => (
+      <div key={keyword.id}>
+      <Box>
+        <Question > {keyword.question}
           <Button onClick={() => questionOpen(index)}>
           {isOpen[index] ? <ExpandMoreIcon style={{fill: "gray"}}/> : <ExpandLessIcon style={{fill: "gray"}}/>}
         </Button> </Question>
       </Box>
-      
       <Box2>
       <Answer style={{ display: isOpen[index] ? "block" : "none" }}>
-        <div className="answer">{user.answer}</div>
+        <div className="answer">{keyword.answer}</div>
       </Answer>
       </Box2>
-      
       </div>
       ))}
+      </>
+    ) : (
+      <>
+      <StatusBox>
+        <p>{searchResult.length} 개의 검색 결과가 있습니다.</p>
+      </StatusBox>
+      <FalseResult>
+        <span>검색 결과가 존재하지 않습니다.</span>
+      </FalseResult>
+      </>
+    )}
+    <Footer />
     </>
     )
 }

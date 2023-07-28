@@ -50,10 +50,10 @@ const Box = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
-
+    
     .content{
       padding-top: 65px;
-
+      
       button{
         height: 25px;
         border: none;
@@ -81,8 +81,8 @@ const HostProfile = styled.div`
   height: 100px;
   border-radius: 50px;
   z-index: 2;
-  top: calc(100% - 220px);
-  left: calc(50% - 50px);
+  top: calc(100% - 220px); 
+  left: calc(50% - 50px); 
   object-fit: cover;
   background-image: url(${props => props.imageurl2});
   background-size: cover;

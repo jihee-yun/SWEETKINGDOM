@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper";
+import test1 from "../images/test1.jpg";
 
 import "swiper/css";
 import "swiper/css/pagination";

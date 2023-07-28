@@ -289,7 +289,7 @@ const AdminReport = () => {
           // 신고정보가 성공적으로 삭제되었다면, 다시 신고 정보를 가져온다.
           getReportInfo();
           setShowModal(false);
-        }
+        } 
       }catch(error) {
         console.error('신고 삭제 오류 : ', error);
       }
@@ -326,10 +326,10 @@ const AdminReport = () => {
         const sortedReportInfo = reportInfo.sort(
           (a, b) => new Date(b.reportDate) - new Date(a.reportDate)
         );
-
+      
         const startIndex = (pageNumber - 1) * perPage;
         const endIndex = startIndex + perPage;
-
+      
         return sortedReportInfo.slice(startIndex, endIndex);
       };
 
@@ -403,11 +403,11 @@ const AdminReport = () => {
             </div>
         );
       }
-
-
+    
+    
     return(
         <AdminReportBlock>
-
+            
             <div className="logo">
                 <img src={logo} alt="logo" className="logo" onClick={LogoClick}/>
             </div>

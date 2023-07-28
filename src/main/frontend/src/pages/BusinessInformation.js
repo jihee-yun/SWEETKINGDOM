@@ -17,4 +17,4 @@ const BusinessInformation = () => {
     <MyInformation/>
   );
 };
-export default MyInformation;
+export default BusinessInformation;

@@ -9,7 +9,8 @@ import { ref, getDownloadURL } from "firebase/storage";
 const Side = styled.div`
   width: 250px;
   min-width: 200px;
-  height: 700px;
+  height: 0%;
+  min-height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,7 +56,7 @@ const MyPoint = styled.p`
 const NaviButton = styled.button`
   width: 100%;
   height: 60px;
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: bold;
   background-color: white;
   cursor: pointer;
@@ -120,7 +121,7 @@ const SideMenu = () => {
   return (
     <Side>
       <ProfileBox>
-        <img className="profileImg" src={imageUrls[0]} alt="프로필 이미지" onClick={()=>navigate("/mypage")}/>
+        <img className="profileImg" src={memberInfo.profileImgUrl} alt="프로필 이미지" onClick={()=>navigate("/mypage/information")}/>
         <MyName>{userName}님</MyName>
         <MyPoint onClick={()=>navigate("/mypage/point")}>{memberInfo.totalPoint} point</MyPoint>
       </ProfileBox>

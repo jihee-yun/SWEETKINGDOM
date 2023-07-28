@@ -192,7 +192,7 @@ const ChallengeMain = () => {
     }
     const response = await AxiosApi.challengeApply(info, userNum, grantType, accessToken);
     if(response.status === 200 && response.data === true) {
-      setModalOpen(true);
+      setModalOpen(true); 
     }
   };
 
@@ -212,7 +212,7 @@ const ChallengeMain = () => {
               <img src={challengePin} alt="핀" />
               <h2>제휴 카페 방문하기 퀘스트</h2>
             </div>
-          </ChHeader>
+          </ChHeader>        
           <ChBox>
           <div className="ch-box1">
             <p className="title">참여 방법</p>

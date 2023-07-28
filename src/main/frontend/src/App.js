@@ -68,19 +68,19 @@ function App() {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/cafe" element={<Cafe/>}/>
-        <Route path="/cafe/main" element={<CafeMain/>}/>
-        <Route path="/cafe/detail" element={<CafeDetail/>}/>
+        <Route path="/cafe/main/:category" element={<CafeMain/>}/>
+        <Route path="/cafe/detail/:cafeNum" element={<CafeDetail/>}/>
         <Route path="/cafe/review" element={<CafeReview/>}/>
         <Route path="/cafe/review/write" element={<PrivateRoute element={<CafeReviewWrite />}/>}/>
         <Route path="/cafe/review/edit" element={<PrivateRoute element={<CafeReviewEdit />}/>}/>
         <Route path="/guild" element={<Guild/>}/>
-        <Route path="/guild/detail" element={<GuildDetail/>}/>
+        <Route path='/guild/detail/:guildNum' element={<GuildDetail/>}/>
         <Route path="/createguild" element={<PrivateRoute element={<NewGuild />}/>}/>
         <Route path="/createguild/second" element={<PrivateRoute element={<NewGuildSecond />}/>}/>
         <Route path='/event' element={<Event/>} />
         <Route path='/findpw' element={<FindPw/>}/>
         <Route path='/admin' element={<Admin/>}/>
-         <Route path='/adminInfo' element={<AdminInfo />}/>
+        <Route path='/adminInfo' element={<AdminInfo />}/>
         <Route path='/couponStore' element={<PrivateRoute element={<CouponStore />}/>}/>
         <Route path='/findId' element={<FindID/>}/>
         <Route path='/admin/report' element={<AdminReport />}/>

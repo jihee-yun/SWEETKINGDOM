@@ -115,7 +115,7 @@ const Content = styled.div`
   font-size: .9rem;
   padding-left: 10px;
  }
-
+ 
 `;
 
 const Img = styled.div`
@@ -162,7 +162,7 @@ const CafeReview = () => {
 
   // 특정 카페 리뷰 조회
   const [cafeReviewInfo, setCafeReviewInfo] = useState("");
-  // 모달창 상태값
+  // 모달창 상태값 
   const [isModalVisible, setModalVisible] = useState(false);
   // 특정 리뷰 값만 모달창 오픈
   const [openReviewId, setOpenReviewId] = useState(null);
@@ -181,11 +181,11 @@ const CafeReview = () => {
     };
     cafeReview();
   }, [cafeNum, selectCategory]);
-
+  
   // 평균 별점 점수 전달
   const star = cafeReviewInfo.length > 0 ? cafeReviewInfo[0].avgScore : 0;
   const count = cafeReviewInfo.length > 0 ? cafeReviewInfo[0].countReview : 0;
-
+  
   const prevPage = () => {
     navigate(-1);
   };
@@ -207,7 +207,7 @@ const CafeReview = () => {
     setOpenReviewId(null);
     completeModal(false);
   };
-
+  
   const completeModal = (isOpen) => {
     setDeleteModalOpen(isOpen);
   };

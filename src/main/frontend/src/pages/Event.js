@@ -55,7 +55,7 @@ const ChallengeContainer = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
   }
 `;
 
@@ -67,13 +67,13 @@ const ChallengeBox = styled.div`
   border-radius: 10px;
   box-shadow: 0 3px 3px #A4A4A4;
   cursor: pointer;
-`;
+`;  
 
 const ChallengeTitle = styled.div`
   width: 220px;
   height: 300px;
   border: none;
-
+  
   .shadow {
     width: 100%;
     height: 50%;
@@ -105,7 +105,7 @@ const Thumb = styled.div`
   border: none;
 `;
 
-const EventFooter = styled.div`
+const EventFooter = styled.div` 
  .event-box{
   display: flex;
   flex-direction: row;

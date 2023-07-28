@@ -205,7 +205,7 @@ const ServiceHome = () => {
     </Search>        
     </Fnq> 
 
-    <FaqList>
+    {/* <FaqList>
      <UserFaq>
         <UserTitle>
           <h2>리뷰어 TOP5 FAQ</h2>
@@ -218,7 +218,7 @@ const ServiceHome = () => {
             <ViewLink to="/"> 전체보기 </ViewLink>
         </UserTitle>
     </UserFaq>
-    </FaqList>
+    </FaqList> */}
  </Container>
     );
 };

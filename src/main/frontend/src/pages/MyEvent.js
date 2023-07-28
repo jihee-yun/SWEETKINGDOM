@@ -9,6 +9,7 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
 import ChatBot from "../component/ChatBot";
+import Sidebar from "../component/Sidebar";
 
 const OutBox = styled.div`
   display: flex;
@@ -188,7 +189,7 @@ const PageNumber = styled.p`
   ${({ active }) =>
     active &&
     `
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: bold;
   `}
   ${({ disabled }) =>
@@ -227,7 +228,7 @@ const SuperRightButton = styled.button`
 
 const MyEvent = () => {
   // useContext 저장값 불러오기
-  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority} = useContext(UserContext);
+  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority, isSidebar, setIsSidebar} = useContext(UserContext);
 
   // 날짜 선택 state
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -357,9 +358,16 @@ const MyEvent = () => {
     setPageNumber(1);
   };
 
+  useEffect(() => {
+    return (
+      setIsSidebar("-300px")
+    )
+  }, []);
+
   return (
     <OutBox>
       <Header />
+      {isSidebar && <Sidebar/>}
       <Container>
         <SideMenu />
         <Detail>

@@ -7,6 +7,8 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
 import ChatBot from "../component/ChatBot";
+import Sidebar from "../component/Sidebar";
+
 
 const OutBox = styled.div`
   display: flex;
@@ -107,7 +109,7 @@ const ChallengeName = styled.p`
 `;
 // 더보기 버튼
 const More = styled.p`
-  font-size: .6em;
+  font-size: .6rem;
   height: 10px;
   letter-spacing: -1px;
   margin-left: auto;
@@ -136,7 +138,7 @@ const ChallengeExpired = styled.p`
 const MyChallenge = () => {
   const navigate = useNavigate();
   // useContext 저장값 불러오기
-  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority} = useContext(UserContext);
+  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority, isSidebar, setIsSidebar} = useContext(UserContext);
   // 유저 정보 상태 관리
   const [memberInfo, setMemberInfo] = useState(null);
 
@@ -156,10 +158,16 @@ const MyChallenge = () => {
     fetchMemberInfo();
   }, [userNum]);
 
+  useEffect(() => {
+    return (
+      setIsSidebar("-300px")
+    )
+  }, []);
 
   return (
     <OutBox>
       <Header />
+      {isSidebar && <Sidebar/>}
       <Container>
         <SideMenu />
         <Detail>

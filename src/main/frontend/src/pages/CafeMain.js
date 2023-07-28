@@ -45,8 +45,8 @@ const Box = styled.div`
   }
   position: relative;
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
   grid-gap: 25px;
   align-items: center;
   padding-top: 50px;
@@ -84,7 +84,7 @@ const CafeBox = styled.div`
     .intro{
       height: 45px;
     }
-
+    
     p {
       font-weight: bold;
       &:nth-child(1) {
@@ -125,7 +125,7 @@ const CafeMain = () => {
   const [allCafeInfo, setAllCafeInfo] = useState([]);
   // 무한 스크롤을 위한 현재 페이지 번호
   const [currentPage, setCurrentPage] = useState(1);
-  // 무한 스크롤을 위한
+  // 무한 스크롤을 위한 
   const [cafeInfo, setCafeInfo] = useState([]);
   // 인기순, 별점순 정렬
   const [sortingOption, setSortingOption] = useState("");
@@ -170,7 +170,7 @@ const CafeMain = () => {
 
   // 모달창
   const [modalOpen, setModalOpen] = useState(false);
-
+  
   const filterModal = () => {
     setModalOpen(true);
   };

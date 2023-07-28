@@ -47,7 +47,7 @@ const NavContainer = styled.nav`
     width: 100%;
     height: 30px;
     border-radius: 40px;
-    border: solid #646b8c;
+    border: solid #FFCFDA;
     padding: 0 15px;
   }
 `;
@@ -141,7 +141,7 @@ const NavBar = () => {
             onChange={onChangeCafeName}
           />
           <SearchIcon
-            style={{ fontSize: 30, marginRight: 10, fill: "#646b8c" }}
+            style={{ fontSize: 30, marginRight: 10, fill: "#FFCFDA" }}
             onClick={swordPush}
           />
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import AxiosApi from "../api/AxiosApi";
 import MessageModal from "../component/MessageModal";
 import Header from "../component/Header";
@@ -121,10 +121,10 @@ const FindID = () => {
     const { isSidebar, setIsSidebar } = useContext(UserContext);
 
     useEffect(() => {
-
-      return (
-             setIsSidebar("-300px")
-            )
+        
+        return (
+            setIsSidebar("-300px")
+        )
     }, []);
 
     // 모달창 닫기

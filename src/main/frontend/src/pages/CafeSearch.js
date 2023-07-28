@@ -136,7 +136,7 @@ const CafeSearch = () => {
     const [searchResult, setSearchResult] = useState("");
     const [isSearchResult, setIsSearchResult] = useState(false);
     const context = useContext(UserContext);
-    const { setCafeNum } = context;
+    const { setCafeNum } = context; 
 
     useEffect(() => {
         const search = async () => {

@@ -3,15 +3,19 @@ import { styled } from "styled-components";
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AxiosApi from "../api/AxiosApi";
+import { Padding } from "@mui/icons-material";
 
 const Box = styled.div`
 margin-top: 2rem;
 display: flex;
 justify-content: space-between;
+
 `;
 
 const Question = styled.span`
 font-weight: bold;
+
+
 `;
 
 const Button = styled.button`
@@ -19,6 +23,7 @@ background-color: #ffffff;
 border: none;
 align-items: center;
 align-self: center;
+
 `;
 
 const Box2 = styled.div`
@@ -48,6 +53,8 @@ const Answer = styled.ul`
 }
 
 `;
+
+
 
 const UserQna = () => {
     const [isOpen, setIsOpen] = useState({});
@@ -81,8 +88,8 @@ const UserQna = () => {
     <div key={user.id}>
       <Box >
         <Question > {user.question}
-          <Button onClick={() => questionOpen(index)}>
-          {isOpen[index] ? <ExpandMoreIcon style={{fill: "gray"}}/> : <ExpandLessIcon style={{fill: "gray"}}/>}
+          <Button className="icon" onClick={() => questionOpen(index)}>
+          {isOpen[index] ? <ExpandMoreIcon style={{fill: "gray" }}/> : <ExpandLessIcon style={{fill: "gray"}}/>}
         </Button> </Question>
       </Box>
       

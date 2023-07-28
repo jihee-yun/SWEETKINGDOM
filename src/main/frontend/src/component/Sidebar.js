@@ -47,7 +47,7 @@ const SidebarTop = styled.div`
       color: white;
     }
   }
-
+  
 `;
 
 const ProfileBox = styled.div`
@@ -111,7 +111,7 @@ const Menu = styled.div`
   justify-content: center;
   align-items: center;
   list-style:none;
-`
+`  
 const NavLink = styled(Link) `
   text-decoration: none;
   margin-bottom: 30px;
@@ -126,7 +126,7 @@ const NavLink = styled(Link) `
 `
 
 const Sidebar = () => {
-  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName,
+  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName, 
     setGrantType, setAccessToken,setRefreshToken, userNum, setUserNum, userAuthority, setUserAuthoruty}  = useContext(UserContext);
     const [sideBarInfo, setSideBarInfo] = useState([]);
     const navigate = useNavigate();
@@ -149,7 +149,7 @@ const Sidebar = () => {
     localStorage.removeItem("userName");
     localStorage.removeItem("userAuthority");
     localStorage.removeItem("isLogin");
-
+    
     navigate("/");
   }
 
@@ -166,7 +166,7 @@ const Sidebar = () => {
     getSidebarInfo(userNum)
 
     console.log(sideBarInfo);
-
+    
   }, [isSidebar, isLogin]);
 
   const closeSideBar = () => {
@@ -200,21 +200,21 @@ const Sidebar = () => {
             <NavLink to="/guild" onClick={closeSideBar}>길드</NavLink>
             <NavLink to="/event" onClick={closeSideBar}>이벤트</NavLink>
             <NavLink to="/couponStore" onClick={closeSideBar}>상점</NavLink>
-          </Menu>
+          </Menu> 
           <LogoutBox>
           <LoginBox>
               <div onClick={handleLogout} className="login">로그아웃</div>
-          </LoginBox>
+          </LoginBox>   
           </LogoutBox>
 
-          </>
+          </> 
       ) : (
         <>
         <ProfileBox>
         <Profile src={user}/>
         <LoginBox>
               <Link to="/memberlogin" className="login">로그인</Link>
-          </LoginBox>
+          </LoginBox> 
         </ProfileBox>
                     <Menu>
                     <NavLink to="/cafe" onClick={closeSideBar}>카페 찾기</NavLink>

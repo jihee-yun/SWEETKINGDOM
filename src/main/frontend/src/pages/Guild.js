@@ -46,7 +46,7 @@ const RegBox = styled.div`
       margin-top: 30px;
     }
   }
-
+  
   button{
     @media (max-width: 768px) {
       font-size: .9rem;

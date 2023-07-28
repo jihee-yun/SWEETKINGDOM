@@ -1,10 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useContext } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
 import ServiceHome from "../component/ServiceHome";
 import Footer from "../component/Footer";
 import Request from "../component/Request";
 import ServiceQuestion from "../component/ServiceQuestion";
+import { UserContext } from "../context/UserStore";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
 display: flex;
@@ -50,6 +52,7 @@ const ServiceCenter = () => {
     const tabClickHandler=(index)=>{
       setActiveIndex(index)
     }
+    const { isSidebar, setIsSidebar } = useContext(UserContext);
     
     const tabContArr=[
       {
@@ -94,6 +97,7 @@ const ServiceCenter = () => {
         </div>
       </TabSetting>
       <Footer />
+      {isSidebar && <Sidebar/>}
     </Container>
         
         </>

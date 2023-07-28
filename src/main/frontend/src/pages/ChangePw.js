@@ -101,7 +101,7 @@ const ChangePw = () => {
     const { isSidebar, setIsSidebar } = useContext(UserContext);
 
     useEffect(() => {
-
+        
         return (
             setIsSidebar("-300px")
         )
@@ -111,7 +111,7 @@ const ChangePw = () => {
         const passwordRex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{7,15}$/;
         const currentPw = e.target.value;
         setNewPassword(currentPw);
-
+        
         if (!passwordRex.test(currentPw)) {
           setPwMsg("숫자+영문자+특수문자 조합으로 7자리 이상 입력해주세요.");
           setIsPw(false);
@@ -128,13 +128,13 @@ const ChangePw = () => {
 
     // 아이디와 새 비밀번호가 모두 비어있지 않은지 확인하는 조건 추가
     const isFormValid = memberId.trim() !== "" && newPassword.trim() !== "";
-
+    
 
 
       const onChangeConfirmPassword = (e) => {
         const currentConPw = e.target.value;
         setConfirmPassword(currentConPw);
-
+    
         if (currentConPw === newPassword) {
           setConPwMsg("비밀번호가 일치합니다.");
           setIsConPw(true);

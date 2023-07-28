@@ -7,6 +7,21 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
 import ChatBot from "../component/ChatBot";
+import Sidebar from "../component/Sidebar";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHiymTV-avTvGv5Oxj3Bghiqw327h8Ac8",
+  authDomain: "sweetkingdom-703fb.firebaseapp.com",
+  projectId: "sweetkingdom-703fb",
+  storageBucket: "sweetkingdom-703fb.appspot.com",
+  messagingSenderId: "40592815779",
+  appId: "1:40592815779:web:24a07fee4b751465687116"
+};
+
+initializeApp(firebaseConfig);
+const storage = getStorage();
 
 const OutBox = styled.div`
   display: flex;
@@ -127,18 +142,19 @@ const GrayInput = styled.input`
 const SmallInfo = styled.p`
   margin-top: -5px;
   margin-bottom: 5px;
-  font-size: .8em;
+  font-size: .8rem;
   width: 80%;
   min-width: 100px;
   text-align: center;
   `;
 
 
+
 const MyInformation = () => {
   const navigate = useNavigate();
   // useContext 저장값 불러오기
   const {grantType, isLogin, setIsLogin, userNum, accessToken, refreshToken, setUserNum, userName, setUserName, 
-    setGrantType, setAccessToken,setRefreshToken, userAuthority, setUserAuthoruty} = useContext(UserContext);
+    setGrantType, setAccessToken,setRefreshToken, userAuthority, setUserAuthoruty, isSidebar, setIsSidebar} = useContext(UserContext);
 
   // 유저 정보 상태 관리
   const [memberInfo, setMemberInfo] = useState(null);
@@ -153,6 +169,14 @@ const MyInformation = () => {
   const [newPasswordCheckMessage, setNewPasswordCheckMessage] = useState("");
 
   const [withdrawAgreement, setSignoutAgreement] = useState("");
+
+  // 이미지 업로드용 상태
+  const [file, setFile] = useState(null);
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   // 유저 정보 가져오기
   useEffect(() => {
@@ -169,6 +193,42 @@ const MyInformation = () => {
     };
     fetchMemberInfo();
   }, [userNum]);
+
+
+  // 파이어베이스 스토리지에 이미지 업로드 함수
+  const handleImageUpdate = async () => {
+    try {
+      const storageRef = ref(storage, "ProfileImage");
+      const fileRef = ref(storageRef, file.name);
+  
+      await uploadBytes(fileRef, file);
+      console.log('파일 업로드 성공');
+      const downloadURL = await getDownloadURL(fileRef);
+      console.log("저장경로 확인: " + downloadURL);
+    // "&token="를 기준으로 문자열을 나누고 첫 번째 부분을 사용
+    const URL = downloadURL.split("&token=")[0];
+    console.log("토큰 제거된 저장경로 확인: " + URL);
+      handleApiRequest(URL);
+    } catch (error) {
+      console.log("이미지 업데이트 실패: ", error);
+    }
+  };
+
+  // 프로필 이미지 변경
+  const handleApiRequest = async (url) => {
+    try {
+      const rsp = await AxiosApi.profileImgUpdate(userNum, url, grantType, accessToken);
+      if (rsp.status) {
+        if (rsp.data === true) {
+          console.log("프로필 이미지 업데이트 성공: ", rsp.data, rsp.status);
+        } else {
+          console.log("통신은 성공, 프로필 이미지 업데이트 실패", rsp.data, rsp.status);
+        }
+      }
+    } catch(error) {
+      console.log("프로필 이미지 업데이트 실패");
+    }
+  };
 
   // 비밀 번호 조합 확인
   const validatePassword = (password) => {
@@ -201,7 +261,7 @@ const MyInformation = () => {
     try {
       const rsp = await AxiosApi.passwordUpdate(userNum, password, newPassword, grantType, accessToken);
       if(rsp.status) {
-        if(rsp.data = "true") {
+        if(rsp.data === true) {
           console.log("비밀번호 업데이트 성공: ", rsp.data);
         } else {
           console.log("통신은 성공, 비밀번호 업데이트 실패", rsp.data);
@@ -218,7 +278,7 @@ const MyInformation = () => {
     try {
       const rsp = await AxiosApi.introUpdate(userNum, intro, grantType, accessToken);
       if(rsp.status) {
-        if(rsp.data = "true") {
+        if(rsp.data === true) {
           console.log("한 줄 소개 업데이트 성공: ", rsp.data);
         } else {
           console.log("통신은 성공, 한 줄 소개 업데이트 실패", rsp.data);
@@ -235,7 +295,7 @@ const MyInformation = () => {
     try {
       const rsp = await AxiosApi.phoneUpdate(userNum, phone, grantType, accessToken);
       if (rsp.status) {
-        if(rsp.data = "true") {
+        if(rsp.data === true) {
           console.log("전화번호 업데이트 성공: ", rsp.data);
         } else {
           console.log("통신은 성공, 전화번호 업데이트 실패", rsp.data);
@@ -246,13 +306,13 @@ const MyInformation = () => {
     }
   };
 
-  // 이메일 변경 함수
+  // 이메일 변경
   const handleEmailChange = async () => {
     const email = document.getElementById("email").value;
     try {
       const rsp = await AxiosApi.emailUpdate(userNum, email, grantType, accessToken);
       if (rsp.status) {
-        if(rsp.data = "true") {
+        if(rsp.data === true) {
           console.log("이메일 업데이트 성공: ", rsp.data);
         } else {
           console.log("통신은 성공, 이메일 업데이트 실패", rsp.data);
@@ -262,7 +322,7 @@ const MyInformation = () => {
       console.log("이메일 업데이트 실패: ", error);
     }
   };
-  // 회원 탈퇴 함수
+  // 회원 탈퇴
   const handleMemberExit = async () => {
     if (withdrawAgreement !== "회원 탈퇴를 동의합니다") {
       alert("정확한 문구를 입력해주세요!");
@@ -271,7 +331,7 @@ const MyInformation = () => {
     try {
       const rsp = await AxiosApi.memberWithdraw(userNum, grantType, accessToken);
       if (rsp.status) {
-        if(rsp.data = "true") {
+        if(rsp.data === true) {
           console.log("회원 탈퇴 성공: ", rsp.data);
           setGrantType("");
           setAccessToken("");
@@ -305,9 +365,16 @@ const MyInformation = () => {
     return <div>회원 정보 로딩중...</div>;
   }
 
+  // useEffect(() => {
+  //   return (
+  //     setIsSidebar("-300px")
+  //   )
+  // }, []);
+
   return (
     <OutBox>
       <Header />
+      {isSidebar && <Sidebar/>}
       <Container>
         <SideMenu />
         <Detail>
@@ -318,8 +385,8 @@ const MyInformation = () => {
           {/* <TitleBox>회원 정보 수정</TitleBox> */}
             <SpecificBox>
               <InfoType>프로필 이미지 수정</InfoType>
-
-              {/* <InfoChangeButton onClick={handleImageChange}>변경하기</InfoChangeButton> */}
+              <input type="file" onChange={handleImageChange} />
+              <InfoChangeButton onClick={handleImageUpdate}>변경하기</InfoChangeButton>
             </SpecificBox>
             <SpecificBox>
               <InfoType>회원 아이디</InfoType>

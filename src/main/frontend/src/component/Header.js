@@ -136,7 +136,7 @@ const SearchBar = styled.div`
 
 // const NavContainer = styled.nav `
 //   width: 100%;
-
+    
 //   a {
 //     text-decoration: none;
 //     color: #646b8c;
@@ -175,7 +175,7 @@ const SearchBar = styled.div`
 //   color: white;
 
 //   &:hover {
-//     color: #000;
+//     color: #000;    
 //   }
 //   .MyPage {
 //     font-size: 2.5rem;
@@ -184,7 +184,7 @@ const SearchBar = styled.div`
 
 
 const Header = () => {
-  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName,
+  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName, 
     setGrantType, setAccessToken,setRefreshToken, setUserNum, userAuthority, setUserAuthoruty}  = useContext(UserContext);
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
@@ -231,10 +231,10 @@ const Header = () => {
     localStorage.removeItem("userName");
     localStorage.removeItem("userAuthority");
     localStorage.removeItem("isLogin");
-
+    
     navigate("/");
   }
-
+  
   return(
     <OutBox>
     {/* <MobileBox /> */}
@@ -271,7 +271,7 @@ const Header = () => {
         {isMobile && (
             <HamburgerBtn className="HamburgerBtn" onClick={() => setIsSidebar("0")}>
               <MenuIcon style={{ fontSize: 30, marginRight: 10 }} />
-            </HamburgerBtn>
+            </HamburgerBtn> 
           )}
         </HeaderContainer>
         <SearchContainer>
@@ -290,7 +290,7 @@ const Header = () => {
           />
         </SearchBar>
         )}
-        </SearchContainer>
+        </SearchContainer>  
         {!isMobile && (
         <NavBar />
         // <NavContainer>

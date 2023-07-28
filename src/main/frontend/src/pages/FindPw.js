@@ -105,14 +105,14 @@ const FindPw = () => {
 
   const [isModalOpen, setIsModalOpen] = useState("");
 
-   const { isSidebar, setIsSidebar } = useContext(UserContext);
+  const { isSidebar, setIsSidebar } = useContext(UserContext);
 
-      useEffect(() => {
-
-          return (
-              setIsSidebar("-300px")
-          )
-       }, []);
+    useEffect(() => {
+        
+        return (
+            setIsSidebar("-300px")
+        )
+    }, []);
 
   const onClickClose = () => {
     setFindPwSuccess(false);

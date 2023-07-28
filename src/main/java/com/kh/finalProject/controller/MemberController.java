@@ -17,7 +17,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
-@CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
@@ -47,7 +46,7 @@ public class MemberController {
         return ResponseEntity.ok(memberDto);
     }
 
-    //    // 비밀번호 찾기
+//    // 비밀번호 찾기
     @PostMapping("/findPw")
     public ResponseEntity<Boolean> findPw(@RequestBody Map<String, String> requestData) {
         String email = requestData.get("email");

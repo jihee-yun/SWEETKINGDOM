@@ -70,7 +70,7 @@ const AdminInfo = () => {
     navigate('/admin/report');
   }
 
-  // 리뷰
+  // 리뷰 
   const handleReview = () => {
     navigate('/admin/manageReview');
   }
@@ -107,6 +107,7 @@ const AdminInfo = () => {
 };
 
 export default AdminInfo;
+
 
 
 

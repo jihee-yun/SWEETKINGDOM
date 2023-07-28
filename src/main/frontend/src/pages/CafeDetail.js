@@ -67,7 +67,7 @@ const Container = styled.div`
     align-items: center;
     padding-left: 35px;
     display: flex;
-
+    
     div{
       width: 70px;
       height: 35px;
@@ -83,7 +83,7 @@ const Container = styled.div`
 
   .middle{
     position: relative;
-
+    
     .decobox{
       width: 120px;
       height: 60px;
@@ -141,7 +141,7 @@ const Container = styled.div`
 const CafeDetail = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { isSidebar } = context;
+  const { isSidebar } = context; 
   const {cafeNum} = useParams();
   const userNum = localStorage.getItem("userNum");
   // const cafeNum = localStorage.getItem("cafeNum");

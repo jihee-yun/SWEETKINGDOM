@@ -60,16 +60,16 @@ const CouponList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  
 
   @media (max-width: 430px) {
     text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
+    justify-content: center; 
     width: 80%;
-    height: 180px;
+    height: 180px; 
   }
 `;
 
@@ -101,7 +101,7 @@ const CafeContainer = styled.div`
   }
   position: relative;
   width: 100%;
-  display: grid;
+  display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 25px;
   align-items: center;
@@ -139,7 +139,7 @@ const CafeBox = styled.div`
     .intro{
       height: 45px;
     }
-
+    
     p {
       font-weight: bold;
       &:nth-child(1) {
@@ -233,7 +233,7 @@ const CouponStore = () => {
       <MyPoint>
           {pointInfo && pointInfo.map(item => (
             <InfoList key={item.memberNum}>
-              <Name>{item.name}님 포인트 : {item.totalPoint} 포인트</Name>
+              <Name>{item.name}님 포인트 : {item.totalPoint} 포인트</Name> 
             </InfoList>
           ))}
         <div className="goEvent">
@@ -258,7 +258,7 @@ const CouponStore = () => {
           <div className="content">
             <p>{cafe.region}</p>
             <p>{cafe.cafeName}</p>
-            <p className="intro">{cafe.intro}</p>
+            <p className="intro">{cafe.intro}</p> 
           </div>
         </CafeBox>
         ))}
