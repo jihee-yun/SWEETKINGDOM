@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
 import { styled } from "styled-components";
 import AxiosApi from "../api/AxiosApi";
 
@@ -89,6 +91,10 @@ const Image = styled.div`
 
 const Ranking = () => {
     const [cafeRankingInfo, setCafeRankingInfo] = useState([]);
+    const navigate = useNavigate();
+    const context = useContext(UserContext);
+    const { setCafeNum } = context; 
+
 
 
     useEffect(() => {
@@ -107,6 +113,12 @@ const Ranking = () => {
         cafeInfo();
         console.log(cafeRankingInfo);
       }, []);
+
+      const cardClick = (cafeNum) => {
+        setCafeNum(cafeNum);
+      localStorage.setItem("cafeNum", cafeNum);
+      navigate(`/cafe/detail/${cafeNum}`);
+      };
       
     return(
         <>
@@ -116,7 +128,8 @@ const Ranking = () => {
             </div>
             <div className="RankingContainer">
             {cafeRankingInfo.map(ranking => (
-                <div className="RankingItem" key={ranking.id}>
+                <div className="RankingItem" key={ranking.id}
+                onClick={() => cardClick(ranking.id)}>
             
             <ImgContainer >
                     <Image image={ranking.thumbnail} alt="카페임시" className="cafe"/>

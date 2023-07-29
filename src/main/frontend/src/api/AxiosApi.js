@@ -163,14 +163,14 @@ const AxiosApi = {
     },
 
     // 로그인
-    userLogin: async (userId, password, grantType, accessToken) => {
-      const loginData = {
-        userId: userId,
-        password: password
-      };
+  //   userLogin: async (userId, password, grantType, accessToken) => {
+  //     const loginData = {
+  //       userId: userId,
+  //       password: password
+  //     };
 
-    return await axios.post("/user/login", loginData)
-  },
+  //   return await axios.post("/user/login", loginData)
+  // },
 
 
   // 새 비밀번호
@@ -205,24 +205,24 @@ const AxiosApi = {
 
     // 사용자 삭제
     deleteUsers : async(memberNum) => {
-        return await axios.delete(`/admin/usermanage/delete/${memberNum}`);
+        return await axios.delete( `/admin/usermanage/delete/${memberNum}`);
     },
 
     // 리뷰 삭제
     deleteReviews : async(reviewNum) => {
-        return await axios.delete(`/admin/review/delete/${reviewNum}`);
+        return await axios.delete( `/admin/review/delete/${reviewNum}`);
     },
 
     // 신고 삭제
     deleteReports : async(reportNum) => {
-      return await axios.delete(`/admin/report/delete/${reportNum}`);
+      return await axios.delete( `/admin/report/delete/${reportNum}`);
     },
 
     // 사용자 정보 수정
     saveUserInfo : async(userInfoToSave) => {
       const {memberNum} = userInfoToSave;
       try {
-        return await axios.put(`/admin/usermanage/modify/${memberNum}`, userInfoToSave);
+        return await axios.put( `/admin/usermanage/modify/${memberNum}`, userInfoToSave);
       } catch(error) {
         throw error;
       }
@@ -230,22 +230,22 @@ const AxiosApi = {
     
     // 신고 전체 조회
     reportGetAll: async () => {
-      return await axios.get('/admin/report/all');
+      return await axios.get( '/admin/report/all');
     },
 
     // 신고 내용 조회
     reportGetContents : async(reportNum) => {
-      return await axios.get(`/admin/report/getContents?reportNum=${reportNum}`)
+      return await axios.get( `/admin/report/getContents?reportNum=${reportNum}`)
     },
 
     // 리뷰 전체 조회
     reviewGetAll : async() => {
-      return await axios.get(`/admin/review/all`);
+      return await axios.get( `/admin/review/all`);
     },
 
     // 사용자 조회
     userGetAll : async() => {
-      return await axios.get(`/admin/usermanage`);
+      return await axios.get( `/admin/usermanage`);
     },
 
     // 관리자 로그인
@@ -254,7 +254,7 @@ const AxiosApi = {
         adminId : adminId,
         password : password
       }
-      return await axios.post(`/admin/login`, adminData);
+      return await axios.post( `/admin/login`, adminData);
     },
 
     // 관리자 등록
@@ -268,17 +268,17 @@ const AxiosApi = {
           gender : gender
       };
 
-      return await axios.post(`/admin/register`, admin);
+      return await axios.post( `/admin/register`, admin);
     },
 
   // 챌린지 조회
   challengeGet: async(chList) => {
-    return await axios.get(`/challenge/chList?chList=${chList}`);
+    return await axios.get( `/challenge/chList?chList=${chList}`);
   },
 
   // 쿠폰 조회
   getCoupon: async(couponget) => {
-    return await axios.get(`/couponstore/couponget?couponget=${couponget}`);
+    return await axios.get( `/couponstore/couponget?couponget=${couponget}`);
   },
 
   // 이벤트 포인트 적립
@@ -288,7 +288,7 @@ const AxiosApi = {
       point: winning,
       pointType: pointType
     };
-    return await axios.post("/point/pointadd", points, {
+    return await axios.post( "/point/pointadd", points, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -297,7 +297,7 @@ const AxiosApi = {
 
   // 내 정보 조회
   myInfoGet: async(memberNum, grantType, accessToken) => {
-    return await axios.get(`/member/myinfo?memberNum=${memberNum}`, {
+    return await axios.get( `/member/myinfo?memberNum=${memberNum}`, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -310,7 +310,7 @@ const AxiosApi = {
       challengeId: challengeId,
       memberId: memberId
     };
-    return await axios.post("/mychallenge/apply", data, {
+    return await axios.post( "/mychallenge/apply", data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -319,7 +319,7 @@ const AxiosApi = {
 
   // 마이챌린지 조회
   mychallengeGet: async(userNum, challengeId, grantType, accessToken) => {
-    return await axios.get(`/mychallenge/get?userNum=${userNum}&challengeId=${challengeId}`, {
+    return await axios.get( `/mychallenge/get?userNum=${userNum}&challengeId=${challengeId}`, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -332,7 +332,7 @@ const AxiosApi = {
       memberNum: memberNum,
       couponId: couponId
     };
-    return await axios.post("/couponstore/couponpay", data, {
+    return await axios.post( "/couponstore/couponpay", data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -341,7 +341,7 @@ const AxiosApi = {
 
   // 인기 카페 4곳 조회
   fourCafeGet: async(fourCafes) => {
-    return await axios.get(`/cafe/fourCafes?fourCafes=${fourCafes}`)
+    return await axios.get( `/cafe/fourCafes?fourCafes=${fourCafes}`)
   },
 
   // 룰렛 하루에 한번
@@ -371,12 +371,12 @@ const AxiosApi = {
 
   // 랭킹정보 불러오기
     MainInfoGet: async(rankingcard) => {
-        return await axios.get(`/main/rankingcard`)
+        return await axios.get( `/main/rankingcard`)
     },
 
     // 자주묻는 질문 불러오기
     QnaGet: async(category) => {
-      return await axios.get(`/auth/qnalist/get-qna?category=${category}`)
+      return await axios.get( `/auth/qnalist/get-qna?category=${category}`)
   },
 
   // 리뷰 전체 다 불러오기(테스트용)
@@ -537,6 +537,19 @@ const AxiosApi = {
     });
   },
 
+  // 프로필 이미지 변경
+  profileImgUpdate: async (userNum, url, grantType, accessToken) => {
+    const profileUrlData = {
+      memberNum : userNum,
+      profileImgUrl : url,
+    }
+    return await axios.post(`/info/profileimgupdate`, profileUrlData, {
+      headers: {
+        Authorization: `${grantType} ${accessToken}`
+      }
+    });
+  },
+
   // 비밀번호 업데이트
   passwordUpdate: async (memberNum, password, newPassword, grantType, accessToken) => {
     const passwordData = {
@@ -597,7 +610,7 @@ const AxiosApi = {
   },
 
   weatherInfoGet: async(regionList) => {
-    return await axios.get(`/weather/get?regionList=${regionList}`);
+    return await axios.get( `/weather/get?regionList=${regionList}`);
   },
 
   // 카페 등록
@@ -624,7 +637,7 @@ const AxiosApi = {
     const mailData = {
       mail: email
     }
-    return await axios.post(`/mail/confirm`, mailData);
+    return await axios.post( `/mail/confirm`, mailData);
   },
   // 인증번호 확인
   codeCheck: async(email, code) => {
@@ -632,12 +645,12 @@ const AxiosApi = {
       mail: email,
       code: code
     }
-    return await axios.post(`/mail/verify`, verifyData);
+    return await axios.post( `/mail/verify`, verifyData);
   },
 
   // 카페 검색 기능
   searchListLoad: async (keyword) => {
-    return await axios.get(`/cafe/searchList?keyword=${keyword}`)
+    return await axios.get( `/cafe/searchList?keyword=${keyword}`)
   },
   // 문의사항 등록
   summitReport: async(userNum, grantType, accessToken, category, questionType, title, content) => {
@@ -648,12 +661,17 @@ const AxiosApi = {
       userType: category,
       category: questionType
     }
-    return await axios.post(`/report/newQuestion`, requestData, {
+    return await axios.post( `/report/newQuestion`, requestData, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
     });
-  }
+  },
+   // 고객센터 검색 기능
+   qnaSearchListLoad: async (keyword) => {
+    return await axios.get( `/auth/qnalist/searchList?keyword=${keyword}`)
+  },
 };
+
 
 export default AxiosApi;

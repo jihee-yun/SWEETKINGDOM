@@ -9,9 +9,11 @@ import { UserContext } from "../context/UserStore";
 import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
+max-width: 1440px;
 display: flex;
 flex-direction: column;
 align-items: center;
+margin: 0 auto;
 `;
 
 

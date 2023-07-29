@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import UserQna from "./UserQna";
 import BusinessQna from "./BusinessQna";
 import { useNavigate } from "react-router-dom";
+import QnaSearchList from "./QnaSearchList";
 
 const Fnq = styled.div`
 margin-top: 2rem;
@@ -137,12 +138,9 @@ const ServiceQuestion = () => {
             )
           })}
         </TabList>
-
         <div>
           { tabContArr[activeIndex].tabCont }
         </div>
-        
-
       </TabSetting>
       </Box>
   

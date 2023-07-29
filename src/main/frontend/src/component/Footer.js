@@ -50,7 +50,7 @@ const Footer = () => {
     <FooterContainer>
       <Sitemap> 
         <li>
-          <Link to="/cafe/main">Find Cafe</Link>
+          <Link to="/cafe">Find Cafe</Link>
         </li>
         <li>
           <Link to="/guild">Guild</Link>
@@ -62,7 +62,7 @@ const Footer = () => {
           <Link to="/servicecenter">고객센터</Link>
         </li>
         <li>
-          <Link to="/">이용약관</Link>
+          <Link to="/policy">이용약관</Link>
         </li>
       </Sitemap>
       <FooterInfo>

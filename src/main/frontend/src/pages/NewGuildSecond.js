@@ -17,6 +17,7 @@ const Container = styled.div`
     width: 100%;
   }
 
+  max-width: 1440px;
   width: 50%;
   margin: 0 auto;
   background-color: #FAFAFA;

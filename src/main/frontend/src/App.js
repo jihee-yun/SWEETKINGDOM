@@ -57,6 +57,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import CafeSearch from './pages/CafeSearch';
 import ChangePw from './pages/ChangePw';
 import QnaSearchList from './component/QnaSearchList';
+import SweetkingdomPolicy from './pages/SweetkingdomPolicy'; 
 
 function App() {
   return (
@@ -118,6 +119,7 @@ function App() {
         <Route path='/cafesearch/:keyword' element={<CafeSearch />}/>
         <Route path='/changepw' element={<ChangePw/>}/>
         <Route path='/qnasearch/:keyword' element={<QnaSearchList />}/>
+        <Route path="/policy" element={<SweetkingdomPolicy/>}/>
       </Routes>
     </BrowserRouter>
     </UserStore>

@@ -4,8 +4,10 @@ import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import AxiosApi from "../api/AxiosApi";
 import Header from "../component/Header";
+import Footer from "../component/Footer";
 
 const Container = styled.div`
+max-width: 1440px;
   width: 80%;
   margin: 0 auto;
   /* padding: 50px; */
@@ -198,6 +200,7 @@ return(
       </FalseResult>
     </>
     )}
+     <Footer />
   </Container>
   </>
    

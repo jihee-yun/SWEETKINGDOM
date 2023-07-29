@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const ModalBox = styled.div`
+  max-width: 1440px;
   width: 90%;
   margin: 0 auto;
   position: relative;

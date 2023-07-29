@@ -15,7 +15,7 @@ const Container = styled.div`
   z-index: 99;
   position: absolute;
   top: 50%;
-  left: 25%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   border: 1px solid lightgray;

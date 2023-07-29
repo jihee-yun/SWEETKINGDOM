@@ -23,6 +23,7 @@ const Container = styled.div`
   @media (max-width: 430px) {
     width: 100%;
   }
+  max-width: 1440px;
   width: 50%;
   margin: 0 auto;
   /* box-shadow: 0 3px 3px lightgray; */

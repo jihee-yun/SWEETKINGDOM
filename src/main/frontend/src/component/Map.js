@@ -38,9 +38,8 @@ const Map = () => {
         <>
         <Container>
         <div className="title">
-            <h2> <PlaceIcon/> 지도로 한눈에 살펴보기</h2>
+            <h2> <PlaceIcon/> 8월 추천 지역</h2>
         </div>
-
         <MapContainer>
         <KakaoMap/>
         </MapContainer>

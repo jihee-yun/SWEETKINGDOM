@@ -7,7 +7,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Header from "./Header";
 import Footer from "./Footer";
 
+const Container = styled.div`
+max-width: 1440px;
+margin: 0 auto;
+`
+
 const Box = styled.div`
+
 margin-top: 2rem;
 display: flex;
 justify-content: space-between;
@@ -62,7 +68,7 @@ const StatusBox = styled.div`
   height: 80px;
   color: #6E6E6E;
   font-weight: bold;
-  border-bottom: solid #FFCFDA;
+  border-bottom: solid #e6e8ed;
   border-bottom-width: thin;
 `;
 
@@ -86,10 +92,10 @@ const QnaSearchList = () => {
             try{
                 const rsp = await AxiosApi.qnaSearchListLoad(keyword);
                 setSearchResult(rsp.data);
-                console.log(rsp.data > 0);
-                if(rsp.data) {
+                console.log(rsp);
+                if(rsp.data.length > 0) {
                     setIsSearchResult(true);
-                } else if(rsp.data === 0) {
+                } else if(rsp.data.length === 0) {
                     setIsSearchResult(false);;
                 }
             } catch(error) {
@@ -109,7 +115,7 @@ const QnaSearchList = () => {
 
 
     return(
-    <>
+    <Container>
     <Header/>
     {isSearchResult ? (
       <>
@@ -140,7 +146,7 @@ const QnaSearchList = () => {
       </>
     )}
     <Footer />
-    </>
+    </Container>
     )
 }
 export default QnaSearchList;

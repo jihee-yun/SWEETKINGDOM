@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import Grid from "../utils/Grid";
 import Text from "../utils/Text";
 import Image from "../utils/Image";
+import Locations from "./Locations";
 
 const {kakao} = window;
 
@@ -12,8 +13,6 @@ const MarkerInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 160px;
-  // height: auto;
-  // overflow: hidden;
   border: none;
   outline: none;
   background-color: white;
@@ -21,42 +20,24 @@ const MarkerInfo = styled.div`
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
 `;
 
+const Footer = styled.div`
+
+a {
+    color: tomato;
+    font-size: 10px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 3px;
+  }
+`;
+
 
 
 
 const KakaoMap = (props) => {
 
- 
-
-  const locations = [
-    { 
-      title: '로얄마카롱', 
-
-      latlng: {lat: 37.5022798575697, lng: 127.03549425626856 }
-    },
-
-    { 
-      title: '크리에잇 쿠키', 
-      latlng: {lat: 37.50292419145257, lng: 127.03511004160167 }
-    },
-    { 
-      title: '테이블스',  
-      latlng: {lat: 37.49811544220041, lng: 127.03384121820527 }
-    },
-    { 
-      title: '로흐',  
-      latlng: {lat: 37.50085501505924, lng: 127.03199624553372 }
-    },
-    { 
-      title: '트리오드',  
-      latlng:{lat: 37.49962351869158, lng: 127.02958126885545 }
-    },
-  ];
-
-  
-  // const map = useMap()
-
-  const [isOpenList, setIsOpenList] = useState(locations.map(() => false));
+  const [isOpenList, setIsOpenList] = useState(Locations.map(() => false));
   const [selectedMarker, setSeleteMarker] = useState();
 
 
@@ -74,7 +55,7 @@ const KakaoMap = (props) => {
         level={4}                                   // 지도 확대 레벨
       >
 
-        {locations.map((loc, index) => ( // 여러개 마커 표시
+        {Locations.map((loc, index) => ( // 여러개 마커 표시
         <MapMarker // 마커 생성하고 지도에 표시
         key={index}
         position={loc.latlng} // 마커를 표시할 위치
@@ -92,14 +73,14 @@ const KakaoMap = (props) => {
                   zIndex={1}
             >
              <MarkerInfo>
-              <Image type="rectangle" />
+              <Image src={loc.ImgUrl} type="rectangle" />
               <Grid padding="5px 10px 10px">
                 <Text margin="5px 0" bold="600" size="16px">
                  {loc.title}
                 </Text>
-                <Text margin="0" size="13px">
-                  내용
-                </Text>
+                <Footer>
+                <a href="#">READ MORE</a>
+                </Footer>
               </Grid>
             </MarkerInfo>
             </CustomOverlayMap>

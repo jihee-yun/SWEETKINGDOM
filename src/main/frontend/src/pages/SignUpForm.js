@@ -65,14 +65,14 @@ const GroupBox = styled.div`
 
 const InputLabel = styled.label`
   margin-bottom: 5px;
-  padding : 3px;
+  padding: 3px;
   width: 80px;
   height: 20px;
   font-weight: bold;
   font-size: .9rem;
   background-color: #FFCFDA;
   border-radius: 10%;
-  text-align : center;
+  text-align: center;
 `;
 
 const Input = styled.input`

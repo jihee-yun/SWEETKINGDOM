@@ -7,9 +7,21 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
 import ChatBot from "../component/ChatBot";
-import firebase from "firebase/app";
-import { storage } from "../context/Firebase";
 import Sidebar from "../component/Sidebar";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHiymTV-avTvGv5Oxj3Bghiqw327h8Ac8",
+  authDomain: "sweetkingdom-703fb.firebaseapp.com",
+  projectId: "sweetkingdom-703fb",
+  storageBucket: "sweetkingdom-703fb.appspot.com",
+  messagingSenderId: "40592815779",
+  appId: "1:40592815779:web:24a07fee4b751465687116"
+};
+
+initializeApp(firebaseConfig);
+const storage = getStorage();
 
 const OutBox = styled.div`
   display: flex;
@@ -19,25 +31,24 @@ const OutBox = styled.div`
 
 // 사이드 메뉴 + 세부 페이지
 const Container = styled.div`
-  width: 80%;
+  width: 95%;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
 `;
 // 세부 페이지
 const Detail = styled.div`
   width: 100%;
-  min-width: 360px;
-  max-width: 768px;
-  /* height: 1000px; */
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   /* border: 2px solid yellow; */
 `;
-// 결제 내역, 포인트 내역 선택 박스
+// 카페 등록, 관리 선택 박스
 const RowBox = styled.div`
-  width: 100%;
+  width: 95%;
   margin-top: 1%;
   margin-bottom: 2%;
   display: flex;
@@ -63,8 +74,8 @@ const TypeButton = styled.button`
 // 세부 페이지 윗쪽 부분
 const SelectBox = styled.div`
   width: 90%;
-  min-width: 300px;
-  height: 80px;
+  min-width: 350px;
+  height: 50px;
   margin-top: 3%;
   border: 1px solid #F3E1E1;
   border-radius: 15px;
@@ -82,7 +93,7 @@ const TextBox = styled.p`
 // 세부 페이지 중앙 부분
 const ContentBox = styled.div`
   width: 90%;
-  min-width: 300px;
+  min-width: 350px;
   margin-top: 3%;
   border: 1px solid #F3E1E1;
   border-radius: 15px;
@@ -123,6 +134,17 @@ const GrayInput = styled.input`
     outline: none;
   }
 `;
+// 자세한 소개 수정 입력창
+const DetailInput = styled.input`
+  width: 90%;
+  min-width: 200px;
+  height: 150px;
+  &:focus {
+    outline: none;
+  }
+  margin-bottom: 10px;
+  padding-left: 5px;
+`;
 // 라디오 버튼
 const RadioInput = styled.input`
   margin: 0 5px;
@@ -151,7 +173,7 @@ const BusinessCafe = () => {
   const userAuthority = localStorage.getItem("userAuthority");
   const isLogin = localStorage.getItem("isLogin");
   
-  // 포인트, 결제 선택 버튼
+  // 등록, 관리 선택 버튼
   const [selectedButton, setSelectedButton] = useState("register");
   // 포인트, 결제 차이
   const handleTypeButtonClick = (buttonType) => {
@@ -168,8 +190,12 @@ const BusinessCafe = () => {
   const [selectedRegion, setSelectedRegion] = useState('서울특별시');
   const [isButtonActive, setIsButtonActive] = useState(false);
   // 이미지 업로드용 상태
-  const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [file, setFile] = useState(null);
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   // 라디오 버튼 변경 처리 핸들러
   const handleRegionChange = (e) => {
@@ -182,54 +208,34 @@ const BusinessCafe = () => {
   const handleCafePhoneChange = (event) => setCafePhone(event.target.value);
   const handleCafeIntroChange = (event) => setCafeIntro(event.target.value);
   const handleCafeDetailChange = (event) => setCafeDetail(event.target.value);
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
 
   // 파이어베이스 스토리지에 이미지 업로드 함수
   const handleCafeRegister = async () => {
     try {
-      // 이미지를 Firebase Storage에 업로드
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      const storageRef = ref(storage, "cafeImage");
+      const fileRef = ref(storageRef, file.name);
   
-      // 업로드 상태를 모니터링
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // 진행 상태를 표시하는 로직이 들어갈 수 있습니다.
-        },
-        (error) => {
-          // 에러 핸들링
-          console.log(error);
-        },
-        () => {
-          // 업로드가 완료되면 이미지 URL을 가져옵니다.
-          storage
-            .ref("images")
-            .child(image.name)
-            .getDownloadURL()
-            .then((url) => {
-              setImageUrl(url);
-              // API에 요청을 보냅니다.
-              handleApiRequest(url);
-            });
-        }
-      );
+      await uploadBytes(fileRef, file);
+      console.log('파일 업로드 성공');
+      const downloadURL = await getDownloadURL(fileRef);
+      console.log("저장경로 확인: " + downloadURL);
+    // "&token="를 기준으로 문자열을 나누고 첫 번째 부분을 사용
+    const url = downloadURL.split("&token=")[0];
+    console.log("토큰 제거된 저장경로 확인: " + url);
+      handleApiRequest(url);
     } catch (error) {
-      console.log("카페 생성 실패: ", error);
+      console.log("이미지 업데이트 실패: ", error);
     }
   };
 
   // 모든 입력 필드가 비어 있지 않고, 이미지가 null이 아닌지 확인합니다.
   useEffect(() => {
-    if (cafeName && cafeAddress && cafeTime && cafePhone && cafeIntro && cafeDetail && image) {
+    if (cafeName && cafeAddress && cafeTime && cafePhone && cafeIntro && cafeDetail && file) {
       setIsButtonActive(true);
     } else {
       setIsButtonActive(false);
     }
-  }, [cafeName, cafeAddress, cafeTime, cafePhone, cafeIntro, cafeDetail, image]);
+  }, [cafeName, cafeAddress, cafeTime, cafePhone, cafeIntro, cafeDetail, file]);
 
   // db에 카페 등록 통신
   const handleApiRequest = async (url) => {
@@ -249,7 +255,7 @@ const BusinessCafe = () => {
       );
   
       if (rsp.status) {
-        if (rsp.data === "true") {
+        if (rsp.data === true) {
           console.log("카페 생성 성공: ", rsp.data);
         } else {
           console.log("통신은 성공, 카페 생성 실패", rsp.data);
@@ -344,7 +350,7 @@ const BusinessCafe = () => {
               </SpecificBox>
               <SpecificBox>
                 <InfoType>카페 자세한 소개</InfoType>
-                <GrayInput type="text" placeholder="1000자 이내" value={cafeDetail} onChange={handleCafeDetailChange} />
+                <DetailInput type="text" placeholder="1000자 이내" value={cafeDetail} onChange={handleCafeDetailChange} />
               </SpecificBox>
               <SpecificBox>
                 <InfoType>카페 썸네일</InfoType>
