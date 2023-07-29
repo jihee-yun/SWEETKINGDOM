@@ -147,6 +147,7 @@ const MyPage = () => {
 
   // 유저 정보 가져오기
   useEffect(() => {
+    if(accessToken) {
     const fetchMemberInfo = async () => {
       try {
         const rsp = await AxiosApi.getMemberAllInfo(userNum, grantType, accessToken);
@@ -159,18 +160,13 @@ const MyPage = () => {
       }
     };
     fetchMemberInfo();
-  }, [userNum]);
+  } else navigate("/memberlogin");
+  }, [userNum, accessToken]);
 
   useEffect(() => {
     setIsSidebar("-300px")
   }, []);
 
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/");
-    }
-  }, [accessToken, navigate]);
-  
   return(
     <OutBox>
       <Header />

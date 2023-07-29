@@ -157,8 +157,8 @@ const Sidebar = () => {
     const getSidebarInfo = async (memberNum) => {
       if(isSidebar && isLogin) {
         const memInfo = await AxiosApi.getMemberInfo(memberNum);
-        setSideBarInfo(memInfo.data);
-        console.log(memInfo);
+        setSideBarInfo(memInfo.data[0]);
+        console.log(memInfo[0]);
       } else {
         setSideBarInfo([]);
       }
@@ -185,9 +185,9 @@ const Sidebar = () => {
         <>
       <ProfileBox>
       {userAuthority === 'ROLE_MEMBER' ? (
-                <div className="profile" onClick={() => navigate("/businesspage")}> <Profile src={profile}/></div>
+                <div className="profile" onClick={() => navigate("/businesspage")}> <Profile src={sideBarInfo.profileImgUrl}/></div>
               ) : (
-                <div className="profile" onClick={() => navigate("/mypage")}> <Profile src={profile}/></div>
+                <div className="profile" onClick={() => navigate("/mypage")}> <Profile src={sideBarInfo.profileImgUrl}/></div>
               )}
       {userAuthority === 'ROLE_MEMBER' ? (
                 <div className="userName" onClick={() => navigate("/businesspage")}>{userName}님</div>

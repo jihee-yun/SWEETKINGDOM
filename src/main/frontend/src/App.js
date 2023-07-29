@@ -87,7 +87,7 @@ function App() {
         <Route path='/mypage/guild' element={<MyGuild />}/>
         <Route path='/mypage/event' element={<MyEvent />}/>
         <Route path='/mypage/point' element={<MyPoint />}/>
-        <Route path='/mypage/information' lement={<MyInformation />}/>
+        <Route path='/mypage/information' element={<MyInformation />}/>
         <Route path='/mypage/report' element={<MyReport />}/>
         <Route path='/mypage/payment' element={<PaymentPage />}/>
         <Route path='/businesspage' element={<BusinessPage />}/>

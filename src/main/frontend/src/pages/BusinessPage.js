@@ -117,9 +117,10 @@ const BusinessPage = () => {
 
   // 유저 정보 가져오기
   useEffect(() => {
+    if(accessToken) {
     const fetchMemberInfo = async () => {
       try {
-        const rsp = await AxiosApi.getMemberInfo(userNum, grantType, accessToken);
+        const rsp = await AxiosApi.getMemberAllInfo(userNum, grantType, accessToken);
         if (rsp.status) {
           setMemberInfo(rsp.data[0]);
           console.log("마이페이지 유저 정보 가져오기 성공: ", rsp.data[0])
@@ -129,19 +130,12 @@ const BusinessPage = () => {
       }
     };
     fetchMemberInfo();
-  }, [userNum]);
+  } else navigate("/memberlogin");
+  }, [userNum, accessToken]);
 
   useEffect(() => {
-    return (
-      setIsSidebar("-300px")
-    )
+    setIsSidebar("-300px")
   }, []);
-
-  useEffect(() => {
-    if (!accessToken) {
-      navigate("/");
-    }
-  }, [accessToken, navigate]);
 
   return(
     <OutBox>
