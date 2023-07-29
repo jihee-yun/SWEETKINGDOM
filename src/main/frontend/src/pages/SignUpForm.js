@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AxiosApi from "../api/AxiosApi";
@@ -8,7 +8,8 @@ import Policy from "../component/Policy";
 import PrivacyPolicy from "../component/PrivacyPolicy";
 import view from "../images/view.png";
 import { async } from "@firebase/util";
-
+import Sidebar from "../component/Sidebar";
+import { UserContext } from "../context/UserStore";
 
 const Container = styled.div`
   width: 100%;
@@ -180,6 +181,7 @@ const FormBox = styled.div`
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+  const {isSidebar, setIsSidebar} = useContext(UserContext);
   const location = useLocation();
   const authorityGet = location.state.authority;
 
@@ -447,9 +449,16 @@ const SignUpForm = () => {
       console.error("회원가입 실패:", error);
     }
   }
+
+  useEffect(() => {
+    return (
+      setIsSidebar("-300px")
+    )
+  }, []);
   
   return(
     <>
+    {isSidebar && <Sidebar />}
     <Header />
     <Container>
     <Box>

@@ -9,6 +9,7 @@ import Header from "../component/Header";
 import Footer from "../component/Footer";
 import user from "../images/user1.png"
 import password from "../images/padlock.png"
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   width: 80%;
@@ -109,6 +110,7 @@ const Button = styled.button`
 
 const MemberLoginPage = () => {
   const navigate = useNavigate();
+  const { isSidebar, setIsSidebar } = useContext(UserContext);
   // 파이어베이스 이미지 로드용
   const [imageUrls, setImageUrls] = useState([]);
   // 일반 회원, 사업자 회원 구분
@@ -200,8 +202,15 @@ const MemberLoginPage = () => {
     }
   };
 
+  useEffect(() => {
+    return (
+      setIsSidebar("-300px")
+    )
+  }, []);
+
   return(
     <>
+    {isSidebar && <Sidebar />}
     <Header />
     <Container>
       {/* <Logo src={imageUrls[0]} alt="반전 로고 이미지" onClick={()=>navigate("/")}></Logo> */}

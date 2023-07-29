@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import user from "../images/user1.png";
 import member from "../images/role-member.png";
+import { UserContext } from "../context/UserStore";
+import Sidebar from "../component/Sidebar";
 
 const Container = styled.div`
   width: 100%;
@@ -78,6 +80,7 @@ const TextBox = styled.p`
 
 const MemberSignUpPage = () => {
   const navigate = useNavigate();
+  const { isSidebar, setIsSidebar } = useContext(UserContext);
 
   // 일반 회원, 사업자 회원 구분
   const [authority, setAuthority] = useState("");
@@ -96,8 +99,15 @@ const MemberSignUpPage = () => {
     }
   }, [authority]);
 
+  useEffect(() => {
+    return (
+      setIsSidebar("-300px")
+    )
+  }, []);
+
   return (
     <>
+    {isSidebar && <Sidebar />}
     <Header />
     <Container>
       <TextBox><h2>SWEET KINGDOM 회원가입</h2></TextBox>
