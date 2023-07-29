@@ -367,17 +367,16 @@ const MyInformation = () => {
     }
   };
 
+  useEffect(() => {
+    return (
+      setIsSidebar("-300px")
+    )
+  }, []);
 
   // memberInfo가 로딩 중일 때 표시할 로딩 스피너 등의 UI를 추가할 수 있음
   if (!memberInfo) {
     return <div>회원 정보 로딩중...</div>;
   }
-
-  // useEffect(() => {
-  //   return (
-  //     setIsSidebar("-300px")
-  //   )
-  // }, []);
 
   return (
     <OutBox>

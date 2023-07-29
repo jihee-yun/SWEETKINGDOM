@@ -162,11 +162,15 @@ const MyPage = () => {
   }, [userNum]);
 
   useEffect(() => {
-    return (
-      setIsSidebar("-300px")
-    )
+    setIsSidebar("-300px")
   }, []);
 
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/");
+    }
+  }, [accessToken, navigate]);
+  
   return(
     <OutBox>
       <Header />

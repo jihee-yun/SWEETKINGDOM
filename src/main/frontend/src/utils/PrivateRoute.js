@@ -11,7 +11,7 @@ const PrivateRoute = ({ element: Component }) => {
     alert('접근할 수 없는 페이지입니다.');
     return <Navigate to="/" />;
   }
-  return <Component />;
+  return Component;
 };
 
 export default PrivateRoute;
