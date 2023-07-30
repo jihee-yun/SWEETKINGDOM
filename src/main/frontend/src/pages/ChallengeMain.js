@@ -177,14 +177,16 @@ const CafeIntro = styled.div`
 
 const ChallengeMain = () => {
   const context = useContext(UserContext);
-  const {isLogin, userNum, grantType, accessToken, isSidebar} = context;
+  const {isSidebar} = context;
   const [modalOpen, setModalOpen] = useState(false);
   const location = useLocation();
   const info = location.state && location.state.editedInfo[0].id;
   const navigate = useNavigate();
 
-  console.log(info);
-  console.log(userNum);
+  const userNum = localStorage.getItem("userNum");
+  const grantType = localStorage.getItem("grantType");
+  const accessToken = localStorage.getItem("accessToken");
+  const isLogin = localStorage.getItem("isLogin");
 
   const applyChallenge = async() => {
     if (!isLogin) {

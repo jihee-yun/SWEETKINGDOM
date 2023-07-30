@@ -77,7 +77,7 @@ function App() {
         <Route path='/findpw' element={<FindPw/>}/>
         <Route path='/admin' element={<Admin/>}/>
         <Route path='/adminInfo' element={<AdminInfo />}/>
-        <Route path='/couponStore' element={<PrivateRoute element={<CouponStore />}/>}/>
+        <Route path='/couponStore' element={<CouponStore />}/>
         <Route path='/findId' element={<FindID/>}/>
         <Route path='/admin/report' element={<AdminReport />}/>
         <Route path='/admin/userManage' element={<UserManage />}/>
@@ -103,7 +103,7 @@ function App() {
         <Route path='/challengeMain' element={<ChallengeMain/>}/>
         <Route path='/admin/manageReview' element={<ManageReview />}/>
         <Route path='/payComplete' element={<PayComplete />}/>
-        <Route path='/couponPayment' element={<PrivateRoute element={<CouponPayment />}/>}/>
+        <Route path='/couponPayment' element={<CouponPayment />}/>
         <Route path='/servicecenter' element={<ServiceCenter/>}/>
         <Route path='/admin/register' element={<AdminReg />}/>
         <Route path='/cafesearch/:keyword' element={<CafeSearch />}/>

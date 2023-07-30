@@ -185,8 +185,13 @@ const CouponStore = () => {
   const [pointInfo, setPointInfo] = useState("");
   const [cafeInfo, setCafeInfo] = useState("");
   const context = useContext(UserContext);
-  const { userNum, isLogin, grantType, accessToken, isSidebar } = context
+  const { isSidebar } = context
   const navigate = useNavigate();
+
+  const userNum = localStorage.getItem("userNum");
+  const grantType = localStorage.getItem("grantType");
+  const accessToken = localStorage.getItem("accessToken");
+  const isLogin = localStorage.getItem("isLogin");
 
   console.log(couponInfo);
 
@@ -221,7 +226,7 @@ const CouponStore = () => {
     navigate('/couponPayment', {state : {filterCoupon}});
   };
 
-  if (!isLogin) {
+  if (!accessToken) {
     navigate('/memberlogin');
     return null;
   }
