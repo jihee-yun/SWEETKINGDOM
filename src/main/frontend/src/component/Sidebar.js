@@ -126,10 +126,14 @@ const NavLink = styled(Link) `
 `
 
 const Sidebar = () => {
-  const { isSidebar, setIsSidebar, isLogin, setIsLogin,  userName, setUserName, 
-    setGrantType, setAccessToken,setRefreshToken, userNum, setUserNum, userAuthority, setUserAuthoruty}  = useContext(UserContext);
+  const { isSidebar, setIsSidebar, setIsLogin,  userName, setUserName, 
+    setGrantType, setAccessToken,setRefreshToken, setUserNum, userAuthority, setUserAuthoruty}  = useContext(UserContext);
     const [sideBarInfo, setSideBarInfo] = useState([]);
     const navigate = useNavigate();
+    const isLogin = localStorage.getItem("isLogin");
+    const userNum = localStorage.getItem("userNum");
+    const grantType = localStorage.getItem("grantType");
+    const accessToken = localStorage.getItem("accessToken"); 
 
   // 로그아웃 버튼 누르면 함수 실행
   const handleLogout = () => {
@@ -154,24 +158,25 @@ const Sidebar = () => {
   }
 
   useEffect(() => {
-    const getSidebarInfo = async (memberNum) => {
-      if(isSidebar && isLogin) {
-        const memInfo = await AxiosApi.getMemberInfo(memberNum);
+    const getSidebarInfo = async () => {
+      if(isLogin === "true") {
+        const memInfo = await AxiosApi.getMemberInfo(userNum, grantType, accessToken);
         setSideBarInfo(memInfo.data[0]);
         console.log(memInfo[0]);
       } else {
         setSideBarInfo([]);
       }
     };
-    getSidebarInfo(userNum)
-
+    getSidebarInfo();
     console.log(sideBarInfo);
     
-  }, [isSidebar, isLogin]);
+  }, [isLogin]);
 
   const closeSideBar = () => {
     setIsSidebar('-380px');
   }
+
+  console.log(sideBarInfo);
 
   return (
 
@@ -181,7 +186,7 @@ const Sidebar = () => {
           <CloseRoundedIcon />
         </button>
       </SidebarTop>
-      {isLogin ? (
+      {isLogin === "true" ? (
         <>
       <ProfileBox>
       {userAuthority === 'ROLE_MEMBER' ? (
@@ -190,9 +195,9 @@ const Sidebar = () => {
                 <div className="profile" onClick={() => navigate("/mypage")}> <Profile src={sideBarInfo.profileImgUrl}/></div>
               )}
       {userAuthority === 'ROLE_MEMBER' ? (
-                <div className="userName" onClick={() => navigate("/businesspage")}>{userName}님</div>
+                <div className="userName" onClick={() => navigate("/businesspage")}>{sideBarInfo.name}님</div>
               ) : (
-                <div className="userName" onClick={() => navigate("/mypage")}>{userName}님</div>
+                <div className="userName" onClick={() => navigate("/mypage")}>{sideBarInfo.name}님</div>
               )}
       </ProfileBox>
             <Menu>

@@ -62,8 +62,8 @@ const Footer = () => {
           <Link to="/servicecenter">고객센터</Link>
         </li>
         <li>
-          <Link to="/policy">이용약관</Link>
-        </li>
+          <Link to="/policy">개인정보처리방침</Link>
+        </li>g
       </Sitemap>
       <FooterInfo>
         <Language>

@@ -84,7 +84,11 @@ const SideMenu = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   // 로그인시 회원 정보
-  const {grantType, accessToken, refreshToken, userNum, userName, userAuthority} = useContext(UserContext);
+  const {refreshToken, userName, userAuthority} = useContext(UserContext);
+
+  const userNum = localStorage.getItem("userNum");
+  const grantType = localStorage.getItem("grantType");
+  const accessToken = localStorage.getItem("accessToken"); 
 
   // 유저 정보 가져오기
   useEffect(() => {
@@ -100,7 +104,7 @@ const SideMenu = () => {
       }
     };
     fetchMemberInfo();
-  }, [userNum]);
+  }, [userNum, accessToken, grantType]);
 
   // 파이어베이스 스토리지 이미지 로딩
   useEffect(() => {
