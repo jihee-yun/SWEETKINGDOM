@@ -158,6 +158,7 @@ const CafeReview = () => {
   const info = location.state;
   const cafeNum = info[0].id;
   const userNum = localStorage.getItem("userNum");
+  const intUserNum = parseInt(userNum);
   const userAuthority = localStorage.getItem("userAuthority");
 
   // const userNum = parseInt(userNumStr);
@@ -175,6 +176,7 @@ const CafeReview = () => {
   const selectCategory = localStorage.getItem("reviewCategory");
 
   console.log(userNum);
+  console.log(cafeReviewInfo);
 
   useEffect(() => {
     const cafeReview = async() => {
@@ -252,7 +254,7 @@ const CafeReview = () => {
         </div>
       </MemberBox>
       <Bar onClick={() => modalOpen(review.id)}>
-      {review.userNum === userNum && <img src={dot} alt="메뉴바" />}
+      {review.userNum === intUserNum && <img src={dot} alt="메뉴바" />}
       {isModalVisible && openReviewId === review.id && (
         <CafeReviewModal reviewInfo={cafeReviewInfo} id={review.id} cafeNum={cafeNum} onClose={closeModal} isModalOpen={completeModal} />
       )}
