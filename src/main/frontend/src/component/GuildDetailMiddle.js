@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import location from "../images/location.png";
 import member from "../images/member.png";
@@ -8,7 +8,6 @@ import GuildJoinModal from "./GuildJoinModal";
 import CompleteModal from "../utils/CompleteModal";
 import AxiosApi from "../api/AxiosApi";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserStore";
 
 const Middle = styled.div`
   position: absolute;
@@ -164,6 +163,7 @@ const GuildDetailMiddle = ({guildNum, guildInfo}) => {
   const grantType = localStorage.getItem("grantType");
   const accessToken = localStorage.getItem("accessToken")
   const userNum = localStorage.getItem("userNum");
+    const userAuthority = localStorage.getItem("userAuthority");
 
   // 인원 마감 버튼
   const { limitMember, memberNumList } = guildInfo[0];
@@ -188,7 +188,7 @@ const GuildDetailMiddle = ({guildNum, guildInfo}) => {
   }
 
   const complete = () => {
-    if(userNum !== 0) {
+    if(userNum) {
       navigate(-1);
     } else navigate('/memberlogin')
   }
@@ -243,21 +243,23 @@ const GuildDetailMiddle = ({guildNum, guildInfo}) => {
           <div className="detailbox"><img src={location} alt="위치" /><p>{guild.region}</p></div>
         </div>
         </div>
-        <div className="join-button">
+        {userAuthority !== 'ROLE_MEMBER' ? (
+        <div className="join-button" >
           {isTrue === 1 ? (<button className="is-join">이미 가입된 회원입니다</button>)
           : !isJoinable ? (
             <button className="limit-member">인원 마감</button>
           ) : (
-            <button className="join" onClick={userNum !==0 ? () => openModal("join") : () => openModal("complete")}>가입하기</button>
+            <button className="join" onClick={userNum ? () => openModal("join") : () => openModal("complete")}>가입하기</button>
           )}
         </div>
+        ) : (<div className="join-button" ><button className="limit-member">가입 불가</button></div>)}
         <Modal move={modalOpen === "complete" ? true : false} open={modalOpen !== null} type={modalOpen === "join" ? true : false} confirm={modalOpen === "join" ? joinGuild : complete} close={closeModal} header={modalOpen === "join" ? "길드 가입" : modalOpen === "complete" ? "완료" : "전체 멤버"}>
           {modalOpen === "members" ? (
             <GuildMemberModal members={guild.memberProfileList} />
           ) : modalOpen === "join" ? (
             <GuildJoinModal />
           ) : modalOpen === "complete" ? (
-            <CompleteModal content={userNum !== 0 ? "가입이 완료되었습니다": "로그인이 필요합니다. 로그인 페이지로 이동할까요?"} maxCharacters={userNum !== 0 ? 0 : 11}/>
+            <CompleteModal content={userNum ? "가입이 완료되었습니다": "로그인이 필요합니다. 로그인 페이지로 이동할까요?"} maxCharacters={userNum  ? 0 : 11}/>
           ) : null}
         </Modal>
       </Middle>

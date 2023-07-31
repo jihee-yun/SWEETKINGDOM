@@ -224,6 +224,7 @@ const SuperRightButton = styled.button`
 `;
 
 const MyReview = () => {
+  const navigate = useNavigate();
   // useContext 저장값 불러오기
   const {isSidebar, setIsSidebar} = useContext(UserContext);
   // 로컬 스토리지 저장값 불러오기
@@ -361,6 +362,10 @@ const MyReview = () => {
     setEndDate(today);
     setPageNumber(1);
   };
+  // 리뷰 클릭하면 해당 페이지로 이동
+  const handleLinkClick = (cafeNum) => {
+    navigate(`/cafe/detail/${cafeNum}`);
+  }
 
   useEffect(() => {
     return (
@@ -412,8 +417,8 @@ const MyReview = () => {
               {getCurrentItems().map((item, index) => (
                 <ContentLists key={index}>
                   <ListNum>{item.reviewNum}</ListNum>
-                  <ListTitle>{item.reviewContent}</ListTitle>
-                  <ListCafe>{item.cafeNum}</ListCafe>
+                  <ListTitle onClick={() => handleLinkClick(item.cafeNum)}>{item.reviewContent}</ListTitle>
+                  <ListCafe>{item.cafeName}</ListCafe>
                   <ListDate>
                     {new Date(item.writtenTime)
                       .toISOString()

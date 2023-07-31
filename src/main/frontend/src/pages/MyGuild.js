@@ -47,17 +47,14 @@ const SelectBox = styled.div`
   justify-content: center;
 `;
 const TextBox = styled.p`
-  margin-left: 10px;
-  @media (max-width: 768px) {
-    text-align: center;
-  }
+  text-align: center;
 `;
 // 세부 페이지 중앙 부분
 const ContentBox = styled.div`
   width: 90%;
   min-width: 330px;
   /* min-width: 500px; */
-  min-height: 600px;
+  /* min-height: 600px; */
   margin-top: 3%;
   border: 1px solid #F3E1E1;
   border-radius: 15px;
@@ -201,7 +198,7 @@ const MyGuild = () => {
                 <GuildImg src={guild.thumbnail} alt="GuildImg"></GuildImg>
                 <RowBox>
                   <GuildName>{guild.guildName}</GuildName>
-                  <More onClick={()=>navigate("/mypage/guild")}>자세히 보기</More>
+                  <More onClick={()=>navigate(`/guild/detail/${guild.id}`)}>자세히 보기</More>
                 </RowBox>
                 <GuildCategory>카테고리: {categoryNames[guild.category]}</GuildCategory>
                 <GuildRegion>지역: {guild.region}</GuildRegion>

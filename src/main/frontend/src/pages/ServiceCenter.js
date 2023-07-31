@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { styled } from "styled-components";
 import Header from "../component/Header";
 import ServiceHome from "../component/ServiceHome";
@@ -7,6 +7,7 @@ import Request from "../component/Request";
 import ServiceQuestion from "../component/ServiceQuestion";
 import { UserContext } from "../context/UserStore";
 import Sidebar from "../component/Sidebar";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
 max-width: 1440px;
@@ -50,11 +51,22 @@ const TabItem = styled.div`
 
 
 const ServiceCenter = () => {
+    const location = useLocation();
+    const selectIndex = location.state;
+    console.log(selectIndex);
+
     const [activeIndex, setActiveIndex] = useState(0);
     const tabClickHandler=(index)=>{
       setActiveIndex(index)
     }
     const { isSidebar, setIsSidebar } = useContext(UserContext);
+
+    useEffect(() => {
+      // selectIndex가 존재하는 경우에만 setActiveIndex로 값을 설정합니다.
+      if (selectIndex) {
+        setActiveIndex(selectIndex);
+      }
+    }, [selectIndex]);
     
     const tabContArr=[
       {
@@ -80,7 +92,7 @@ const ServiceCenter = () => {
             <Header/>
             <h1>고객센터</h1>
         <TabSetting>
-        <TabList>
+        <TabList>        
           {tabContArr.map((section, index)=>{
             return(
               <TabItem
@@ -95,7 +107,7 @@ const ServiceCenter = () => {
         </TabList>
 
         <div>
-          { tabContArr[activeIndex].tabCont }
+        {tabContArr[activeIndex].tabCont}
         </div>
       </TabSetting>
       <Footer />

@@ -85,6 +85,7 @@ const Guild = () => {
   const context = useContext(UserContext);
   const { isSidebar } = context;
   const userNum = localStorage.getItem("userNum");
+  const userAuthority = localStorage.getItem("userAuthority");
 
   const [allGuildInfo, setAllGuildInfo] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -157,7 +158,8 @@ const Guild = () => {
           <h3 className="context2">나와 같은 목적을 가진 <br />
               친구들을 직접 모집해보세요</h3>
         </div>
-        <button onClick={moveToNewGuild}>길드 만들기</button>
+        {userAuthority === 'ROLE_USER' || !userAuthority ?  <button onClick={moveToNewGuild}>길드 만들기</button> :
+        <button style={{ backgroundColor: "darkgray", cursor: "none"}}>길드 만들기</button>}
       </RegBox>
       {/* <div className="middle-bar"></div> */}
       <GuildFilterCategory onClickCategory={categoryChange} />

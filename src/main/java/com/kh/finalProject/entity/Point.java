@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_point")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class Point {
     @Id
@@ -23,10 +23,6 @@ public class Point {
 
     @Column
     private String pointType;
-
-    @OneToOne
-    @JoinColumn(name = "user_num", referencedColumnName = "userNum")
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "T_userNum")

@@ -158,6 +158,8 @@ const CafeReview = () => {
   const info = location.state;
   const cafeNum = info[0].id;
   const userNum = localStorage.getItem("userNum");
+  const userAuthority = localStorage.getItem("userAuthority");
+
   // const userNum = parseInt(userNumStr);
 
   // 특정 카페 리뷰 조회
@@ -234,7 +236,9 @@ const CafeReview = () => {
     <div className="count-review"><p>총 {count}개의 후기</p></div>
     <div className="top">
     <AvgStar avgStar={star}/>
-    <button className="write" onClick={sendCafeNum}>후기 작성</button>
+    {userAuthority === 'ROLE_USER' || !userAuthority ?  
+    <button className="write" onClick={sendCafeNum}>후기 작성</button> :
+    <button className="write" style={{ backgroundColor: "darkgray", cursor: "none"}} >후기 작성</button>} 
     </div>
     <CafeReviewFilter onClickCategory={categoryChange}/>
     {cafeReviewInfo && cafeReviewInfo.map(review =>(

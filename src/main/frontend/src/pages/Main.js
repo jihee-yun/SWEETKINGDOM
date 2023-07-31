@@ -1,10 +1,9 @@
-import {useContext, useState , useEffect} from "react";
+import {useContext, useEffect} from "react";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import Map from "../component/Map";
 import Weather from "../component/Weather";
 import Ranking from "../component/Ranking";
-import Recommend from "../component/Recommend"
 import { styled } from "styled-components";
 import Sidebar from "../component/Sidebar";
 import { UserContext } from "../context/UserStore";
@@ -40,7 +39,6 @@ const Main = () => {
         <Weather />
         <Map/>
         <Ranking/>
-        {/* <Recommend/> */}
         <TestSwiper/>
         <Footer/>
         {isSidebar && <Sidebar/>}

@@ -2,7 +2,6 @@ import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/UserStore";
 import styled from "styled-components";
 import Logo from "../images/logo.png";
-// import mobileLogo from "../images/.PNG";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import NavBar from "./NavBar";
@@ -137,63 +136,15 @@ const SearchBar = styled.div`
   }
 `;
 
-// const NavContainer = styled.nav `
-//   width: 100%;
-    
-//   a {
-//     text-decoration: none;
-//     color: #646b8c;
-//     position: relative;
-//   }
-//   .Nav {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     gap: 10px;
-//     text-align: center;
-//     padding-right: 20px;
-//     height: 60px;
-//   }
-//   .search {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     gap: 10px;
-//     width: 200px;
-//   }
-//   .search-bar {
-//     width: 100%;
-//     height: 30px;
-//     border-radius: 40px;
-//     border: solid #646b8c;
-//     padding: 0 15px;
-//   }
-// `;
-// const Navlink = styled(Link) `
-//   width: 150px;
-//   height: 40px;
-//   line-height: 40px;
-//   font-size: 1rem;
-//   font-weight: bold;
-//   color: white;
-
-//   &:hover {
-//     color: #000;    
-//   }
-//   .MyPage {
-//     font-size: 2.5rem;
-//   }
-// `;
-
-
 const Header = () => {
   const { isSidebar, setIsSidebar, setIsLogin, setUserName, 
-    setGrantType, setAccessToken,setRefreshToken, setUserNum, userAuthority, setUserAuthoruty}  = useContext(UserContext);
+    setGrantType, setAccessToken,setRefreshToken, setUserNum, setUserAuthoruty}  = useContext(UserContext);
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const [keyword, setKeyword] = useState(""); // 검색어 입력을 위한 useState
   const isLogin = localStorage.getItem("isLogin");
   const userName = localStorage.getItem("userName");
+  const userAuthority = localStorage.getItem("userAuthority");
 
   // 반응형 UI 적용
   useEffect(() => {
@@ -290,7 +241,7 @@ const Header = () => {
            placeholder="카페 이름 또는 메뉴를 검색해보세요"
           />
           <SearchIcon
-            style={{ fontSize: 30, fill: "#FFCFDA" }}
+            style={{ fontSize: 30, fill: "#FFCFDA", marginLeft: '10px' }}
             onClick={swordPush}
           />
         </SearchBar>
@@ -298,26 +249,6 @@ const Header = () => {
         </SearchContainer>  
         {!isMobile && (
         <NavBar />
-        // <NavContainer>
-        //   <ul className="Nav">
-        //     <Navlink to="/cafe">카페 찾기</Navlink>
-        //     <Navlink to="/guild">길드</Navlink>
-        //     <Navlink to="/event">이벤트</Navlink>
-        //     <Navlink to="/couponStore">상점</Navlink>
-        //     <div className="search">
-        //       <input
-        //         type="text"
-        //         className="search-bar"
-        //         value={keyword}
-        //         onChange={onChangeCafeName}
-        //       />
-        //       <SearchIcon
-        //         style={{ fontSize: 30, marginRight: 10, fill: "#646b8c" }}
-        //         onClick={swordPush}
-        //       />
-        //     </div>
-        //   </ul>
-        // </NavContainer>
       )}
     </OutBox>
   );

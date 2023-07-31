@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_my_challenge")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class MyChallenge {
     @Id
@@ -20,12 +20,11 @@ public class MyChallenge {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_num")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "T_user_num")
     private Member member;
+
+    @Column (nullable = false)
+    private int count;
 
     // 장바구니
 //    @OneToMany(mappedBy = "myChallenge")

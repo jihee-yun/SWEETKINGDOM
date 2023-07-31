@@ -11,13 +11,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_cafe")
-@Getter @Setter @ToString(exclude = {"cafeImgList", "cafeMenuList", "cafeLikeList"})
+@Getter @Setter
 @NoArgsConstructor
 public class Cafe {
     @Id
     @Column(name = "cafe_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "member_num")
+    private Member member; // 카페 등록자의 회원 번호
 
     @Column(nullable = false)
     private String cafeName;

@@ -84,11 +84,12 @@ const SideMenu = () => {
   const [imageUrls, setImageUrls] = useState([]);
 
   // 로그인시 회원 정보
-  const {refreshToken, userName, userAuthority} = useContext(UserContext);
+  const {refreshToken, userName} = useContext(UserContext);
 
   const userNum = localStorage.getItem("userNum");
   const grantType = localStorage.getItem("grantType");
   const accessToken = localStorage.getItem("accessToken"); 
+  const userAuthority = localStorage.getItem("userAuthority");
 
   // 유저 정보 가져오기
   useEffect(() => {
@@ -129,7 +130,7 @@ const SideMenu = () => {
         <MyName>{userName}님</MyName>
         <MyPoint onClick={()=>navigate("/mypage/point")}>{memberInfo.totalPoint} point</MyPoint>
       </ProfileBox>
-      {userAuthority === 'ROLE_MEMBER' ? (
+      {userAuthority === "ROLE_MEMBER" ? (
         <>
         <NaviButton onClick={()=>navigate("/businesspage/cafe")}>카페 등록 / 관리</NaviButton>
         <NaviButton onClick={()=>navigate("/businesspage/review")}>리뷰 관리</NaviButton>

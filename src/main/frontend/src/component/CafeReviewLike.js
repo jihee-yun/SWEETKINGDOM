@@ -37,12 +37,13 @@ const CafeReviewLike = ({reviewId, likeCount}) => {
   const grantType = localStorage.getItem("grantType");
   const accessToken = localStorage.getItem("accessToken")
   const memNum = localStorage.getItem("userNum");
+  const userAuthority = localStorage.getItem("userAuthority");
   
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const changeLikeCount = async(memNum, id) => {
-    if(memNum) {
+    if(memNum && userAuthority === 'ROLE_USER') {
       const response = await AxiosApi.reviewLike(memNum, id, grantType, accessToken );
       console.log(response.data);
       if(response.data === true) {

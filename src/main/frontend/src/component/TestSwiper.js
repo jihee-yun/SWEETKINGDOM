@@ -5,14 +5,16 @@ import slideImg from "../images/slideImg.jpg";
 import slideImg2 from "../images/slideImg2.jpg";
 import slideImg3 from "../images/slideImg3.jpg";
 import slideImg4 from "../images/slideImg4.jpg";
+import mainimg3 from "../images/mainimg3.png"
 
 import "swiper/css";
 import "swiper/css/pagination";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
 width: 90%;
-height: 500px;
-margin-top: 20px;
+height: auto;
+margin-top: 100px;
 display: flex;
 align-items: center;
 flex-direction: column;
@@ -123,6 +125,24 @@ const Footer = styled.div`
     color: #c2c0e0;
 `;
 
+const TopContainer = styled.div`
+display: flex;
+`
+
+
+const Title = styled.div`
+margin-bottom: 15px;
+
+h1 {
+    font-family: 'Pretendard-Regular';
+    font-weight: 800; 
+    font-size: 2rem;
+    color: #424242;
+}
+
+`;
+
+
 const TestSwiper = () => {
 
     useEffect(() => {
@@ -152,7 +172,11 @@ const TestSwiper = () => {
   return (
     <>
     <Container>
-    <h2 className="title">추천 리스트</h2>
+    <TopContainer>
+        <Title>
+            <h1>추천 리스트</h1>
+        </Title>
+        </TopContainer>
     <SwiperContainer className="swiper-container">
       <SwiperWrapper className="swiper-wrapper">
      
@@ -181,7 +205,7 @@ const TestSwiper = () => {
             </p>
             <Footer>
               <div>01/02</div>
-              <a href="http://localhost:3000/cafe/detail/4">READ MORE</a>
+              <Link to="/cafe/detail/4">READ MORE</Link>
            </Footer>
         </SlideContent>
         </SwiperSlide>
@@ -211,7 +235,7 @@ const TestSwiper = () => {
             </p>
             <Footer>
               <div>02/02</div>
-              <a href="http://localhost:3000/cafe/detail/5">READ MORE</a>
+              <Link to="/cafe/detail/5">READ MORE</Link>
            </Footer>
         </SlideContent>
         </SwiperSlide>

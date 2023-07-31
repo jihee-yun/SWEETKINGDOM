@@ -153,7 +153,10 @@ const CafeDetail = () => {
   useEffect(() => {
     const detailInfo = async() => {
       const response = await AxiosApi.detailInfoGet(cafeNum);
-      if(response.status === 200) setDetailInfo(response.data);
+      if(response.status === 200) {
+        setDetailInfo(response.data);
+        console.log("카페 정보: " + response.data);
+      }
     };
     detailInfo();
   }, [cafeNum]);

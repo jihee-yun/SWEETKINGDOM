@@ -146,6 +146,13 @@ const BusinessPage = () => {
       <Detail>
         <SquareBox>
           <BoxTitle>
+            <Title>카페 등록/관리</Title>
+            <More onClick={()=>navigate("/businesspage/cafe")}>더 보기</More>
+          </BoxTitle>
+          <BoxContent></BoxContent>
+        </SquareBox>
+        <SquareBox>
+          <BoxTitle>
             <Title>리뷰 관리</Title>
             <More onClick={()=>navigate("/businesspage/review")}>더 보기</More>
           </BoxTitle>
@@ -153,14 +160,7 @@ const BusinessPage = () => {
         </SquareBox>
         <SquareBox>
           <BoxTitle>
-            <Title>카페 챌린지</Title>
-            <More onClick={()=>navigate("/businesspage/challenge")}>더 보기</More>
-          </BoxTitle>
-          <BoxContent></BoxContent>
-        </SquareBox>
-        <SquareBox>
-          <BoxTitle>
-            <Title>참여 이벤트</Title>
+            <Title>?카페 챌린지?</Title>
             <More onClick={()=>navigate("/businesspage/event")}>더 보기</More>
           </BoxTitle>
           <BoxContent></BoxContent>

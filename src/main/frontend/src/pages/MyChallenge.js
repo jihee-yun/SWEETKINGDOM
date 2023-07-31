@@ -190,7 +190,7 @@ const MyChallenge = () => {
                   <ChallengeName>{challenge.challengeName}</ChallengeName>
                   <More onClick={()=>navigate("/mypage/challenge")}>자세히 보기</More>
                 </RowBox>
-                <CahllengeCount>카운트: {challenge.count}</CahllengeCount>
+                <CahllengeCount>참여 중인 인원 수: {challenge.count}</CahllengeCount>
                 <ChallengeDetail>내용: {challenge.detail}</ChallengeDetail>
                 <ChallengeExpired>만료날짜: {challenge.endTime}</ChallengeExpired>  
               </SpecificBox>

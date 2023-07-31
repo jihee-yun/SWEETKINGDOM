@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "T_User")
-@Getter @Setter @ToString
+@Getter @Setter
 @NoArgsConstructor
 public class User { // 일반 회원
     @Id
@@ -53,13 +53,4 @@ public class User { // 일반 회원
         this.gender = gender;
         this.authority = authority;
     }
-
-
-    @OneToOne(mappedBy = "user")
-    private Point point;
-
-    @OneToMany(mappedBy = "user")
-    private List<MyChallenge> myChallenges = new ArrayList<>();
-
-
 }

@@ -176,6 +176,10 @@ const ServiceHome = () => {
         navigate(`/qnasearch/${keyword}`);
       };
 
+    const question = () => {
+        navigate('/servicecenter', {state : 2})
+    };
+
     return(
     <Container>
     <Info>
@@ -186,7 +190,7 @@ const ServiceHome = () => {
             <h1 className="number">1588-0000 </h1>
             <p className="desc">월~금요일 10:00~17:00 (점심시간 12:00~13:30 / 주말,공휴일 제외)</p>
             </InfoTime>
-            <Button className="btn">1:1문의</Button>
+            <Button className="btn" onClick={question} >1:1문의</Button>
     </InfoText>
     </InfoItem>
     </Info>

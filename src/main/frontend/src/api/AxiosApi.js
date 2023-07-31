@@ -11,19 +11,19 @@ const AxiosApi = {
   },
   // 카페 디테일 정보 조회
   detailInfoGet: async(cafeNum) => {
-    return await axios.get(`/cafe/detail?cafeNum=${cafeNum}`);
+    return await axios.get( `/cafe/detail?cafeNum=${cafeNum}`);
   },
   // 카페 이미지 리스트 조회
   imgListGet: async(cafeNum) => {
-    return await axios.get(`/cafe/img?cafeNum=${cafeNum}`);
+    return await axios.get( `/cafe/img?cafeNum=${cafeNum}`);
   },
   // 길드 전체 리스트 조회
   guildInfoGet: async(guildList) => {
-    return await axios.get(`/guild/all?guildList=${guildList}`)
+    return await axios.get( `/guild/all?guildList=${guildList}`)
   },
   // 특정 길드 디테일 정보 조회
   guildDeInfoGet: async(guildNum) => {
-    return await axios.get(`/guild/detail?guildNum=${guildNum}`)
+    return await axios.get( `/guild/detail?guildNum=${guildNum}`)
   },
   // 새로운 길드 생성
   createNewGuild: async(grantType, accessToken, memNum, guildName, guildIntro, guildDetailIntro, meetDay, category, member, region, url) => {
@@ -38,7 +38,7 @@ const AxiosApi = {
       region : region,
       thumbnail : url
     };
-    return await axios.post("/guild/newGuild", guildData, {
+    return await axios.post( "/guild/newGuild", guildData, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -46,7 +46,7 @@ const AxiosApi = {
   },
   // 길드 가입 회원 확인하기
   isMemberGet: async(guildNum, userNum) => {
-    return await axios.get(`/guild/isMember?guildNum=${guildNum}&userNum=${userNum}`)
+    return await axios.get( `/guild/isMember?guildNum=${guildNum}&userNum=${userNum}`)
   },
   //길드 가입하기
   joinGuild: async(guildNum, userNum, grantType, accessToken) => {
@@ -54,7 +54,7 @@ const AxiosApi = {
       guildNum: guildNum,
       userNum: userNum
     }
-    return await axios.post(`/guild/join`, data, {
+    return await axios.post( `/guild/join`, data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -70,7 +70,7 @@ const AxiosApi = {
       url1: url1,
       url2: url2
     }
-    return await axios.post(`/review/newReview`, reviewData, {
+    return await axios.post( `/review/newReview`, reviewData, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -90,7 +90,7 @@ const AxiosApi = {
       url1: url1,
       url2: url2 
     }
-    return await axios.post(`/review/edit`, data, {
+    return await axios.post( `/review/edit`, data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -102,7 +102,7 @@ const AxiosApi = {
       reviewId: id,
       cafeNum: cafeNum
     }
-    return await axios.post(`/review/delete`, data, {
+    return await axios.post( `/review/delete`, data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -114,7 +114,7 @@ const AxiosApi = {
       memNum: memNum,
       reviewId: id
     }
-    return await axios.post(`/review/like`, data, {
+    return await axios.post( `/review/like`, data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -126,7 +126,7 @@ const AxiosApi = {
       cafeNum: cafeNum,
       memNum: memNum
     }
-    return await axios.post(`/cafe/like`, data, {
+    return await axios.post( `/cafe/like`, data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -134,7 +134,7 @@ const AxiosApi = {
   },
   // 카페 좋아요 상태값 관리
   getLikeState: async(cafeNum, memNum, grantType, accessToken) => {
-    return await axios.get(`/cafe/getLike?cafeNum=${cafeNum}&memNum=${memNum}`, {
+    return await axios.get( `/cafe/getLike?cafeNum=${cafeNum}&memNum=${memNum}`, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -143,7 +143,7 @@ const AxiosApi = {
 
   // 회원가입 여부 
   checkId : async(userId) => {
-    return await axios.get(`/user/check?userId=${userId}`);
+    return await axios.get( `/user/check?userId=${userId}`);
   },
   
     // 회원가입
@@ -159,19 +159,8 @@ const AxiosApi = {
             gender : gender,
             authority : authority
     };
-        return await axios.post("/user/new", member);
+        return await axios.post( "/user/new", member);
     },
-
-    // 로그인
-  //   userLogin: async (userId, password, grantType, accessToken) => {
-  //     const loginData = {
-  //       userId: userId,
-  //       password: password
-  //     };
-
-  //   return await axios.post("/user/login", loginData)
-  // },
-
 
   // 새 비밀번호
   changePassword : async(memberId, newPassword) => {
@@ -179,7 +168,7 @@ const AxiosApi = {
       memberId : memberId,
       newPassword : newPassword
     }
-    return await axios.post("/member/changePw", data);
+    return await axios.post( "/member/changePw", data);
   },
 
 
@@ -191,7 +180,7 @@ const AxiosApi = {
         memberId : memberId,
         name : name
     };
-    return await axios.post("/member/findPw", data);
+    return await axios.post( "/member/findPw", data);
   },
 
     // 아이디 찾기
@@ -200,7 +189,7 @@ const AxiosApi = {
         name : name,
         email : email
       };
-      return await axios.post("/member/findId", data);
+      return await axios.post( "/member/findId", data);
     },
 
     // 사용자 삭제
@@ -349,7 +338,7 @@ const AxiosApi = {
     const data = {
       memberNum: memberNum
     }
-    return await axios.post("/roulette/spin", data, {
+    return await axios.post( "/roulette/spin", data, {
       headers: {
         Authorization: `${grantType} ${accessToken}`
       }
@@ -618,13 +607,13 @@ const AxiosApi = {
     const cafeData = {
       memberNum : userNum,
       cafeName : cafeName,
-      selectedRegion : selectedRegion,
-      cafeAddress : cafeAddress,
-      cafeTime : cafeTime,
-      cafePhone : cafePhone,
-      cafeIntro : cafeIntro,
-      cafeDetail : cafeDetail,
-      url : url
+      region : selectedRegion,
+      address : cafeAddress,
+      operatingTime : cafeTime,
+      tel : cafePhone,
+      intro : cafeIntro,
+      detailIntro : cafeDetail,
+      thumbnail : url
     }
     return await axios.post(`/cafe/cafecreate`, cafeData, {
       headers: {
@@ -632,6 +621,15 @@ const AxiosApi = {
       }
     });
   },
+  // 카페 정보 불러오기
+  getMemberCafeInfo: async (memberNum, grantType, accessToken) => {
+    return await axios.get(`/cafe/memberinfo?membernum=${memberNum}`, {
+      headers: {
+        Authorization: `${grantType} ${accessToken}`
+      }
+    });
+  },
+
   // 이메일 인증
   emailCheck: async(email) => {
     const mailData = {

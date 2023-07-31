@@ -227,7 +227,7 @@ const Roulette = () => {
 
   const showWinning = (stopTime) => {
     if (stopTime === 3) {
-      amount = 50;
+      amount = 500;
     } else if (stopTime === 4) {
       amount = 100;
     } else if (stopTime === 5) {

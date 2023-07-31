@@ -7,7 +7,6 @@ import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
-import SideMenuForBusiness from "../component/SideMenuForBusiness";
 import ChatBot from "../component/ChatBot";
 import MyReport from "./MyReport";
 

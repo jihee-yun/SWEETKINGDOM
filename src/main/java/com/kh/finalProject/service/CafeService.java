@@ -1,5 +1,6 @@
 package com.kh.finalProject.service;
 
+import com.kh.finalProject.dto.CafeCreateDto;
 import com.kh.finalProject.dto.CafeDetailDto;
 import com.kh.finalProject.dto.CafeDto;
 import com.kh.finalProject.dto.ImgDto;
@@ -23,10 +24,46 @@ public class CafeService {
     private final CafeRepository cafeRepository;
     private final CafeImgRepository cafeImgRepository;
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
 
     private final MemberRepository memberRepository;
     private final CafeLikeRepository cafeLikeRepository;
+
+    // 카페 생성
+    public boolean createCafeByNum(CafeCreateDto cafeCreateDto) {
+        Member member = memberRepository.findByMemberNum(cafeCreateDto.getMemberNum())
+                .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없음"));
+
+        Cafe cafe = new Cafe();
+        cafe.setMember(member);
+        cafe.setCafeName(cafeCreateDto.getCafeName());
+        cafe.setRegion(cafeCreateDto.getRegion());
+        cafe.setAddress(cafeCreateDto.getAddress());
+        cafe.setOperatingTime(cafeCreateDto.getOperatingTime());
+        cafe.setTel(cafeCreateDto.getTel());
+        cafe.setIntro(cafeCreateDto.getIntro());
+        cafe.setDetailIntro(cafeCreateDto.getDetailIntro());
+        cafe.setThumbnail(cafeCreateDto.getThumbnail());
+        cafe.setLikeCount(0L); // 좋아요 카운트 0 부터 시작
+        cafe.setScore(0.0); // 0.0부터 점수 시작
+        cafeRepository.save(cafe);
+        return true;
+    }
+    // 회원 번호로 카페 등록 내역 조회
+    public List<CafeDto> getCafeInfoByNum(Long memberNum) {
+        Optional<Member> memberOptional = memberRepository.findByMemberNum(memberNum);
+        List<Cafe> cafeList = cafeRepository.findByMember(memberOptional.get());
+        List<CafeDto> cafeDtoList = new ArrayList<>();
+        for (Cafe cafe : cafeList) {
+            CafeDto cafeDto = new CafeDto();
+            cafeDto.setId(cafe.getId());
+            cafeDto.setThumbnail(cafe.getThumbnail());
+            cafeDto.setCafeName(cafe.getCafeName());
+            cafeDto.setRegion(cafe.getRegion());
+            cafeDto.setIntro(cafe.getIntro());
+            cafeDtoList.add(cafeDto);
+        }
+        return cafeDtoList;
+    }
 
     // 지역별(카테고리 선택별) 카페 조회
     public List<CafeDto> selectCafeList(String region) {
