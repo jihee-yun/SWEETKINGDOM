@@ -181,7 +181,7 @@ const TestSwiper = () => {
             </p>
             <Footer>
               <div>01/02</div>
-              <a href="#">READ MORE</a>
+              <a href="http://localhost:3000/cafe/detail/4">READ MORE</a>
            </Footer>
         </SlideContent>
         </SwiperSlide>
@@ -211,7 +211,7 @@ const TestSwiper = () => {
             </p>
             <Footer>
               <div>02/02</div>
-              <a href="#">READ MORE</a>
+              <a href="http://localhost:3000/cafe/detail/5">READ MORE</a>
            </Footer>
         </SlideContent>
         </SwiperSlide>

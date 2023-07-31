@@ -63,7 +63,7 @@ const Footer = () => {
         </li>
         <li>
           <Link to="/policy">개인정보처리방침</Link>
-        </li>g
+        </li>
       </Sitemap>
       <FooterInfo>
         <Language>

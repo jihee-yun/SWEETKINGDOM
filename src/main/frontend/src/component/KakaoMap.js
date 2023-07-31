@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserStore";
 import Maker from "../images/maker.png";
 import { Map,  MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { styled } from "styled-components";
@@ -6,6 +8,7 @@ import Grid from "../utils/Grid";
 import Text from "../utils/Text";
 import Image from "../utils/Image";
 import Locations from "./Locations";
+import AxiosApi from "../api/AxiosApi";
 
 const {kakao} = window;
 
@@ -22,7 +25,7 @@ const MarkerInfo = styled.div`
 
 const Footer = styled.div`
 
-a {
+.item {
     color: tomato;
     font-size: 10px;
     font-weight: 500;
@@ -40,12 +43,40 @@ const KakaoMap = (props) => {
   const [isOpenList, setIsOpenList] = useState(Locations.map(() => false));
   const [selectedMarker, setSeleteMarker] = useState();
 
+  const [cafeRankingInfo, setCafeRankingInfo] = useState([]);
+  const navigate = useNavigate();
+  const context = useContext(UserContext);
+  const { setCafeNum } = context; 
+
 
   const isCafeOpen = (index) => {
     setSeleteMarker(index);
     const updatedIsOpenList = isOpenList.map((state, i) => i === index);
     setIsOpenList(updatedIsOpenList);
   }
+
+  useEffect(() => {
+    const cafeInfo = async () => {
+      try {
+        const rsp = await AxiosApi.MainInfoGet();
+        if (rsp.status) {
+          setCafeRankingInfo(rsp.data);
+          console.log("카페 정보 가져오기 성공: ", rsp.data)
+        }
+      } catch (error) {
+        console.log("카페 정보 가져오기 실패: ", error);
+      }
+    };
+
+    cafeInfo();
+    console.log(cafeRankingInfo);
+  }, []);
+
+  const cardClick = (cafeNum) => {
+    setCafeNum(cafeNum);
+  localStorage.setItem("cafeNum", cafeNum);
+  navigate(`/cafe/detail/${cafeNum}`);
+  };
 
   return(
     <>
@@ -65,25 +96,31 @@ const KakaoMap = (props) => {
         }}
         onClick={() => isCafeOpen(index)}
         >
-
+        
         {isOpenList[index] &&  (
+          <div>
+          {cafeRankingInfo.map(ranking => (
             <CustomOverlayMap	// 커스텀 오버레이를 표시할 Container
                   position={loc.latlng}	// 커스텀 오버레이가 표시될 위치
                   yAnchor={1.2}
                   zIndex={1}
             >
-             <MarkerInfo>
+             <MarkerInfo key={ranking.id}>
               <Image src={loc.ImgUrl} type="rectangle" />
               <Grid padding="5px 10px 10px">
                 <Text margin="5px 0" bold="600" size="16px">
                  {loc.title}
                 </Text>
                 <Footer>
-                <a href="#">READ MORE</a>
+                <div className="item" onClick={() => cardClick(ranking.id)}>READ MORE</div>
                 </Footer>
               </Grid>
             </MarkerInfo>
+            
             </CustomOverlayMap>
+    
+        ))}
+        </div>
         )}
         </MapMarker>
         ))}
