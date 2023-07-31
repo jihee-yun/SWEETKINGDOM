@@ -65,3 +65,5 @@ src/main/resources/static/static
 src/main/frontend/src/.DS_Store
 src/main/java/com/kh/finalProject/.DS_Store
 src/main/java/com/kh/finalProject/controller/.DS_Store
+src/main/resources/static/index.html
+src/main/resources/static/asset-manifest.json
