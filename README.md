@@ -10,6 +10,7 @@
  	<img src="https://img.shields.io/badge/SASS-CC6699?style=for-the-badge&logo=Sass&logoColor=white" />
 	<img src="https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=Sass&logoColor=white" />
 	<img src="https://img.shields.io/badge/CSS-3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white" />
+	<br />
  	<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white" />
  	<img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=white" />
 	<img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" />
@@ -87,7 +88,7 @@ PC 환경 및 모바일 환경 최적화를 위해 미디어 쿼리 적용
 * Language : Java, Javascript
 * FrontEnd : HTML/CSS
 * Library : ReactJS
-* DB : mySql
+* DB : MySQL
 * Server : Tomcat
 
 
