@@ -35,7 +35,6 @@ import SignUpForm from './pages/SignUpForm';
 import PaymentPage from './pages/PaymentPage';
 import BusinessPage from './pages/BusinessPage';
 import BusinessCafe from './pages/BusinessCafe';
-import BusinessChallenge from './pages/BusinessChallenge';
 import BusinessReport from './pages/BusinessReport';
 import BusinessReview from './pages/BusinessReview';
 import BusinessInformation from './pages/BusinessInformation';
@@ -92,7 +91,6 @@ function App() {
         <Route path='/mypage/payment' element={<PaymentPage />}/>
         <Route path='/businesspage' element={<BusinessPage />}/>
         <Route path='/businesspage/cafe' element={<BusinessCafe />}/>
-        <Route path='/businesspage/Challenge' element={<BusinessChallenge />}/>
         <Route path='/businesspage/report' element={<BusinessReport />}/>
         <Route path='/businesspage/review' element={<BusinessReview />}/>
         <Route path='/businesspage/information' element={<BusinessInformation />}/>

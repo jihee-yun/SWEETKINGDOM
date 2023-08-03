@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import { storage } from "../utils/Firebase";
@@ -8,8 +8,9 @@ import { ref, getDownloadURL } from "firebase/storage";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
-import ChatBot from "../component/ChatBot";
 import Sidebar from "../component/Sidebar";
+import Modal from "../utils/Modal2";
+
 
 const OutBox = styled.div`
   display: flex;
@@ -125,6 +126,8 @@ const PaymentPage = () => {
   const [memberInfo, setMemberInfo] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   // 버튼 클릭시 결제 통신
   const handlePayment = async(points) => {
     try {
@@ -132,12 +135,17 @@ const PaymentPage = () => {
       
       if (response.status === 200) {
         console.log(`${points} 포인트 충전 성공`);
+        setModalOpen(true);
       } else {
         console.log("충전 에러");
       }
     } catch (error) {
       console.error("결제 에러: ", error);
     }
+  }
+
+  const closeModal = () => {
+    setModalOpen(false);
   }
 
   // 파이어베이스 스토리지 이미지 로딩
@@ -200,7 +208,9 @@ const PaymentPage = () => {
         </Detail>
       </Container>
       <Footer />
-      {/* <ChatBot/>     */}
+      <Modal open={modalOpen} close={closeModal} header="포인트 충전 성공">
+        포인트 충전이 성공적으로 이루어졌습니다.
+      </Modal>
     </OutBox>
   );
 };

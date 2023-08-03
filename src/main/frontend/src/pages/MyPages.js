@@ -6,7 +6,6 @@ import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
-import ChatBot from "../component/ChatBot";
 import Sidebar from "../component/Sidebar";
 
 const OutBox = styled.div`
@@ -218,7 +217,7 @@ const MyPage = () => {
           {/* <LineBox> */}
             <SquareBox>
               <BoxTitle>
-                <Title>참여 이벤트</Title>
+                <Title>참여 이벤트 / 상점</Title>
                 <More onClick={()=>navigate("/mypage/event")}>더 보기</More>
               </BoxTitle>
               <BoxContent>
@@ -231,7 +230,7 @@ const MyPage = () => {
             </SquareBox>
             <SquareBox>
               <BoxTitle>
-                <Title>포인트 / 결제</Title>
+                <Title>포인트 결제</Title>
                 <More onClick={()=>navigate("/mypage/point")}>더 보기</More>
               </BoxTitle>
               <BoxContent>

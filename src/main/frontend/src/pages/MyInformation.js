@@ -1,12 +1,11 @@
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
-import ChatBot from "../component/ChatBot";
 import Sidebar from "../component/Sidebar";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
@@ -74,10 +73,9 @@ const SpecificBox = styled.div`
   align-items: center;
   border-radius: 15px;
 `;
-const TitleBox = styled.div`
-  margin-top: 5px;
-  /* border: 1px solid blue; */
-`;
+// const TitleBox = styled.div`
+//   margin-top: 5px;
+// `;
 
 // 각 박스별 정보 표시 p태크
 const InfoType = styled.p`

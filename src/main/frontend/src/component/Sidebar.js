@@ -14,7 +14,7 @@ const SidebarContainer = styled.div`
   height: 100%;
   position: fixed;
   top: 0;
-  right: ${(props) => props.Xlocation};
+  right: ${(props) => props.xlocation};
   transition: 0.4s ease;
   display: flex;
   flex-direction: column;
@@ -180,13 +180,13 @@ const Sidebar = () => {
 
   return (
 
-      <SidebarContainer  Xlocation={isSidebar}>
+      <SidebarContainer  xlocation={isSidebar}>
       <SidebarTop>
       <button className="xButton" onClick={() => setIsSidebar("-300px")}>
           <CloseRoundedIcon />
         </button>
       </SidebarTop>
-      {isLogin === "true" ? (
+      {sideBarInfo && isLogin === "true" ? (
         <>
       <ProfileBox>
       {userAuthority === 'ROLE_MEMBER' ? (

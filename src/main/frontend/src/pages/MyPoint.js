@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
 import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import DatePicker from "react-datepicker";
@@ -8,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
-import ChatBot from "../component/ChatBot";
 import Sidebar from "../component/Sidebar";
 
 const OutBox = styled.div`

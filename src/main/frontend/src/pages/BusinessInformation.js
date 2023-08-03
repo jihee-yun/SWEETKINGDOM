@@ -7,7 +7,6 @@ import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
-import ChatBot from "../component/ChatBot";
 import MyInformation from "./MyInformation";
 
 const BusinessInformation = () => {

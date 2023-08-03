@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
-import ChatBot from "../component/ChatBot";
 import Sidebar from "../component/Sidebar";
 
 const OutBox = styled.div`
@@ -408,7 +407,7 @@ const MyReview = () => {
           <ContentBox>
             <ContentTop>
               <ContentNum>번호</ContentNum>
-              <ContentTitle>제목</ContentTitle>
+              <ContentTitle>리뷰 내용</ContentTitle>
               <ContentCafe>카페</ContentCafe>
               <ContentDate>날짜</ContentDate>
             </ContentTop>

@@ -98,7 +98,7 @@ const AdminInfo = () => {
         {/* "신고 내역" element */}
         <div onClick={handleReport} className="report">
           <img src={report} alt="report" />
-          <span>신고 내역</span>
+          <span>문의 / 신고 내역</span>
         </div>
       </div>
 

@@ -1,12 +1,11 @@
 import React, {useEffect, useState, useContext} from "react";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AxiosApi from "../api/AxiosApi";
 import { UserContext } from "../context/UserStore";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import SideMenu from "../component/SideMenu";
-import ChatBot from "../component/ChatBot";
 import Sidebar from "../component/Sidebar";
 
 
@@ -51,9 +50,7 @@ const SelectBox = styled.div`
 `;
 const TextBox = styled.p`
   margin-left: 10px;
-  @media (max-width: 768px) {
-    text-align: center;
-  }
+  text-align: center;
 `;
 // 세부 페이지 중앙 부분
 const ContentBox = styled.div`

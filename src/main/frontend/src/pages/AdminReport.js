@@ -412,7 +412,7 @@ const AdminReport = () => {
                 <img src={logo} alt="logo" className="logo" onClick={LogoClick}/>
             </div>
 
-            <h2>신고 내역</h2>
+            <h2>문의 / 신고 내역</h2>
 
             <table className="board">
                 <thead>
