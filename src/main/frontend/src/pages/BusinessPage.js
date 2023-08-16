@@ -95,6 +95,9 @@ const BoxContent = styled.div`
   height: 75%;
   border: 1px solid #F1D1D1;
 `;
+const ContrntList = styled.p`
+  margin-left: 5px;
+`;
 
 
 
@@ -148,14 +151,26 @@ const BusinessPage = () => {
             <Title>카페 등록/관리</Title>
             <More onClick={()=>navigate("/businesspage/cafe")}>더 보기</More>
           </BoxTitle>
-          <BoxContent></BoxContent>
+          <BoxContent>
+            {
+              memberInfo?.cafeNames?.map((cafeNames, index) => (
+                <ContrntList key={index}>{cafeNames}</ContrntList>
+              ))
+            }
+          </BoxContent>
         </SquareBox>
         <SquareBox>
           <BoxTitle>
             <Title>리뷰 관리</Title>
             <More onClick={()=>navigate("/businesspage/review")}>더 보기</More>
           </BoxTitle>
-          <BoxContent></BoxContent>
+          <BoxContent>
+            {
+              memberInfo?.reviewContents?.map((reviewContents, index) => (
+                <ContrntList key={index}>{reviewContents}</ContrntList>
+              ))
+            }
+          </BoxContent>
         </SquareBox>
         <SquareBox>
           <BoxTitle>
@@ -169,7 +184,13 @@ const BusinessPage = () => {
             <Title>문의/신고</Title>
             <More onClick={()=>navigate("/businesspage/report")}>더 보기</More>
           </BoxTitle>
-          <BoxContent></BoxContent>
+          <BoxContent>
+            {
+              memberInfo?.reportTitles?.map((reportTitles, index) => (
+                <ContrntList key={index}>{reportTitles}</ContrntList>
+              ))
+            }
+          </BoxContent>
         </SquareBox>
         <ShortBox>
             <BoxTitle>
